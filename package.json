@@ -1,32 +1,44 @@
 {
-    "name": "platypi-cli",
-    "version": "0.2.0-beta.5",
-    "description": "A command line interface for working with PlatypusTS projects.",
-    "author": "Platypi <support@platypi.io>",
-    "homepage": "https://platypi.io",
-    "main": "dist/cli.js",
-    "preferGlobal": true,
-    "scripts": {
-    },
-    "bin": {
-        "platypi": "dist/cli.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Platypi/platypi-cli.git"
-    },
-    "keywords": [
-        "platypi",
-        "platypusts",
-        "typescript",
-        "framework"
-    ],
-    "license": "GPL v3.0",
-    "bugs": {
-        "url": "https://github.com/Platypi/platypi-cli/issues"
-    },
-    "dependencies": {
-    },
-    "devDependencies": {
-    }
+  "name": "platypi-cli",
+  "version": "0.2.0-beta.5",
+  "description": "A command line interface for working with PlatypusTS projects.",
+  "author": "Platypi <support@platypi.io>",
+  "homepage": "https://platypi.io",
+  "main": "src/cli.js",
+  "preferGlobal": true,
+  "scripts": {
+    "build": "npm run build-src",
+    "build-src": "tsc -p build/src",
+    "clean": "rimraf src/**/*.js src/*.js",
+    "tsd": "npm run tsd-src",
+    "tsd-src": "tsd update -so --config tsd.src.json"
+  },
+  "bin": {
+    "platypi": "src/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Platypi/platypi-cli.git"
+  },
+  "keywords": [
+    "platypi",
+    "platypusts",
+    "typescript",
+    "framework"
+  ],
+  "license": "GPL v3.0",
+  "bugs": {
+    "url": "https://github.com/Platypi/platypi-cli/issues"
+  },
+  "dependencies": {
+    "es6-promise": "latest",
+    "github": "latest",
+    "lodash": "latest",
+    "request": "latest",
+    "rimraf": "latest"
+  },
+  "devDependencies": {
+    "tsd": "next",
+    "typescript": "1.5.0-alpha"
+  }
 }

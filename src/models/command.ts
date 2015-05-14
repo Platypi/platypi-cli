@@ -2,4 +2,4 @@
 
 export default class Command {
 	
-};
+}
