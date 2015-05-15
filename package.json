@@ -14,7 +14,7 @@
     "tsd-src": "tsd update -so --config tsd.src.json"
   },
   "bin": {
-    "platypi": "src/cli.js"
+    "platypi": "bin/platypi"
   },
   "repository": {
     "type": "git",
@@ -31,10 +31,16 @@
     "url": "https://github.com/Platypi/platypi-cli/issues"
   },
   "dependencies": {
+    "chalk": "latest",
     "es6-promise": "latest",
+    "exit": "latest",
     "github": "latest",
+    "inquirer": "latest",
     "lodash": "latest",
-    "rimraf": "latest"
+    "pleasant-progress": "latest",
+    "resolve": "latest",
+    "rimraf": "latest",
+    "through": "latest"
   },
   "devDependencies": {
     "tsd": "next",
