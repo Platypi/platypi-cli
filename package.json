@@ -34,7 +34,6 @@
     "es6-promise": "latest",
     "github": "latest",
     "lodash": "latest",
-    "request": "latest",
     "rimraf": "latest"
   },
   "devDependencies": {
