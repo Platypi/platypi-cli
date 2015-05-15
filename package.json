@@ -11,7 +11,8 @@
     "build-src": "tsc -p build/src",
     "clean": "rimraf src/**/*.js src/*.js",
     "tsd": "npm run tsd-src",
-    "tsd-src": "tsd update -so --config tsd.src.json"
+    "tsd-src": "tsd update -so --config tsd.src.json",
+    "cli": "npm run build && node bin/platypi"
   },
   "bin": {
     "platypi": "bin/platypi"
