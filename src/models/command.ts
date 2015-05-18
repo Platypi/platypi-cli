@@ -8,10 +8,10 @@ export default class Command extends Base {
 	static aliases: Array<string> = [];
 
 	help() {
-		this.ui.info(`No help entry for command ${Command.commandName}.`);
+		this.ui.info(`No help entry for command \`${Command.commandName}\`.`);
 	}
 	
 	run(options: any) {
-		throw new SilentError(`The specified command ${Command.commandName} is invalid. For available commands see \`platypi help\``);
+		throw new SilentError(`The specified command \`${Command.commandName}\` is invalid. For available commands see \`platypi help\``);
 	}
 }
