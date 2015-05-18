@@ -3,7 +3,7 @@
 import Command from '../models/command';
 
 class Create extends Command {
-	static name = 'create';
+	static commandName = 'create';
 	
 	run(options: any) {
 		this.ui.info('create command!');

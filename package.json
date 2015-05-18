@@ -39,7 +39,7 @@
     "github": "latest",
     "inquirer": "latest",
     "lodash": "latest",
-    "node-uuid": "^1.4.3",
+    "node-uuid": "latest",
     "pleasant-progress": "latest",
     "require-all": "^1.0.0",
     "resolve": "latest",

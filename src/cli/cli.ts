@@ -8,12 +8,12 @@ import {isFunction, find} from 'lodash';
 function findCommand(commands: Array<typeof Command>, name: string, args: Array<string>, options: any) {
 	var ui = options.ui,
 		command = find(commands, (command) => {
-			return command.name === name || command.aliases.indexOf(name) > -1;
+			return command.commandName === name || command.aliases.indexOf(name) > -1;
 		});
 
 	if(!isFunction(command)) {
 		command = Command;
-		command.name = name;
+		command.commandName = name;
 	}
 	
 	return command;
