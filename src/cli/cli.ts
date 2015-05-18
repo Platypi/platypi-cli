@@ -2,7 +2,22 @@
 
 import {Promise} from 'es6-promise';
 import Ui from '../ui/ui';
-import lookUpCommand from '../commands/lookup';
+import Command from '../models/command';
+import {isFunction, find} from 'lodash';
+
+function findCommand(commands: Array<typeof Command>, name: string, args: Array<string>, options: any) {
+	var ui = options.ui,
+		command = find(commands, (command) => {
+			return command.name === name || command.aliases.indexOf(name) > -1;
+		});
+
+	if(!isFunction(command)) {
+		command = Command;
+		command.name = name;
+	}
+	
+	return command;
+};
 
 export default class Cli {
 	ui: Ui;
@@ -16,7 +31,7 @@ export default class Cli {
 			var args = environment.args,
 				commandName = args.shift();
 
-			var RegisteredCommand = lookUpCommand(environment.commands, commandName, args, {
+			var RegisteredCommand = findCommand(environment.commands, commandName, args, {
 				ui: this.ui
 			});
 			
