@@ -4,7 +4,7 @@
   "description": "A command line interface for working with PlatypusTS projects.",
   "author": "Platypi <support@platypi.io>",
   "homepage": "https://platypi.io",
-  "main": "src/cli.js",
+  "main": "src/index.js",
   "preferGlobal": true,
   "scripts": {
     "build": "npm run build-src",
