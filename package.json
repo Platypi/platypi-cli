@@ -33,12 +33,15 @@
   },
   "dependencies": {
     "chalk": "latest",
+    "configstore": "^1.0.0",
     "es6-promise": "latest",
     "exit": "latest",
     "github": "latest",
     "inquirer": "latest",
     "lodash": "latest",
+    "node-uuid": "^1.4.3",
     "pleasant-progress": "latest",
+    "require-all": "^1.0.0",
     "resolve": "latest",
     "rimraf": "latest",
     "through": "latest"

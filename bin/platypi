@@ -13,7 +13,7 @@ resolve('platypi-cli', {
   var cli;
 
   if (error) {
-    cli = require('../src/cli');
+    cli = require('../src');
   } else {
     cli = require(localCli);
   }
