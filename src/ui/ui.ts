@@ -72,42 +72,25 @@ export default class Ui {
 		}
 	}
 	
-	warn(message: string, newLine: boolean = true): void {
-		if(newLine) {
-			this.logLine(message, LOG_LEVEL.WARN);
-		} else {
-			this.log(message, LOG_LEVEL.WARN);
-		}
+	warn(message: string): void {
+		this.logLine(message, LOG_LEVEL.WARN);
 	}
 	
-	info(message: any, newLine: boolean = true): void {
-		if(newLine) {
-			this.logLine(message, LOG_LEVEL.INFO);
-		} else {
-			this.log(message, LOG_LEVEL.INFO);
-		}
+	info(message: string): void {
+		this.logLine(message, LOG_LEVEL.INFO);
 	}
 	
-	debug(message: string, newLine: boolean = true): void {
-		if(newLine) {
-			this.logLine(message, LOG_LEVEL.DEBUG);
-		} else {
-			this.log(message, LOG_LEVEL.DEBUG);
-		}
+	debug(message: string): void {
+		this.logLine(message, LOG_LEVEL.DEBUG);
 	}
 	
-	trace(message: any, newLine: boolean = true): void {
-		if(newLine) {
-			this.logLine(message, LOG_LEVEL.TRACE);
-		} else {
-			this.log(message, LOG_LEVEL.TRACE);
-		}
+	trace(message: string): void {
+		this.logLine(message, LOG_LEVEL.TRACE);
 	}
 	
 	log(message: any, logLevel: number = LOG_LEVEL.INFO): void {
 		if(this.shouldLog(logLevel)) {
 			this.output.write(message);
-			
 		}
 	}
 
