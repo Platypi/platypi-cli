@@ -20,6 +20,7 @@ var LOG_LEVEL = {
 
 var PROMPTS = {
 	INPUT: 'input',
+	EXPAND: 'expand',
 	CONFIRM: 'confirm',
 	LIST: 'list',
 	RAWLIST: 'rawlist',
@@ -100,21 +101,22 @@ export default class Ui {
 	
 	prompt(questions: Array<IQuestion>): Thenable<Array<any>> {
 		var Prompt = this.Prompt,
-			output = this.through(null, function() {});
+			output = this.through(null, function() {}),
+			_this = this;
 		
 		// Pipe it to the output stream but don't forward end event
 		output.pipe(this.output);
-		
+
 		function PromptExt(...args: Array<any>) {
+			this.r1 = _this.readline.createInterface({
+				input: _this.input,
+				output: output
+		    });
 			Prompt.apply(this, args);
-		}
-		
+		};
+
 		PromptExt.prototype = Object.create(Prompt.prototype);
 		PromptExt.prototype.constructor = PromptExt;
-		PromptExt.prototype.rl = this.readline.createInterface({
-			input: this.input,
-			output: output
-	    });
 
 		return new this.Promise((resolve) => {
 			(new PromptExt(inquirer.prompt.prompts)).run(questions, resolve);
