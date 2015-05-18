@@ -5,7 +5,6 @@ import * as chalk from 'chalk';
 import * as through from 'through';
 import {Promise} from 'es6-promise';
 import {EOL} from 'os';
-import * as readline from 'readline2';
 
 var Progress: any = require('pleasant-progress');
 var inquirer: any = require('inquirer');
@@ -38,7 +37,6 @@ export default class Ui {
 	protected output: through.ThroughStream;
 	protected progress: { start: (message?: string, stepString?: string) => void; stop: (printWithFullStepString?: boolean) => void; };
 	protected Promise = Promise;
-	protected readline = readline;
 	protected through = through;
 	protected utils = _;
 	
@@ -100,26 +98,8 @@ export default class Ui {
 	}
 	
 	prompt(questions: Array<IQuestion>): Thenable<Array<any>> {
-		var Prompt = this.Prompt,
-			output = this.through(null, function() {}),
-			_this = this;
-		
-		// Pipe it to the output stream but don't forward end event
-		output.pipe(this.output);
-
-		function PromptExt(...args: Array<any>) {
-			this.r1 = _this.readline.createInterface({
-				input: _this.input,
-				output: output
-		    });
-			Prompt.apply(this, args);
-		};
-
-		PromptExt.prototype = Object.create(Prompt.prototype);
-		PromptExt.prototype.constructor = PromptExt;
-
 		return new this.Promise((resolve) => {
-			(new PromptExt(inquirer.prompt.prompts)).run(questions, resolve);
+			inquirer.prompt(questions, resolve);
 		});
 	}
 
