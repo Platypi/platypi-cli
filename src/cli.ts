@@ -9,5 +9,11 @@ export = function(options: { args: Array<string>; input: NodeJS.ReadableStream; 
 	ui.info('the args are:');
 	ui.info(JSON.stringify(options.args, null, 2));
 	ui.error(new Error('this is a test error'));
-	return Promise.resolve();
+	return ui.prompt([
+		{ type: 'input', name: 'question1', message: 'Input here' },
+		{ type: 'confirm', name: 'question2', message: 'Y/n' }
+	]).then((answers) => {
+		ui.info('answers:');
+		ui.info(JSON.stringify(answers, null, 2));
+	}, ui.error.bind(ui));
 }

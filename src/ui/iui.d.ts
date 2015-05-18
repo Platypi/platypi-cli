@@ -1,4 +1,4 @@
-/// <references path="../references.d.ts" />
+/// <reference path="../references.d.ts" />
 
 declare module models.ui {
 	interface IOptions {

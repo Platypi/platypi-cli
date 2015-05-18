@@ -1,4 +1,5 @@
 /// <reference path="typings/tsd.d.ts" />
+/// <reference path="interfaces.d.ts" />
 /// <reference path="ui/iui.d.ts" />
 
 /// <reference path="cli.ts" />

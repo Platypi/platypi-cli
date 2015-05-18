@@ -1,4 +1,4 @@
-/// <references path="../references.d.ts" />
+/// <reference path="../references.d.ts" />
 
 var GitHubApi: any = require('github');
 

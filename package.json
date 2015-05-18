@@ -39,6 +39,7 @@
     "inquirer": "latest",
     "lodash": "latest",
     "pleasant-progress": "latest",
+    "readline2": "^0.1.1",
     "resolve": "latest",
     "rimraf": "latest",
     "through": "latest"
