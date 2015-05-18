@@ -18,8 +18,17 @@ var LOG_LEVEL = {
 	TRACE: 1
 };
 
+var PROMPTS = {
+	INPUT: 'input',
+	CONFIRM: 'confirm',
+	LIST: 'list',
+	RAWLIST: 'rawlist',
+	PASSWORD: 'password'
+};
+
 export default class Ui {
 	static LOG_LEVEL = LOG_LEVEL;
+	static PROMPTS = PROMPTS;
 
 	protected chalk = chalk;
 	protected Prompt = inquirer.ui.Prompt;
@@ -106,7 +115,7 @@ export default class Ui {
 		this.log(message + EOL, logLevel);
 	}
 	
-	prompt(questions: Array<any>): Thenable<Array<any>> {
+	prompt(questions: Array<IQuestion>): Thenable<Array<any>> {
 		var Prompt = this.Prompt,
 			output = this.through(null, function() {});
 		
