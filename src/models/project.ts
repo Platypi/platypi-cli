@@ -1,9 +1,9 @@
 /// <reference path="../references.d.ts" />
 
-export default class BaseObject {
-	ui: ui.Ui;
+import Base from './base';
 
+export default class Project extends Base {
 	constructor(options: models.IModelOptions) {
-		this.ui = options.ui;
+		super(options);
 	}
 }

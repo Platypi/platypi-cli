@@ -1,6 +1,37 @@
 /// <reference path="../references.d.ts" />
 
-declare module models.ui {
+declare module ui {
+	class Ui {
+		static LOG_LEVEL: {
+			ERROR: number;
+			WARN: number;
+			INFO: number;
+			DEBUG: number;
+			TRACE: number;
+		};
+
+		static PROMPTS: {
+			INPUT: string;
+			EXPAND: string;
+			CONFIRM: string;
+			LIST: string;
+			RAWLIST: string;
+			PASSWORD: string;
+		};
+
+		error(error: any): void;
+		warn(message: string): void;
+		info(message: string): void;
+		debug(message: string): void;
+		trace(message: string): void;
+		log(message: any, logLevel?: number): void;
+		logLine(message: any, logLevel?: number): void;
+		prompt(questions: Array<IQuestion>): Thenable<Array<any>>;
+		startProgress(message?: string, stepString?: string): void;
+		stopProgress(printWithFullStepString?: boolean): void;
+		setLogLevel(level: string | number): void;
+	}
+	
 	interface IOptions {
 		logLevel?: string | number;
 		input: NodeJS.ReadableStream;

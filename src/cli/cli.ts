@@ -1,9 +1,9 @@
 /// <reference path='../references.d.ts' />
 
 import {Promise} from 'es6-promise';
-import Ui from '../ui/ui';
 import Command from '../models/command';
 import {isFunction, find} from 'lodash';
+import Base from '../models/base';
 
 function findCommand(commands: Array<typeof Command>, name: string, args: Array<string>, options: any) {
 	var ui = options.ui,
@@ -15,17 +15,11 @@ function findCommand(commands: Array<typeof Command>, name: string, args: Array<
 		command = Command;
 		command.commandName = name;
 	}
-	
+
 	return command;
 };
 
-export default class Cli {
-	ui: Ui;
-
-	constructor(options: any) {
-		this.ui = options.ui;
-	}
-
+export default class Cli extends Base {
 	run(environment: any): Thenable<number> {
 		return Promise.resolve().then(() => {
 			var args = environment.args,

@@ -40,7 +40,7 @@ export default class Ui {
 	protected through = through;
 	protected utils = _;
 	
-	constructor(protected options: models.ui.IOptions) {
+	constructor(protected options: ui.IOptions) {
 		var progress = this.progress = new Progress();
 		
 		this.output = this.through(function (data: any) {

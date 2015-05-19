@@ -39,7 +39,7 @@ function getLogLevel(args: Array<string>): string|number {
 }
 
 export = function(options: { args: Array<string>; input: NodeJS.ReadableStream; output: NodeJS.WritableStream; }) {
-	var ui = new Ui(<models.ui.IOptions>utils.extend({
+	var ui = new Ui(<ui.IOptions>utils.extend({
 			logLevel: getLogLevel(options.args)
 		}, options)),
 		environment = {
