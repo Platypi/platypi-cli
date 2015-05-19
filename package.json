@@ -45,6 +45,7 @@
     "istanbul": "^0.3.14",
     "mocha": "^2.2.5",
     "tsd": "next",
+    "tslint": "^2.2.0-beta",
     "typescript": "1.5.0-alpha"
   },
   "scripts": {
@@ -54,14 +55,14 @@
     "clean": "npm run clean-src && npm run clean-test",
     "clean-src": "rimraf src/**/*.js src/*.js",
     "clean-test": "rimraf test/unit/**/*.js test/*.js",
+    "cli": "npm run build && node bin/platypi",
+    "lint": "node build/scripts/tslint tslint.json src test",
+    "lint-src": "node build/scripts/tslint tslint.json src",
+    "lint-test": "node build/scripts/tslint tslint.json test",
+    "test": "npm run build-test && istanbul cover --dir test/coverage -- test/runner.js",
+    "test-all": "npm run build-test && istanbul cover --dir test/coverage -- test/runner.js all",
     "tsd": "npm run tsd-src && npm run tsd-test",
     "tsd-src": "tsd update -so --config tsd.src.json",
-    "tsd-test": "tsd update -so --config tsd.test.json",
-    "cli": "npm run build && node bin/platypi",
-    "test": "npm run build-test && node test/runner",
-    "test:debug": "npm run build-test && node debug test/runner",
-    "test-all": "npm run build-test && node test/runner all",
-    "test-all:debug": "npm run build-test && node debug test/runner all",
-    "test-all:cover": "npm run build-test && istanbul cover --dir test/coverage -- test/runner.js all"
+    "tsd-test": "tsd update -so --config tsd.test.json"
   }
 }

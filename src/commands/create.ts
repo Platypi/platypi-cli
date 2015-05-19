@@ -3,9 +3,9 @@
 import Command from '../models/command';
 
 class Create extends Command {
-	static commandName = 'create';
-	
-	run(options: any) {
+	static commandName: string = 'create';
+
+	run(options: any): any {
 		this.ui.info('create command!');
 	}
 }

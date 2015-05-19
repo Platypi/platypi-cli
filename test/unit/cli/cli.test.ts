@@ -9,13 +9,13 @@ use(require('chai-as-promised'));
 
 describe('cli', () => {
 	var cli: Cli;
-	
+
 	beforeEach(() => {
 		cli = new Cli({
 			ui: new Ui()
 		});
 	});
-	
+
 	it('should run a command when it is matched', (done) => {
 		var ranCreate = false,
 			Create = getCreate(() => {
@@ -32,7 +32,7 @@ describe('cli', () => {
 			done();
 		});
 	});
-	
+
 	it('should run a command when its alias is matched', (done) => {
 		var ranCreate = false,
 			Create = getCreate(() => {
@@ -49,7 +49,7 @@ describe('cli', () => {
 			done();
 		});
 	});
-	
+
 	it('should return 1 when command not found', (done) => {
 		expect(cli.run({
 			commands: {},
