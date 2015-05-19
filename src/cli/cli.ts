@@ -30,9 +30,10 @@ export default class Cli extends Base {
 			});
 			
 			var command = new RegisteredCommand({
-				ui: this.ui
+				ui: this.ui,
+				project: this.project
 			});
-			
+
 			return command.run({
 				args: args
 			});

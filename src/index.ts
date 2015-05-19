@@ -3,6 +3,7 @@
 import {Promise} from 'es6-promise';
 import Ui from './ui/ui';
 import Cli from './cli/cli';
+import Project from './models/project';
 import * as utils from 'lodash';
 import * as uuid from 'node-uuid';
 
@@ -42,12 +43,15 @@ export = function(options: { args: Array<string>; input: NodeJS.ReadableStream; 
 	var ui = new Ui(<ui.IOptions>utils.extend({
 			logLevel: getLogLevel(options.args)
 		}, options)),
-		environment = {
+		environment: any = {
 			commands: commands,
 			args: options.args
 		};
 
-	return (new Cli({
-		ui: ui
-	})).run(environment);
+	return Project.project(process.cwd(), ui).then((project) => {
+		return (new Cli({
+			ui: ui,
+			project: project
+		})).run(environment);
+	}).then(undefined, ui.error.bind(ui));
 };

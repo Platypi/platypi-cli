@@ -28,6 +28,7 @@
     "configstore": "^1.0.0",
     "es6-promise": "latest",
     "exit": "latest",
+    "findup": "^0.1.5",
     "github": "latest",
     "inquirer": "latest",
     "lodash": "latest",

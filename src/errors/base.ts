@@ -13,7 +13,7 @@ export class BaseError {
 	}
 }
 
-export function extend(ExtendedError: typeof BaseError) {
+export function extend(ExtendedError: typeof BaseError): void {
 	ExtendedError.prototype = Object.create(Error.prototype);
 	ExtendedError.prototype.constructor = ExtendedError;
 };
