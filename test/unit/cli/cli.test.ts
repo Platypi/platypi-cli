@@ -1,14 +1,11 @@
 /// <reference path="../../references.d.ts" />
 
-import * as chai from 'chai';
-import {expect} from 'chai';
+import {use, expect} from 'chai';
 import Cli from '../../../src/cli/cli';
 import getCreate from '../mock/create.mock';
 import Ui from '../mock/ui.mock';
 
-import chaiAsPromised = require('chai-as-promised');
-
-chai.use(chaiAsPromised);
+use(require('chai-as-promised'));
 
 describe('cli', () => {
 	var cli: Cli;
