@@ -45,7 +45,7 @@ export default class Cli {
 		}).catch(this.error.bind(this));
 	}
 
-	error(error?: any) {
+	error(error: any) {
 		this.ui.error(error);
 		return 1;
 	}

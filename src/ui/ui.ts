@@ -55,6 +55,12 @@ export default class Ui {
 	}
 	
 	error(error: any): void {
+		if(!this.utils.isObject(error)) {
+			error = {
+				message: error
+			};
+		}
+
 		var message: string = error.message,
 			stack: string = error.stack;
 		

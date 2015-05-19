@@ -36,6 +36,23 @@ describe('cli', () => {
 		});
 	});
 	
+	it('should run a command when its alias is matched', (done) => {
+		var ranCreate = false,
+			Create = getCreate(() => {
+				ranCreate = true;
+			});
+		
+		expect(cli.run({
+			commands: {
+				create: Create
+			},
+			args: [Create.aliases[0]]
+		})).to.eventually.be.an('undefined').notify(() => {
+			expect(ranCreate).to.be.ok;
+			done();
+		});
+	});
+	
 	it('should return 1 when command not found', (done) => {
 		expect(cli.run({
 			commands: {},
@@ -44,6 +61,6 @@ describe('cli', () => {
 	});
 	
 	it('should return 1 when erroring', () => {
-		expect(cli.error()).to.equal(1);
+		expect(cli.error(new Error())).to.equal(1);
 	});
 });

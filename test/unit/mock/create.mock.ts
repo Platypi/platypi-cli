@@ -7,6 +7,8 @@ import CreateBase = require('../../../src/commands/create');
 var cb = () => { };
 
 export class Create extends CreateBase {
+	static aliases = ['create-alias'];
+
 	run(options: any) {
 		cb();
 		return super.run(options);
