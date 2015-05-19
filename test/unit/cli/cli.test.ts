@@ -11,11 +11,15 @@ import chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 
 describe('cli', () => {
-	it('should run a command when it is matched', (done) => {
-		var cli = new Cli({
+	var cli: Cli;
+	
+	beforeEach(() => {
+		cli = new Cli({
 			ui: new Ui()
 		});
-		
+	});
+	
+	it('should run a command when it is matched', (done) => {
 		var ranCreate = false,
 			Create = getCreate(() => {
 				ranCreate = true;
@@ -30,5 +34,16 @@ describe('cli', () => {
 			expect(ranCreate).to.be.ok;
 			done();
 		});
+	});
+	
+	it('should return 1 when command not found', (done) => {
+		expect(cli.run({
+			commands: {},
+			args: ['noop']
+		})).to.eventually.equal(1).notify(done);
+	});
+	
+	it('should return 1 when erroring', () => {
+		expect(cli.error()).to.equal(1);
 	});
 });
