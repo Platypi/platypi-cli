@@ -6,25 +6,31 @@
   "bundle": "src/typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "68114f9ff37de0f92c94126b6e0164e026a1737a"
+      "commit": "37188e039560982aba57213819e4e210660e1235"
     },
     "es6-promise/es6-promise.d.ts": {
-      "commit": "68114f9ff37de0f92c94126b6e0164e026a1737a"
+      "commit": "37188e039560982aba57213819e4e210660e1235"
     },
     "lodash/lodash.d.ts": {
-      "commit": "68114f9ff37de0f92c94126b6e0164e026a1737a"
+      "commit": "37188e039560982aba57213819e4e210660e1235"
     },
     "rimraf/rimraf.d.ts": {
-      "commit": "68114f9ff37de0f92c94126b6e0164e026a1737a"
+      "commit": "37188e039560982aba57213819e4e210660e1235"
     },
     "through/through.d.ts": {
-      "commit": "7d2f0aa875cc3bc41f3567e3ff99d344df986155"
+      "commit": "37188e039560982aba57213819e4e210660e1235"
     },
     "chalk/chalk.d.ts": {
-      "commit": "7d2f0aa875cc3bc41f3567e3ff99d344df986155"
+      "commit": "37188e039560982aba57213819e4e210660e1235"
     },
     "node-uuid/node-uuid.d.ts": {
-      "commit": "e42bef3a8f9024a50468b12202df69519315b023"
+      "commit": "37188e039560982aba57213819e4e210660e1235"
+    },
+    "glob/glob.d.ts": {
+      "commit": "99b767400d6b6121fac0f14a687838e76a891379"
+    },
+    "minimatch/minimatch.d.ts": {
+      "commit": "39cc71d6b8e329c98b28b64e226fa157af597fa3"
     }
   }
 }

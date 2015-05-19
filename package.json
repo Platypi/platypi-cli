@@ -6,14 +6,6 @@
   "homepage": "https://platypi.io",
   "main": "src/index.js",
   "preferGlobal": true,
-  "scripts": {
-    "build": "npm run build-src",
-    "build-src": "tsc -p build/src",
-    "clean": "rimraf src/**/*.js src/*.js",
-    "tsd": "npm run tsd-src",
-    "tsd-src": "tsd update -so --config tsd.src.json",
-    "cli": "npm run build && node bin/platypi"
-  },
   "bin": {
     "platypi": "bin/platypi"
   },
@@ -47,7 +39,29 @@
     "through": "latest"
   },
   "devDependencies": {
+    "chai": "^2.3.0",
+    "chai-as-promised": "^5.0.0",
+    "glob": "^5.0.6",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.5",
     "tsd": "next",
     "typescript": "1.5.0-alpha"
+  },
+  "scripts": {
+    "build": "npm run build-src",
+    "build-src": "tsc -p build/src",
+    "build-test": "tsc -p build/test",
+    "clean": "npm run clean-src && npm run clean-test",
+    "clean-src": "rimraf src/**/*.js src/*.js",
+    "clean-test": "rimraf test/**/*.js test/*.js",
+    "tsd": "npm run tsd-src && npm run tsd-test",
+    "tsd-src": "tsd update -so --config tsd.src.json",
+    "tsd-test": "tsd update -so --config tsd.test.json",
+    "cli": "npm run build && node bin/platypi",
+    "test": "npm run build-test && node test/runner",
+    "test:debug": "npm run build-test && node debug test/runner",
+    "test-all": "npm run build-test && node test/runner all",
+    "test-all:debug": "npm run build-test && node debug test/runner all",
+    "test-all:cover": "npm run build-test && istanbul cover --dir test/coverage -- test/runner.js all"
   }
 }
