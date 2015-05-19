@@ -17,8 +17,6 @@ var arg = process.argv[2];
 var root = __dirname + '/unit';
 
 function addFiles(mocha, files) {
-	console.log(root + files);
-	console.log(glob.sync(root + files));
 	glob.sync(root + files).forEach(mocha.addFile.bind(mocha));
 }
 
