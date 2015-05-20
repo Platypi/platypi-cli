@@ -3,6 +3,7 @@
 /// <reference path="runner.ts" />
 /// <reference path="unit/cli/cli.test.ts" />
 /// <reference path="unit/errors/silent.test.ts" />
+/// <reference path="unit/errors/notfound.test.ts" />
 /// <reference path="unit/models/command.test.ts" />
 /// <reference path="unit/models/project.test.ts" />
 /// <reference path="unit/ui/ui.test.ts" />
