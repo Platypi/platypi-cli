@@ -47,7 +47,7 @@ export default class Project extends Base {
 			}
 			return {
 				directory: pkg.directory,
-				pkg: utils.cloneDeep(pkg.pkg, platypi.pkg)
+				pkg: utils.merge(pkg.pkg, { platypi: platypi.pkg })
 			};
 		});
 	}
