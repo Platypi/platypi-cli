@@ -9,10 +9,10 @@ import NotFoundError from '../errors/notfound';
 var findup = require('findup');
 
 export default class Project extends Base {
-	static project(root: string, ui: ui.Ui): Thenable<Project> {
-		return Project.closestPackage(root).then((info: { directory: string; pkg: any; }) => {
+	static project(ui: ui.Ui, root: string): Thenable<Project> {
+		return Project.closestPackage(ui, root).then((info: { directory: string; pkg: any; }) => {
 			ui.debug(`Closest project found at ${info.directory}`);
-			
+
 			return new Project({
 				root: info.directory,
 				pkg: info.pkg,
@@ -21,35 +21,56 @@ export default class Project extends Base {
 		});
 	}
 	
-	protected static closestPackage(root: string): Thenable<{ directory: string; pkg: any; }> {
+	protected static closestPackage(ui: ui.Ui, root: string): Thenable<{ directory: string; pkg: any; }> {
 		var file = 'package.json';
 		return Promise.all([
-			Project.closestConfig(root, 'package.json'),
-			Project.closestConfig(root, 'platypi.json')
+			Project.closestConfig(ui, root, 'package.json'),
+			Project.closestConfig(ui, root, 'platypi.json')
 		]).then((values) => {
 			var pkg = values[0],
-				platypi = values[1];
+				platypi = values[1],
+				pkgError = !utils.isString(pkg.directory),
+				platypiError = !utils.isString(platypi.directory);
 
+			if(pkgError && platypiError) {
+				throw pkg;
+			} else if(pkgError) {
+				pkg = {
+					directory: platypi.directory,
+					pkg: {}
+				};
+			} else if(platypiError) {
+				platypi = {
+					directory: pkg.directory,
+					pkg: {}
+				};
+			}
 			return {
 				directory: pkg.directory,
-				pkg: utils.cloneDeep({}, pkg.pkg, platypi.pkg)
+				pkg: utils.cloneDeep(pkg.pkg, platypi.pkg)
 			};
 		});
 	}
 	
-	protected static closestConfig(root: string, configName: string): Thenable<{ directory: string; pkg: any; }> {
+	protected static closestConfig(ui: ui.Ui, root: string, configName: string): Thenable<{ directory: string; pkg: any; }> {
 		return new Promise((resolve, reject) => {
+			ui.debug(`Searching for ${configName} at and above ${root}`);
 			findup(root, configName, (err: any, directory: string) => {
 				if(utils.isObject(err)) {
-					reject(Project.handleError(root, err));
+					resolve(Project.handleError(root, err));
 					return;
 				}
 				resolve(directory);
 			});
 		}).then((directory: string) => {
+			if(!utils.isString(directory)) {
+				return <any>directory;
+			}
+			var config = path.join(directory, configName);
+			ui.debug(`Reading ${config}`);
 			return {
 				directory: directory,
-				pkg: require(path.join(directory, configName))
+				pkg: require(config)
 			};
 		});
 	}

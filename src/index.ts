@@ -41,14 +41,15 @@ function getLogLevel(args: Array<string>): string|number {
 
 export = function(options: { args: Array<string>; input: NodeJS.ReadableStream; output: NodeJS.WritableStream; }) {
 	var ui = new Ui(<ui.IOptions>utils.extend({
-			logLevel: getLogLevel(options.args)
+			logLevel: getLogLevel(options.args) || Ui.LOG_LEVEL.TRACE
 		}, options)),
 		environment: any = {
 			commands: commands,
 			args: options.args
 		};
 
-	return Project.project(process.cwd(), ui).then((project) => {
+	return Project.project(ui, process.cwd()).then((project) => {
+		ui.debug(`Project found: ${JSON.stringify((<any>project).pkg, null, 2)}`);
 		return (new Cli({
 			ui: ui,
 			project: project
