@@ -2,7 +2,7 @@
 
 import {use, expect} from 'chai';
 import Cli from '../../../src/cli/cli';
-import getCreate from '../mock/create.mock';
+import getCreateCommand from '../mock/create.mock';
 import Ui from '../mock/ui.mock';
 
 use(require('chai-as-promised'));
@@ -18,7 +18,7 @@ describe('cli', () => {
 
 	it('should run a command when it is matched', (done) => {
 		var ranCreate = false,
-			Create = getCreate(() => {
+			Create = getCreateCommand(() => {
 				ranCreate = true;
 			});
 		
@@ -35,7 +35,7 @@ describe('cli', () => {
 
 	it('should run a command when its alias is matched', (done) => {
 		var ranCreate = false,
-			Create = getCreate(() => {
+			Create = getCreateCommand(() => {
 				ranCreate = true;
 			});
 		

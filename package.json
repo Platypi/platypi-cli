@@ -45,6 +45,8 @@
     "glob": "^5.0.6",
     "istanbul": "^0.3.14",
     "mocha": "^2.2.5",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
     "tsd": "next",
     "tslint": "^2.2.0-beta",
     "typescript": "1.5.0-alpha"

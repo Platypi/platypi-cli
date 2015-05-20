@@ -34,10 +34,11 @@ export default class Ui {
 	protected Prompt = inquirer.ui.Prompt;
 	protected input: NodeJS.ReadableStream;
 	protected logLevel: number;
-	protected output: through.ThroughStream;
+	protected output: NodeJS.ReadWriteStream;
 	protected progress: { start: (message?: string, stepString?: string) => void; stop: (printWithFullStepString?: boolean) => void; };
 	protected Promise = Promise;
 	protected through = through;
+	protected inquirer = inquirer;
 	protected utils = _;
 	
 	constructor(protected options: ui.IOptions) {
@@ -55,10 +56,8 @@ export default class Ui {
 	}
 	
 	error(error: any): void {
-		if(!this.utils.isObject(error)) {
-			error = {
-				message: error
-			};
+		if(!error) {
+			return;
 		}
 
 		var message: string = error.message,
@@ -105,7 +104,7 @@ export default class Ui {
 	
 	prompt(questions: Array<IQuestion>): Thenable<Array<any>> {
 		return new this.Promise((resolve) => {
-			inquirer.prompt(questions, resolve);
+			this.inquirer.prompt(questions, resolve);
 		});
 	}
 
@@ -126,14 +125,19 @@ export default class Ui {
 	setLogLevel(level: string | number): void {
 		if(this.utils.isNumber((<any>LOG_LEVEL)[level])) {
 			this.logLevel = (<any>LOG_LEVEL)[level];
-		} else if(level >= LOG_LEVEL.TRACE && level <= LOG_LEVEL.ERROR) {
-			this.logLevel = <number>level;
-		} else {
-			this.logLevel = LOG_LEVEL.INFO;
+			return;
+		} else if(level < LOG_LEVEL.TRACE) {
+			this.logLevel = LOG_LEVEL.TRACE;
+			return;
+		} else if(level > LOG_LEVEL.ERROR) {
+			this.logLevel = LOG_LEVEL.ERROR;
+			return;
 		}
+
+		this.logLevel = <number>level;
 	}
 	
-	protected shouldLog(logLevel: number = LOG_LEVEL.INFO): boolean {
-		return logLevel >= this.logLevel;
+	protected shouldLog(logLevel: number): boolean {
+		return logLevel >= (this.logLevel || LOG_LEVEL.INFO);
 	}
 }
