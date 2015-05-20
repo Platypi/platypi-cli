@@ -1,6 +1,6 @@
 /// <reference path="../references.d.ts" />
 
-import * as _ from 'lodash';
+import * as utils from 'lodash';
 import * as chalk from 'chalk';
 import * as through from 'through';
 import {Promise} from 'es6-promise';
@@ -39,7 +39,7 @@ export default class Ui {
 	protected Promise = Promise;
 	protected through = through;
 	protected inquirer = inquirer;
-	protected utils = _;
+	protected utils = utils;
 	
 	constructor(protected options: ui.IOptions) {
 		var progress = this.progress = new Progress();
