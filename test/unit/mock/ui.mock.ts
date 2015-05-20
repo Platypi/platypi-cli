@@ -5,14 +5,16 @@ import {Promise} from 'es6-promise';
 import UiBase from '../../../src/ui/ui';
 
 export class Ui extends UiBase {
-	constructor() {
+	constructor(private onLog: (message?: string, level?: number) => void = (message?: string, level?: number) => {}) {
 		super({
 			input: process.stdin,
 			output: process.stdout
 		});
 	}
 
-	log(): void { }
+	log(message: string, level: number): void {
+		this.onLog(message, level);
+	}
 
 	prompt(): Thenable<Array<any>> {
 		return Promise.resolve([]);
