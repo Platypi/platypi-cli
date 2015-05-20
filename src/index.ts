@@ -1,11 +1,11 @@
 /// <reference path='references.d.ts' />
 
-import {Promise} from 'es6-promise';
-import Ui from './ui/ui';
-import Cli from './cli/cli';
-import Project from './models/project';
-import * as utils from 'lodash';
-import * as uuid from 'node-uuid';
+//import {Promise} from 'es6-promise';
+//import Ui from './ui/ui';
+//import Cli from './cli/cli';
+//import Project from './models/project';
+//import * as utils from 'lodash';
+//import * as uuid from 'node-uuid';
 
 var ConfigStore = require('configstore'),
 	pkg = require('../package.json'),
@@ -14,10 +14,10 @@ var ConfigStore = require('configstore'),
 		filter: /^(.*)\.js$/
 	});
 
-function clientId() {
+function clientId(): string {
 	var config =  ConfigStore(pkg.name),
 		id = config.get('client-id');
-		
+
 	if(!utils.isString(id)) {
 		id = uuid.v4().toString();
 		config.set('client-id', id);
@@ -29,7 +29,7 @@ function clientId() {
 function getLogLevel(args: Array<string>): string|number {
 	var level: string,
 		index = args.indexOf('--loglevel');
-	
+
 	if(index > -1) {
 		return args[index + 1];
 	} else if(args.indexOf('--verbose') > -1) {
@@ -39,7 +39,7 @@ function getLogLevel(args: Array<string>): string|number {
 	}
 }
 
-export = function(options: { args: Array<string>; input: NodeJS.ReadableStream; output: NodeJS.WritableStream; }) {
+export = function(options: { args: Array<string>; input: NodeJS.ReadableStream; output: NodeJS.WritableStream; }): Thenable<any> {
 	var ui = new Ui(<ui.IOptions>utils.extend({
 			logLevel: getLogLevel(options.args) || Ui.LOG_LEVEL.TRACE
 		}, options)),

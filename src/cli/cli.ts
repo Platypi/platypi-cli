@@ -5,7 +5,7 @@ import Command from '../models/command';
 import {isFunction, find} from 'lodash';
 import Base from '../models/base';
 
-function findCommand(commands: Array<typeof Command>, name: string, args: Array<string>, options: any) {
+function findCommand(commands: Array<typeof Command>, name: string, args: Array<string>, options: any): Command {
 	var ui = options.ui,
 		command = find(commands, (command) => {
 			return command.commandName === name || command.aliases.indexOf(name) > -1;
@@ -28,7 +28,7 @@ export default class Cli extends Base {
 			var RegisteredCommand = findCommand(environment.commands, commandName, args, {
 				ui: this.ui
 			});
-			
+
 			var command = new RegisteredCommand({
 				ui: this.ui,
 				project: this.project
@@ -40,7 +40,7 @@ export default class Cli extends Base {
 		}).catch(this.error.bind(this));
 	}
 
-	error(error: any) {
+	error(error: any): number {
 		this.ui.error(error);
 		return 1;
 	}

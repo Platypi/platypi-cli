@@ -9,6 +9,9 @@ import NotFoundError from '../errors/notfound';
 var findup = require('findup');
 
 export default class Project extends Base {
+	protected root: string;
+	protected pkg: any;
+
 	static project(ui: ui.Ui, root: string): Thenable<Project> {
 		return Project.closestPackage(ui, root).then((info: { directory: string; pkg: any; }) => {
 			ui.debug(`Closest project found at ${info.directory}`);
@@ -20,7 +23,7 @@ export default class Project extends Base {
 			});
 		});
 	}
-	
+
 	protected static closestPackage(ui: ui.Ui, root: string): Thenable<{ directory: string; pkg: any; }> {
 		var file = 'package.json';
 		return Promise.all([
@@ -51,7 +54,7 @@ export default class Project extends Base {
 			};
 		});
 	}
-	
+
 	protected static closestConfig(ui: ui.Ui, root: string, configName: string): Thenable<{ directory: string; pkg: any; }> {
 		return new Promise((resolve, reject) => {
 			ui.debug(`Searching for ${configName} at and above ${root}`);
@@ -74,7 +77,7 @@ export default class Project extends Base {
 			};
 		});
 	}
-	
+
 	protected static handleError(root: string, err: any): any {
 		if(utils.isObject(err) && /not found/i.test(err.message)) {
 			return new NotFoundError(`No project found at or up from: \`${root}\``);
@@ -82,13 +85,10 @@ export default class Project extends Base {
 			return err;
 		}
 	}
-	
-	protected root: string;
-	protected pkg: any;
-	
+
 	constructor(options: models.IProjectOptions) {
 		super(options);
-		
+
 		this.root = options.root;
 		this.pkg = options.pkg;
 	}

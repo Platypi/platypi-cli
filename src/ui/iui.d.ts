@@ -2,22 +2,9 @@
 
 declare module ui {
 	class Ui {
-		static LOG_LEVEL: {
-			ERROR: number;
-			WARN: number;
-			INFO: number;
-			DEBUG: number;
-			TRACE: number;
-		};
+		static LOG_LEVEL: ILogLevels;
 
-		static PROMPTS: {
-			INPUT: string;
-			EXPAND: string;
-			CONFIRM: string;
-			LIST: string;
-			RAWLIST: string;
-			PASSWORD: string;
-		};
+		static PROMPTS: IPrompts;
 
 		error(error: any): void;
 		warn(message: string): void;
@@ -31,7 +18,24 @@ declare module ui {
 		stopProgress(printWithFullStepString?: boolean): void;
 		setLogLevel(level: string | number): void;
 	}
-	
+
+	interface ILogLevels {
+		ERROR: number;
+		WARN: number;
+		INFO: number;
+		DEBUG: number;
+		TRACE: number;
+	}
+
+	interface IPrompts {
+		INPUT: string;
+		EXPAND: string;
+		CONFIRM: string;
+		LIST: string;
+		RAWLIST: string;
+		PASSWORD: string;
+	}
+
 	interface IOptions {
 		logLevel?: string | number;
 		input: NodeJS.ReadableStream;
