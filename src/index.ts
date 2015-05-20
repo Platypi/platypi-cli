@@ -1,11 +1,11 @@
 /// <reference path='references.d.ts' />
 
-//import {Promise} from 'es6-promise';
-//import Ui from './ui/ui';
-//import Cli from './cli/cli';
-//import Project from './models/project';
-//import * as utils from 'lodash';
-//import * as uuid from 'node-uuid';
+import {Promise} from 'es6-promise';
+import Ui from './ui/ui';
+import Cli from './cli/cli';
+import Project from './models/project';
+import * as utils from 'lodash';
+import * as uuid from 'node-uuid';
 
 var ConfigStore = require('configstore'),
 	pkg = require('../package.json'),

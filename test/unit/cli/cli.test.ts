@@ -21,7 +21,7 @@ describe('cli', () => {
 			Create = getCreateCommand(() => {
 				ranCreate = true;
 			});
-		
+
 		expect(cli.run({
 			commands: {
 				create: Create
@@ -38,7 +38,7 @@ describe('cli', () => {
 			Create = getCreateCommand(() => {
 				ranCreate = true;
 			});
-		
+
 		expect(cli.run({
 			commands: {
 				create: Create
@@ -56,7 +56,7 @@ describe('cli', () => {
 			args: ['noop']
 		})).to.eventually.equal(1).notify(done);
 	});
-	
+
 	it('should return 1 when erroring', () => {
 		expect(cli.error(new Error())).to.equal(1);
 	});

@@ -15,7 +15,7 @@ var mocha = new Mocha({
 var arg = process.argv[2];
 var root = __dirname + '/unit/';
 
-function addFiles(mocha, files) {
+function addFiles(mocha, files): void {
 	glob.sync(root + files).forEach(mocha.addFile.bind(mocha));
 }
 
@@ -27,8 +27,8 @@ if (arg === 'all') {
 	addFiles(mocha, '**/*.test.js');
 }
 
-mocha.run(function(failures) {
-	process.on('exit', function() {
+mocha.run((failures) => {
+	process.on('exit', () => {
 		process.exit(failures);
 	});
 });

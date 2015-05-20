@@ -7,15 +7,15 @@ import CreateBase = require('../../../src/commands/create');
 var cb = () => { };
 
 export class Create extends CreateBase {
-	static aliases = ['create-alias'];
+	static aliases: Array<string> = ['create-alias'];
 
-	run(options: any) {
+	run(options: any): any {
 		cb();
 		return super.run(options);
 	}
 }
 
-export default function(onRun: () => void) {
+export default function(onRun: () => void): typeof Create {
 	cb = onRun;
 	return Create;
 };

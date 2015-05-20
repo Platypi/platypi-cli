@@ -11,14 +11,15 @@ export class Ui extends UiBase {
 			output: process.stdout
 		});
 	}
-	log() { }
-	
-	prompt() {
+
+	log(): void { }
+
+	prompt(): Thenable<Array<any>> {
 		return Promise.resolve([]);
 	}
-	
+
 	startProgress(): void { }
-	
+
 	stopProgress(): void {}
 }
 

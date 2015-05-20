@@ -5,7 +5,7 @@ import Command from '../models/command';
 import {isFunction, find} from 'lodash';
 import Base from '../models/base';
 
-function findCommand(commands: Array<typeof Command>, name: string, args: Array<string>, options: any): Command {
+function findCommand(commands: Array<typeof Command>, name: string, args: Array<string>, options: any): typeof Command {
 	var ui = options.ui,
 		command = find(commands, (command) => {
 			return command.commandName === name || command.aliases.indexOf(name) > -1;
