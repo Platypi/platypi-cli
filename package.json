@@ -19,7 +19,7 @@
     "typescript",
     "framework"
   ],
-  "license": "GPL v3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Platypi/platypi-cli/issues"
   },
