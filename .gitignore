@@ -29,3 +29,5 @@ node_modules
 typings
 *.js
 *.map
+
+!build/*/*.js

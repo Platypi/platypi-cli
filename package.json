@@ -32,6 +32,7 @@
     "github": "latest",
     "inquirer": "latest",
     "lodash": "latest",
+    "minimist": "latest",
     "node-uuid": "latest",
     "pleasant-progress": "latest",
     "require-all": "latest",
