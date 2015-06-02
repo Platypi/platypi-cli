@@ -41,13 +41,12 @@ export = function(options: { args: Array<string>; input: NodeJS.ReadableStream; 
 	var ui = new Ui(<ui.IOptions>utils.extend({
 			logLevel: getLogLevel(options.args) || Ui.LOG_LEVEL.TRACE
 		}, options)),
-		environment: any = {
+		environment: IEnvironment = {
 			commands: commands,
 			args: options.args
 		};
 
 	return Project.project(ui, process.cwd()).then((project) => {
-		ui.debug(`Project found: ${JSON.stringify((<any>project).pkg, null, 2)}`);
 		return (new Cli({
 			ui: ui,
 			project: project

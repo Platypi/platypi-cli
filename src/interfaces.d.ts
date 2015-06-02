@@ -54,3 +54,8 @@ interface IQuestion {
 	 */
 	when?: boolean|((answers: any) => boolean);
 }
+
+interface IEnvironment {
+	args?: Array<string>;
+	commands?: any;
+}

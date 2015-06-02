@@ -18,9 +18,9 @@ function findCommand(commands: Array<typeof Command>, name: string, args: Array<
 };
 
 export default class Cli extends Base {
-	run(environment: any): Thenable<number> {
+	run(environment: IEnvironment): Thenable<number> {
 		return Promise.resolve().then(() => {
-			var args = environment.args,
+			var args = environment.args || [],
 				commandName = args.shift();
 
 			var RegisteredCommand = findCommand(environment.commands, commandName, args, {
