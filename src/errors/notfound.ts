@@ -1,5 +1,3 @@
-/// <reference path="../references.d.ts" />
-
 import {BaseError, extend} from './base';
 
 export default class NotFoundError extends BaseError {

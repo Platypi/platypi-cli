@@ -1,5 +1,3 @@
-/// <reference path="../references.d.ts" />
-
 export default class BaseObject {
 	protected ui: ui.Ui;
 	protected project: models.Project;

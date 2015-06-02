@@ -1,5 +1,3 @@
-/// <reference path="../references.d.ts" />
-
 import * as utils from 'lodash';
 import * as chalk from 'chalk';
 import * as through from 'through';

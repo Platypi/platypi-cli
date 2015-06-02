@@ -1,5 +1,3 @@
-/// <reference path="../../references.d.ts" />
-
 import {expect} from 'chai';
 import {Promise} from 'es6-promise';
 import UiBase from '../../../src/ui/ui';

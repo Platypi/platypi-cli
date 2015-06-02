@@ -1,5 +1,3 @@
-/// <reference path="references.d.ts" />
-
 import * as glob from 'glob';
 import Mocha = require('mocha');
 
@@ -12,20 +10,13 @@ var mocha = new Mocha({
 	reporter: 'spec'
 });
 
-var arg = process.argv[2];
 var root = __dirname + '/unit/';
 
 function addFiles(mocha, files): void {
 	glob.sync(root + files).forEach(mocha.addFile.bind(mocha));
 }
 
-if (arg === 'all') {
-	addFiles(mocha, '**/*.test.js');
-} else if (arg)  {
-	mocha.addFile(arg);
-} else {
-	addFiles(mocha, '**/*.test.js');
-}
+addFiles(mocha, '**/*.test.js');
 
 mocha.run((failures) => {
 	process.on('exit', () => {

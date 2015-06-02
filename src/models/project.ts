@@ -1,5 +1,3 @@
-/// <reference path="../references.d.ts" />
-
 import * as path from 'path';
 import {Promise} from 'es6-promise';
 import * as utils from 'lodash';

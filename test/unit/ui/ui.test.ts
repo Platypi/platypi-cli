@@ -1,5 +1,3 @@
-/// <reference path="../../references.d.ts" />
-
 import {use, expect} from 'chai';
 import {spy as spyOn, stub} from 'sinon';
 import Ui from '../../../src/ui/ui';

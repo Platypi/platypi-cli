@@ -1,5 +1,3 @@
-/// <reference path="../references.d.ts" />
-
 declare module ui {
 	class Ui {
 		static LOG_LEVEL: ILogLevels;

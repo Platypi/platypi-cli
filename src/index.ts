@@ -1,5 +1,3 @@
-/// <reference path='references.d.ts' />
-
 import {Promise} from 'es6-promise';
 import Ui from './ui/ui';
 import Cli from './cli/cli';

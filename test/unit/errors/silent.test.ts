@@ -1,5 +1,3 @@
-/// <reference path="../../references.d.ts" />
-
 import {expect} from 'chai';
 import SilentError from '../../../src/errors/silent';
 

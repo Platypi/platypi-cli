@@ -1,5 +1,3 @@
-/// <reference path="../references.d.ts" />
-
 import Base from './base';
 import SilentError from '../errors/silent';
 

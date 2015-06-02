@@ -1,5 +1,3 @@
-/// <reference path="../../references.d.ts" />
-
 import {use, expect} from 'chai';
 import Cli from '../../../src/cli/cli';
 import getCreateCommand from '../mock/create.mock';

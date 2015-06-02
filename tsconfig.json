@@ -1,0 +1,176 @@
+{
+    "lintOptions": {
+        "rules": {
+            "ban": [
+                true,
+                [
+                    "_",
+                    "extend"
+                ],
+                [
+                    "_",
+                    "isNull"
+                ],
+                [
+                    "_",
+                    "isDefined"
+                ]
+            ],
+            "class-name": true,
+            "comment-format": [
+                true,
+                "check-space"
+            ],
+            "curly": true,
+            "eofline": true,
+            "forin": true,
+            "indent": [
+                true,
+                4
+            ],
+            "interface-name": true,
+            "jsdoc-format": true,
+            "label-position": true,
+            "label-undefined": true,
+            "max-line-length": [
+                false,
+                140
+            ],
+            "member-ordering": [
+                true,
+                "public-before-private",
+                "static-before-instance",
+                "variables-before-functions"
+            ],
+            "no-any": false,
+            "no-arg": true,
+            "no-bitwise": false,
+            "no-console": [
+                true,
+                "debug",
+                "info",
+                "time",
+                "timeEnd",
+                "trace"
+            ],
+            "no-consecutive-blank-lines": true,
+            "no-construct": true,
+            "no-constructor-vars": false,
+            "no-debugger": true,
+            "no-duplicate-key": true,
+            "no-duplicate-variable": true,
+            "no-empty": false,
+            "no-eval": true,
+            "no-string-literal": true,
+            "no-trailing-comma": true,
+            "no-trailing-whitespace": true,
+            "no-unreachable": true,
+            "no-unused-expression": true,
+            "no-unused-variable": false,
+            "no-use-before-declare": true,
+            "one-line": [
+                true,
+                "check-open-brace",
+                "check-catch",
+                "check-else",
+                "check-whitespace"
+            ],
+            "quotemark": [
+                true,
+                "single"
+            ],
+            "radix": true,
+            "semicolon": true,
+            "triple-equals": [
+                true,
+                "allow-null-check"
+            ],
+            "typedef": [
+                true,
+                "property-declaration",
+                "member-variable-declaration",
+                "call-signature"
+            ],
+            "typedef-whitespace": [
+                true,
+                [
+                    "call-signature",
+                    "nospace"
+                ],
+                [
+                    "catch-clause",
+                    "nospace"
+                ],
+                [
+                    "index-signature",
+                    "space"
+                ],
+                [
+                    "parameter",
+                    "nospace"
+                ],
+                [
+                    "property-declaration",
+                    "nospace"
+                ],
+                [
+                    "variable-declaration",
+                    "nospace"
+                ]
+            ],
+            "use-strict": [
+                true,
+                "check-module"
+            ],
+            "variable-name": false,
+            "whitespace": [
+                false,
+                "check-branch",
+                "check-decl",
+                "check-operator",
+                "check-separator",
+                "check-type"
+            ]
+        }
+    },
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES5",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "watch": false
+    },
+    "filesGlob": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "typings/tsd.d.ts"
+    ],
+    "files": [
+        "typings/tsd.d.ts",
+        "src/ui/iui.d.ts",
+        "src/models/imodels.d.ts",
+        "src/interfaces.d.ts",
+        "test/runner.ts",
+        "src/errors/silent.ts",
+        "src/errors/notfound.ts",
+        "src/models/base.ts",
+        "src/models/command.ts",
+        "src/errors/base.ts",
+        "src/models/project.ts",
+        "src/services/github.ts",
+        "src/commands/create.ts",
+        "src/ui/ui.ts",
+        "src/index.ts",
+        "test/unit/cli/cli.test.ts",
+        "test/unit/errors/notfound.test.ts",
+        "test/unit/errors/silent.test.ts",
+        "test/unit/mock/create.mock.ts",
+        "test/unit/mock/ui.mock.ts",
+        "test/unit/models/command.test.ts",
+        "test/unit/models/project.test.ts",
+        "test/unit/ui/ui.test.ts",
+        "src/cli/cli.ts"
+    ]
+}

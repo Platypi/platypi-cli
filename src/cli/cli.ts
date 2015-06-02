@@ -1,5 +1,3 @@
-/// <reference path='../references.d.ts' />
-
 import {Promise} from 'es6-promise';
 import Command from '../models/command';
 import {isFunction, find} from 'lodash';

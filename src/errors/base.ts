@@ -1,5 +1,3 @@
-/// <reference path="../references.d.ts" />
-
 export class BaseError {
 	name: string = 'BaseError';
 	stack: string;
