@@ -44,9 +44,6 @@
 			"showOutput": "always"
 		},
 		{
-			"taskName": "tsconfig"
-		},
-		{
 			"taskName": "tsd"
 		}
 	]

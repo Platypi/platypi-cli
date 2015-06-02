@@ -7,9 +7,9 @@ var cb = () => { };
 export class Create extends CreateBase {
 	static aliases: Array<string> = ['create-alias'];
 
-	run(options: any): any {
+	validateAndRun(options: any): any {
 		cb();
-		return super.run(options);
+		return super.validateAndRun(options);
 	}
 }
 

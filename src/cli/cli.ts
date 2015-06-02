@@ -32,7 +32,7 @@ export default class Cli extends Base {
 				project: this.project
 			});
 
-			return command.run({
+			return command.validateAndRun({
 				args: args
 			});
 		}).catch(this.error.bind(this));
