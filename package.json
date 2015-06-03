@@ -48,7 +48,8 @@
     "mocha": "latest",
     "sinon": "latest",
     "sinon-chai": "latest",
-    "tsconfig-glob": "^0.1.0",
+    "tsconfig-glob": "^0.1.1",
+    "tsconfig-lint": "^0.1.0",
     "tsd": "latest",
     "tslint": "latest",
     "typescript": "1.5.0-alpha"
@@ -58,7 +59,7 @@
     "build": "tsconfig && tsc -p .",
     "clean": "rimraf src/**/*.js src/*.js test/unit/**/*.js test/*.js",
     "cli": "npm run build && node bin/platypi",
-    "lint": "tsconfig && node build/scripts/tslint -files files -lint lintOptions tsconfig.json",
+    "lint": "tsconfig-lint -u",
     "test": "npm run build && istanbul cover --dir test/coverage -- test/runner.js",
     "tsd": "tsd update -so && tsd link"
   }
