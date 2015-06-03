@@ -29,7 +29,6 @@
     "es6-promise": "latest",
     "exit": "latest",
     "findup": "latest",
-    "github": "latest",
     "inquirer": "latest",
     "lodash": "latest",
     "minimist": "latest",

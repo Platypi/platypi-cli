@@ -1,7 +1,7 @@
 import * as path from 'path';
 import {Promise} from 'es6-promise';
-import * as utils from 'lodash';
 import Base from './base';
+import {isObject, isString, merge} from 'lodash';
 import NotFoundError from '../errors/notfound';
 
 var findup = require('findup');
@@ -30,8 +30,8 @@ export default class Project extends Base {
 		]).then((values) => {
 			var pkg = values[0],
 				platypi = values[1],
-				pkgError = !utils.isString(pkg.directory),
-				platypiError = !utils.isString(platypi.directory);
+				pkgError = !isString(pkg.directory),
+				platypiError = !isString(platypi.directory);
 
 			if(pkgError && platypiError) {
 				throw pkg;
@@ -48,7 +48,7 @@ export default class Project extends Base {
 			}
 			return {
 				directory: pkg.directory,
-				pkg: utils.merge(pkg.pkg, { platypi: platypi.pkg })
+				pkg: merge(pkg.pkg, { platypi: platypi.pkg })
 			};
 		});
 	}
@@ -57,14 +57,14 @@ export default class Project extends Base {
 		return new Promise((resolve, reject) => {
 			ui.debug(`Searching for ${configName} at and above ${root}`);
 			findup(root, configName, (err: any, directory: string) => {
-				if(utils.isObject(err)) {
+				if(isObject(err)) {
 					resolve(Project.handleError(root, err));
 					return;
 				}
 				resolve(directory);
 			});
 		}).then((directory: string) => {
-			if(!utils.isString(directory)) {
+			if(!isString(directory)) {
 				return <any>directory;
 			}
 			var config = path.join(directory, configName);
@@ -77,7 +77,7 @@ export default class Project extends Base {
 	}
 
 	protected static handleError(root: string, err: any): any {
-		if(utils.isObject(err) && /not found/i.test(err.message)) {
+		if(isObject(err) && /not found/i.test(err.message)) {
 			return new NotFoundError(`No project found at or up from: \`${root}\``);
 		} else {
 			return err;

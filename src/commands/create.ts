@@ -6,6 +6,12 @@ class Create extends Command {
 	run(): any {
 		this.ui.info('create command!');
 	}
+	
+	validate(args: IParsedArgs) {
+		var commands = args.commands;
+		
+		return commands.length > 0;
+	}
 }
 
 export = Create;

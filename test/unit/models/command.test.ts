@@ -13,7 +13,7 @@ describe('Command', () => {
 			ui: new Ui()
 		});
 
-		expect(command.validateAndRun({})).to.eventually.rejectedWith(SilentError).notify(done);
+		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(SilentError).notify(done);
 	});
 	
 	it('should log on help', () => {

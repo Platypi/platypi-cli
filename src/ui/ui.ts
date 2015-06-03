@@ -91,6 +91,11 @@ export default class Ui {
 	}
 
 	log(message: any, logLevel: number = LOG_LEVEL.INFO): void {
+		if(this.utils.isString(message)) {
+			message = (<string>message).replace(/`[^`]*`/g, (substr) => {
+				return <string><any>this.chalk.cyan(substr);
+			});
+		}
 		if(this.shouldLog(logLevel)) {
 			this.output.write(message);
 		}

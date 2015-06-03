@@ -159,7 +159,6 @@
         "src/models/command.ts",
         "src/errors/base.ts",
         "src/models/project.ts",
-        "src/services/github.ts",
         "src/commands/create.ts",
         "src/ui/ui.ts",
         "src/index.ts",
