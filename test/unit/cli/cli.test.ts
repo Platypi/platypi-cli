@@ -48,14 +48,14 @@ describe('cli', () => {
 		});
 	});
 
-	it('should return 1 when command not found', (done) => {
+	it('should return 0 when command not found', (done) => {
 		expect(cli.run({
 			commands: {},
 			args: ['noop']
-		})).to.eventually.equal(1).notify(done);
+		})).to.eventually.equal(0).notify(done);
 	});
 
-	it('should return 1 when erroring', () => {
-		expect(cli.error(new Error())).to.equal(1);
+	it('should return 0 when erroring', () => {
+		expect(cli.error(new Error())).to.equal(0);
 	});
 });

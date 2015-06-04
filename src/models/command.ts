@@ -48,7 +48,5 @@ export default class Command extends Base {
 		return Promise.resolve(false);
 	}
 
-	protected run(): any {
-		throw new NotFoundError(`The specified command \`${this.name}\` is invalid. For available commands see \`platypi help\``);
-	}
+	protected run(): any {}
 }
