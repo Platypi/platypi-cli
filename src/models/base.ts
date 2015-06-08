@@ -9,4 +9,17 @@ export default class BaseObject {
 		this.ui = options.ui;
 		this.project = options.project;
 	}
+
+	protected instantiate<T>(Constructor: new (options: models.IModelOptions) => T, options?: any): T {
+		if(!this.utils.isFunction(Constructor)) {
+			return;
+		}
+
+		options = this.utils.extend(options, {
+			project: this.project,
+			ui: this.ui
+		});
+		
+		return new Constructor(options);
+	}
 }

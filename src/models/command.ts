@@ -1,17 +1,21 @@
 import {Promise} from 'es6-promise';
 import Base from './base';
 import NotFoundError from '../errors/silent';
+import Environment from '../environment/environment';
 
 export default class Command extends Base {
 	static commandName: string = 'command';
 	static aliases: Array<string> = [];
 
-	protected Promise = Promise;
+	protected env: Environment;
 	protected name: string;
+	protected args: any;
+	protected commands: Array<string>;
 
-	constructor(options) {
+	constructor(options: models.IModelOptions) {
 		super(options);
 		this.name = (<typeof Command>this.constructor).commandName;
+		this.env = new Environment(options);
 	}
 
 	help(): void {
@@ -40,12 +44,14 @@ export default class Command extends Base {
 					throw new NotFoundError(message);
 				}
 
+				this.args = args;
+				this.commands = args.commands.slice(0);
 				return this.run();
 			});
 	}
 
 	protected validate(args: IParsedArgs): any {
-		return Promise.resolve(false);
+		return true;
 	}
 
 	protected run(): any {}

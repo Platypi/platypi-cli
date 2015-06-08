@@ -13,9 +13,9 @@ resolve('platypi-cli', {
   var cli;
 
   if (error) {
-    cli = require('../src');
+    cli = require('../src').default;
   } else {
-    cli = require(localCli);
+    cli = require(localCli).default;
   }
 
   cli({
