@@ -2,6 +2,11 @@ import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
 
 export default class DefaultGenerator extends Generator {
+	constructor(options: any) {
+		super(options);
+		this.destRoot('app');
+	}
+
 	initialize() {
 		
 	}
@@ -21,6 +26,7 @@ export default class DefaultGenerator extends Generator {
 			}
 		]).then((answers: { type: string; }) => {			
 			this.ui.debug(`Creating a \`${answers.type}\` app.`);
+			return this.render('package.json', '../package.json');
 		});
 	}
 }

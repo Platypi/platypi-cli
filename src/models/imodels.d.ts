@@ -17,6 +17,10 @@ declare module models {
 	}
 
 	class Project {
+		/**
+		 * The root directory for the project
+		 */
+		root: string;
 		static project(root: string, ui: ui.Ui): Thenable<Project>;
 	}
 }

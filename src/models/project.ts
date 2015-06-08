@@ -7,7 +7,11 @@ import NotFoundError from '../errors/notfound';
 var findup = require('findup');
 
 export default class Project extends Base {
-	protected root: string;
+	/**
+	 * The root directory for the project
+	 */
+	root: string;
+
 	protected pkg: any;
 
 	static project(ui: ui.Ui, root: string): Thenable<Project> {

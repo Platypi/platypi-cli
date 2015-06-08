@@ -1,0 +1,41 @@
+{
+  "name": "default",
+  "version": "0.0.0",
+  "private": true,
+  "main": "app/dist/app.js",
+  "devDependencies": {
+    "browserify": "latest",
+    "concurrently": "latest",
+    "glob": "latest",
+    "http-server": "latest",
+    "less": "latest",
+    "less-plugin-clean-css": "latest",
+    "minifyify": "latest",
+    "mkdirp": "latest",
+    "nodemon": "latest",
+    "platypus": "latest",
+    "platypusui": "latest",
+    "rimraf": "latest",
+    "stringify": "latest",
+    "tsconfig-glob": "latest",
+    "tsconfig-lint": "latest",
+    "tsd": "latest",
+    "typescript": "1.5.0-alpha"
+  },
+  "scripts": {
+    "prepublish": "npm run tsd",
+    "build": "npm run less && npm run build:ts",
+    "build:ts": "tsconfig && npm run ts && npm run bundle",
+    "bundle": "mkdirp app/dist && browserify app/src/main.js -d -t stringify -o app/dist/app.js -v",
+    "clean": "rimraf app/**/*.css app/src/**/*.js app/dist/*",
+    "clean:dist": "rimraf app/dist/*",
+    "deploy": "npm run clean:dist && npm run build -- -- -p [minifyify --no-map]",
+    "less": "mkdirp app/dist && lessc app/styles/main.less > app/dist/app.css --clean-css=\"--s0 --advanced\"",
+    "lint": "tsconfig-lint --use-glob",
+    "ts": "tsc -p .",
+    "tsd": "tsd update -so && tsd link",
+    "watch": "concurrent \"npm run watch:ts\" \"npm run watch:less\"",
+    "watch:less": "nodemon -w app -e less --exec npm run less",
+    "watch:ts": "nodemon -w app -e ts --exec npm run build:ts"
+  }
+}

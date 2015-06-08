@@ -29,6 +29,7 @@
     "es6-promise": "latest",
     "exit": "latest",
     "findup": "latest",
+    "handlebars": "^3.0.3",
     "inquirer": "latest",
     "lodash": "latest",
     "minimist": "latest",
@@ -37,6 +38,7 @@
     "require-all": "latest",
     "resolve": "latest",
     "rimraf": "latest",
+    "swag": "^0.7.0",
     "through": "latest"
   },
   "devDependencies": {
