@@ -11,7 +11,7 @@ declare module ui {
 		trace(message: string): void;
 		log(message: any, logLevel?: number): void;
 		logLine(message: any, logLevel?: number): void;
-		prompt(questions: Array<IQuestion>): Thenable<Array<any>>;
+		prompt(questions: Array<IQuestion>): Thenable<any>;
 		startProgress(message?: string, stepString?: string): void;
 		stopProgress(printWithFullStepString?: boolean): void;
 		setLogLevel(level: string | number): void;

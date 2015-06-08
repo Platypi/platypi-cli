@@ -105,7 +105,7 @@ export default class Ui {
 		this.log(message + EOL, logLevel);
 	}
 
-	prompt(questions: Array<IQuestion>): Thenable<Array<any>> {
+	prompt(questions: Array<IQuestion>): Thenable<any> {
 		return new this.Promise((resolve) => {
 			this.inquirer.prompt(questions, resolve);
 		});

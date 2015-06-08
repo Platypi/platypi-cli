@@ -9,7 +9,7 @@ declare module 'readline2' {
  */
 interface IQuestion {
 	/**
-	 * The name to use when storing the answer in the anwers hash.
+	 * The name to use when storing the answer in the answers hash.
 	 */
 	name: string;
 
