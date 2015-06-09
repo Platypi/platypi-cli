@@ -27,6 +27,7 @@ export default class AppGenerator extends Generator {
 			this.render('tsconfig.json', '../tsconfig.json', options),
 			this.render('tsd.json', '../tsd.json', options),
 			this.render('app/app.ts', 'src/app/app.ts', options),
+			this.render('styles/main.less', 'styles/main.less', options),
 			generator.run(),
 			this.mkdirDest(
 				'src/attributecontrols',
@@ -37,7 +38,7 @@ export default class AppGenerator extends Generator {
 				'src/templatecontrols',
 				'fonts',
 				'images',
-				'styles'
+				'../test'
 			)
 		]);
 	}

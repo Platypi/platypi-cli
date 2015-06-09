@@ -56,7 +56,7 @@ export default class Generator extends Command {
 			});
 		});
 	}
-	
+
 	protected write(dest: string, data: string, options: any) {
 		this.ui.debug(`Writing to \`${dest}\``);
 
