@@ -1,11 +1,11 @@
 import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
 
-export default class DefaultGenerator extends Generator {
+export default class ViewControlGenerator extends Generator {
 	constructor(options: any) {
 		super(options);
 		this.srcRoot('viewcontrol');
-		this.destRoot('project/app/viewcontrols');
+		this.destRoot('project/app/src/viewcontrols');
 	}
 
 	run() {

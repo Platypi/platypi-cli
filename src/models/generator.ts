@@ -62,7 +62,7 @@ export default class Generator extends Base {
 	protected write(dest: string, data: string, options: any) {
 		this.ui.debug(`Writing to \`${dest}\``);
 
-		return this.ensureDirectory(dest)
+		return this.ensureWritable(dest)
 			.then(() => {
 				return new Promise((resolve, reject) => {
 					fs.writeFile(dest, data, options, (err) => {
@@ -76,18 +76,30 @@ export default class Generator extends Base {
 				});
 			});
 	}
-	
-	protected ensureDirectory(file: string) {
-		return new Promise((resolve, reject) => {
-			mkdir(path.dirname(file), (err) => {
-				if(this.utils.isObject(err)) {
-					reject(err);
-					return;
-				}
 
-				resolve();
+	protected ensureWritable(file: string) {
+		return this.mkdir(path.dirname(file));
+	}
+
+	protected mkdirDest(...dirs: Array<string>) {
+		return this.mkdir.apply(this, dirs.map((dir) => {
+			return this.getPath(this._destRoot, dir);
+		}));
+	}
+
+	protected mkdir(...dirs: Array<string>) {
+		return Promise.all(dirs.map((dir) => {
+			return new Promise((resolve, reject) => {
+				mkdir(dir, (err) => {
+					if(this.utils.isObject(err)) {
+						reject(err);
+						return;
+					}
+	
+					resolve();
+				});
 			});
-		});
+		}));
 	}
 
 	protected srcRoot(source?: string): string {

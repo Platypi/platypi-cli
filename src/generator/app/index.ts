@@ -3,7 +3,7 @@ import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
 import ViewControl from '../viewcontrol/index';
 
-export default class DefaultGenerator extends Generator {
+export default class AppGenerator extends Generator {
 	constructor(options: any) {
 		super(options);
 		this.destRoot('project/app');
@@ -29,8 +29,19 @@ export default class DefaultGenerator extends Generator {
 			this.render('package.json', '../package.json', options),
 			this.render('tsconfig.json', '../tsconfig.json', options),
 			this.render('tsd.json', '../tsd.json', options),
-			this.render('app/app.ts', 'app/app.ts', options),
-			generator.run()
+			this.render('app/app.ts', 'src/app/app.ts', options),
+			generator.run(),
+			this.mkdirDest(
+				'src/attributecontrols',
+				'src/injectables',
+				'src/models',
+				'src/repositories',
+				'src/services',
+				'src/templatecontrols',
+				'fonts',
+				'images',
+				'styles'
+			)
 		]);
 	}
 }

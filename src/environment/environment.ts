@@ -1,10 +1,12 @@
 import * as path from 'path';
 import Base from '../models/base';
 import Generator from '../models/generator';
+import NotFoundError from '../errors/notfound';
 
 export default class Environment extends Base {
 	generator(component: string): Generator {
-		var Gen: typeof Generator;
+		var Gen: typeof Generator,
+			original = component;
 
 		component = this.findGenerator(component);
 
@@ -21,10 +23,18 @@ export default class Environment extends Base {
 
 		this.ui.debug('Locating generator at: `' + component + '`');
 
-		return this.instantiate(<typeof Generator>require(component).default, {
-			env: this,
-			directory: path.resolve(directory)
-		});
+		try {
+			return this.instantiate(<typeof Generator>require(component).default, {
+				env: this,
+				directory: path.resolve(directory)
+			});
+		} catch(e) {
+			if(e.message.indexOf('Cannot find module') > -1) {
+				throw new NotFoundError('Unrecognized component: `' + original + '`');
+			}
+
+			throw e;
+		}
 	}
 
 	private findGenerator(generator: string) {
