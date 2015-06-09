@@ -27,7 +27,9 @@ export default class DefaultGenerator extends Generator {
 
 		return Promise.all([
 			this.render('package.json', '../package.json', options),
-			this.render('app.ts', 'app/app.ts', options),
+			this.render('tsconfig.json', '../tsconfig.json', options),
+			this.render('tsd.json', '../tsd.json', options),
+			this.render('app/app.ts', 'app/app.ts', options),
 			generator.run()
 		]);
 	}
