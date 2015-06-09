@@ -12,12 +12,13 @@ export default class ViewControlGenerator extends Generator {
 		var name = 'home',
 			options = {
 				name: name
-			};
+			},
+			root = `${name}/${name}`;
 
 		return Promise.all([
-			this.render('vc.html', `${name}/${name}.vc.html`, options),
-			this.render('vc.less', `${name}/${name}.vc.less`, options),
-			this.render('vc.ts', `${name}/${name}.vc.ts`, options)
+			this.render('vc.html', `${root}.vc.html`, options),
+			this.render('vc.less', `${root}.vc.less`, options),
+			this.render('vc.ts', `${root}.vc.ts`, options)
 		]);
 	}
 }
