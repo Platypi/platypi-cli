@@ -9,9 +9,6 @@ export default class AppGenerator extends Generator {
 		this.destRoot('project/app');
 	}
 
-	initialize() {
-	}
-
 	run() {
 		this.ui.debug('Generating the `default` app');
 

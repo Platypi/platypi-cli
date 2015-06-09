@@ -9,7 +9,7 @@ var ConfigStore = require('configstore'),
 	pkg = require('../package.json'),
 	commands = require('require-all')({
 		dirname: __dirname + '/commands',
-		filter: /^(.*)\.js$/
+		filter: /^((?!invalid).*)\.js$/
 	});
 
 function clientId(): string {

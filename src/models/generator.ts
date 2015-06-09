@@ -4,12 +4,13 @@ import * as Handlebars from 'handlebars';
 import * as mkdir from 'mkdirp';
 import {registerHelpers} from 'swag';
 import {Promise} from 'es6-promise';
-import Base from './base';
+import Command from './command';
 import Environment from '../environment/environment';
+import NotFoundError from '../errors/silent';
 
 registerHelpers(Handlebars);
 
-export default class Generator extends Base {
+export default class Generator extends Command {
 	protected env: Environment;
 	protected directory: string;
 	private _srcRoot: string = '';
@@ -23,27 +24,24 @@ export default class Generator extends Base {
 		this.destRoot(this.project.root);
 	}
 
-	run() {
-		this.ui.debug('Generating');
-	}
-
-	protected render(source: string, destination: string, options?: any) {
+	protected render(source: string, destination: string, context?: any) {
 		var src = this.getPath(this._srcRoot, source),
 			dest = this.getPath(this._destRoot, destination);
 		
-		options = this.utils.extend({
+		var options: any = this.utils.extend({
+			context: context,
 			encoding: 'utf8'
-		}, options);
+		}, context);
 
 		return this.read(src, options).then((data: string) => {
 			data = Handlebars.compile(data, {
 				noEscape: true
-			})(options);
+			})(options.context);
 
 			return this.write(dest, data, options);
 		});
 	}
-	
+
 	protected read(source: string, options: any) {
 		this.ui.debug(`Reading from \`${source}\``);
 

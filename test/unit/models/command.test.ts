@@ -22,7 +22,7 @@ describe('Command', () => {
 				ui: new Ui((<any>spy))
 			});
 
-		command.help();
+		command.help('create');
 		
 		expect(spy).to.have.been.calledOnce;
 		expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.INFO);

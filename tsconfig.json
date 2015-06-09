@@ -150,22 +150,23 @@
     ],
     "files": [
         "typings/tsd.d.ts",
+        "src/interfaces.d.ts",
         "src/models/imodels.d.ts",
         "src/ui/iui.d.ts",
-        "src/interfaces.d.ts",
-        "src/environment/environment.ts",
+        "src/errors/base.ts",
         "src/errors/notfound.ts",
+        "src/errors/silent.ts",
         "src/generator/app/index.ts",
         "src/generator/templatecontrol/index.ts",
         "src/generator/viewcontrol/index.ts",
         "src/index.ts",
-        "src/errors/base.ts",
+        "src/cli/cli.ts",
         "src/models/base.ts",
         "src/models/command.ts",
-        "src/models/generator.ts",
         "src/commands/create.ts",
+        "src/commands/invalid.ts",
         "src/models/project.ts",
-        "src/errors/silent.ts",
+        "src/environment/environment.ts",
         "src/ui/ui.ts",
         "test/runner.ts",
         "test/unit/cli/cli.test.ts",
@@ -176,6 +177,6 @@
         "test/unit/models/command.test.ts",
         "test/unit/models/project.test.ts",
         "test/unit/ui/ui.test.ts",
-        "src/cli/cli.ts"
+        "src/models/generator.ts"
     ]
 }

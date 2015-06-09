@@ -1,5 +1,6 @@
 import {Promise} from 'es6-promise';
 import Command from '../models/command';
+import InvalidCommand from '../commands/invalid';
 import {isFunction, find} from 'lodash';
 import * as minimist from 'minimist';
 import Base from '../models/base';
@@ -11,8 +12,7 @@ function findCommand(commands: Array<typeof Command>, name: string, args: IParse
 		});
 
 	if(!isFunction(command)) {
-		command = Command;
-		command.commandName = name;
+		command = InvalidCommand;
 	}
 
 	return command;
@@ -25,7 +25,7 @@ export default class Cli extends Base {
 			args.commands = (<any>args)._;
 			delete (<any>args)._;
 
-			var RegisteredCommand = findCommand(environment.commands, args.commands.shift(), args, {
+			var RegisteredCommand = findCommand(environment.commands, args.commands[0], args, {
 				ui: this.ui
 			});
 
