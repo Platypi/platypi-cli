@@ -7,7 +7,7 @@ class Create extends Command {
 
 	run(): any {
 		var component = this.commands[0];
-		return this.env.generator(component).generate();
+		return this.env.generator(component).run();
 	}
 }
 

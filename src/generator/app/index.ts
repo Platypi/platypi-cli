@@ -1,32 +1,34 @@
+import * as path from 'path';
 import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
+import ViewControl from '../viewcontrol/index';
 
 export default class DefaultGenerator extends Generator {
 	constructor(options: any) {
 		super(options);
-		this.destRoot('app');
+		this.destRoot('project/app');
 	}
 
 	initialize() {
-		
 	}
 
-	generate() {
+	run() {
 		this.ui.debug('Generating the `default` app');
 
-		return this.ui.prompt([
-			{ 
-				name: 'type',
-				message: 'Web or Mobile?',
-				choices: [
-					'web',
-					'mobile'
-				],
-				type: 'list'
-			}
-		]).then((answers: { type: string; }) => {			
-			this.ui.debug(`Creating a \`${answers.type}\` app.`);
-			return this.render('package.json', '../package.json');
+		var generator = this.instantiate(ViewControl, {
+			env: this.env,
+			directory: this.directory
 		});
+
+		var options = {
+			appName: 'TEST',
+			vcName: 'home'
+		};
+
+		return Promise.all([
+			this.render('package.json', '../package.json', options),
+			this.render('app.ts', 'app/app.ts', options),
+			generator.run()
+		]);
 	}
 }

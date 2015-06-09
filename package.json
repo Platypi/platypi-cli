@@ -33,6 +33,7 @@
     "inquirer": "latest",
     "lodash": "latest",
     "minimist": "latest",
+    "mkdirp": "^0.5.1",
     "node-uuid": "latest",
     "pleasant-progress": "latest",
     "require-all": "latest",
@@ -49,8 +50,8 @@
     "mocha": "latest",
     "sinon": "latest",
     "sinon-chai": "latest",
-    "tsconfig-glob": "^0.1.1",
-    "tsconfig-lint": "^0.1.0",
+    "tsconfig-glob": "latest",
+    "tsconfig-lint": "latest",
     "tsd": "latest",
     "tslint": "latest",
     "typescript": "1.5.0-alpha"
