@@ -9,19 +9,19 @@ use(require('chai-as-promised'));
 use(require('sinon-chai'));
 
 describe('Command', () => {
-	it('should throw a NotImplementedError when trying to run', (done) => {
-		var command = new Command({
+	var command: Command;
+
+	beforeEach(() => {
+		command = new Command({
 			ui: new Ui()
 		});
-
+	});
+	
+	it('should throw a NotImplementedError when trying to run', (done) => {
 		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(NotImplementedError).notify(done);
 	});
 
 	it('should throw a ValidationError when command is invalid', (done) => {
-		var command = new Command({
-			ui: new Ui()
-		});
-
 		stub(command, 'validate', () => {
 			return false;
 		});
@@ -31,10 +31,6 @@ describe('Command', () => {
 	});
 
 	it('should call help when -h or --help are passed through', (done) => {
-		var command = new Command({
-			ui: new Ui()
-		});
-
 		var spy = spyOn(command, 'help');
 
 		command.validateAndRun({ commands: ['create'], h: true }).then(() => {

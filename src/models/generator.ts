@@ -110,8 +110,8 @@ export default class Generator extends Command {
 	private getPath(source: string, append: string): string {
 		if(this.utils.isEmpty(source) || path.isAbsolute(append)) {
 			source = append;
-		} else if(!this.utils.isEmpty(append)) {
-			source = path.resolve(source, append);
+		} else {
+			source = path.resolve(source, append || '.');
 		}
 
 		return source;
