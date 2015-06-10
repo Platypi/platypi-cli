@@ -4,7 +4,7 @@ import NotFoundError from '../errors/notfound';
 export default class Invalid extends Command {
 	static commandName: string = 'invalid';
 
-	help() {
+	help(): any {
 		this.ui.info(`Platypi CLI Help`);
 	}
 
@@ -13,9 +13,9 @@ export default class Invalid extends Command {
 		if(this.utils.isString(command)) {
 			throw new NotFoundError(`\`${command}\` is not a valid command.`);
 		}
-		
+
 		this.help();
 	}
-	
-	run() { }
+
+	run(): any { }
 }

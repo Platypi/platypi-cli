@@ -16,7 +16,7 @@ describe('Command', () => {
 			ui: new Ui()
 		});
 	});
-	
+
 	it('should throw a NotImplementedError when trying to run', (done) => {
 		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(NotImplementedError).notify(done);
 	});
@@ -53,7 +53,7 @@ describe('Command', () => {
 			});
 
 		command.help('create');
-		
+
 		expect(spy).to.have.been.calledOnce;
 		expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.INFO);
 	});

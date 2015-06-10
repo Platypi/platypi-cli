@@ -8,7 +8,7 @@ export default class ViewControlGenerator extends Generator {
 		this.destRoot('project/app/src/viewcontrols');
 	}
 
-	run() {
+	run(): any {
 		var name = 'home',
 			options = {
 				name: name

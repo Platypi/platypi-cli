@@ -9,7 +9,7 @@ export default class AppGenerator extends Generator {
 		this.destRoot('project/app');
 	}
 
-	run() {
+	run(): any {
 		this.ui.debug('Generating the `default` app');
 
 		var generator = this.instantiate(ViewControl, {

@@ -24,14 +24,14 @@ class MockGenerator extends Generator {
 		return super.render(source, dest, context);
 	}
 
-	ensureWritable(file: string) {
+	ensureWritable(file: string): any {
 		return super.ensureWritable(file);
 	}
 
 	mkdirDest(...dirs: Array<string>): any {
 		return super.mkdirDest.apply(this, dirs);
 	}
-	
+
 	mkdir(...dirs: Array<string>): any {
 		return Promise.resolve();
 	}
@@ -65,7 +65,7 @@ describe('Generators', () => {
 		}), writeStub = stub(command, 'write', (dest: string, data: any, options: any) => {
 			return Promise.resolve();
 		});
-		
+
 		command.render('app/app.ts', 'app/app.ts').then(() => {
 			expect(readStub).to.have.been.calledWith(path.resolve(command.srcRoot(), 'app/app.ts'));
 			expect(writeStub).to.have.been.calledWith(path.resolve(command.destRoot(), 'app/app.ts'));

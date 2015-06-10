@@ -54,8 +54,8 @@ export default class Command extends Base {
 	protected run(): any {
 		throw new NotImplementedError(`The command exists, but has not been implemented.`);
 	}
-	
-	protected needsHelp(args: IParsedArgs) {
+
+	protected needsHelp(args: IParsedArgs): boolean {
 		return args.commands.length === 1 && (args.hasOwnProperty('h') || args.hasOwnProperty('help'));
 	}
 }

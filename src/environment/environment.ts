@@ -17,7 +17,6 @@ export default class Environment extends Base {
 		var split = component.split(/:(?!\\|\/)/),
 			directory = split[0];
 
-
 		component = split.join('/');
 		component = component.toLowerCase();
 
@@ -37,7 +36,7 @@ export default class Environment extends Base {
 		}
 	}
 
-	private findGenerator(generator: string) {
+	private findGenerator(generator: string): string {
 		if(this.utils.isEmpty(generator)) {
 			return path.resolve(__dirname, '..', 'generator');
 		}

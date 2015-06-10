@@ -23,10 +23,10 @@ export default class Generator extends Command {
 		this.destRoot(this.project.root);
 	}
 
-	protected render(source: string, destination: string, context?: any) {
+	protected render(source: string, destination: string, context?: any): Thenable<void> {
 		var src = this.getPath(this._srcRoot, source),
 			dest = this.getPath(this._destRoot, destination);
-		
+
 		var options: any = this.utils.extend({
 			context: context,
 			encoding: 'utf8'
@@ -41,10 +41,10 @@ export default class Generator extends Command {
 		});
 	}
 
-	protected read(source: string, options: any) {
+	protected read(source: string, options: any): Thenable<string> {
 		this.ui.debug(`Reading from \`${source}\``);
 
-		return new Promise((resolve, reject) => {
+		return new Promise<string>((resolve, reject) => {
 			fs.readFile(source, options, (err, data) => {
 				if(err) {
 					reject(err);
@@ -56,35 +56,35 @@ export default class Generator extends Command {
 		});
 	}
 
-	protected write(dest: string, data: string, options: any) {
+	protected write(dest: string, data: string, options: any): Thenable<void> {
 		this.ui.debug(`Writing to \`${dest}\``);
 
 		return this.ensureWritable(dest)
 			.then(() => {
-				return new Promise((resolve, reject) => {
+				return new Promise<void>((resolve, reject) => {
 					fs.writeFile(dest, data, options, (err) => {
 						if(err) {
 							reject(err);
 							return;
 						}
-						
+
 						resolve();
 					});
 				});
 			});
 	}
 
-	protected ensureWritable(file: string) {
+	protected ensureWritable(file: string): Thenable<any> {
 		return this.mkdir(path.dirname(file));
 	}
 
-	protected mkdirDest(...dirs: Array<string>) {
+	protected mkdirDest(...dirs: Array<string>): Thenable<any> {
 		return this.mkdir.apply(this, dirs.map((dir) => {
 			return this.getPath(this._destRoot, dir);
 		}));
 	}
 
-	protected mkdir(...dirs: Array<string>) {
+	protected mkdir(...dirs: Array<string>): Thenable<any> {
 		return Promise.all(dirs.map((dir) => {
 			return new Promise((resolve, reject) => {
 				mkdir(dir, (err) => {
@@ -92,7 +92,7 @@ export default class Generator extends Command {
 						reject(err);
 						return;
 					}
-	
+
 					resolve();
 				});
 			});
@@ -102,11 +102,11 @@ export default class Generator extends Command {
 	protected srcRoot(source?: string): string {
 		return this._srcRoot = this.getPath(this._srcRoot, source);
 	}
-	
+
 	protected destRoot(dest?: string): string {
 		return this._destRoot = this.getPath(this._destRoot, dest);
 	}
-	
+
 	private getPath(source: string, append: string): string {
 		if(this.utils.isEmpty(source) || path.isAbsolute(append)) {
 			source = append;

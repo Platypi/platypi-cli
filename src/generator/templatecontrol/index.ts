@@ -8,7 +8,7 @@ export default class TemplateControlGenerator extends Generator {
 		this.destRoot('project/app/src/templatecontrols');
 	}
 
-	run() {
+	run(): any {
 		var name = 'test',
 			options = {
 				name: name
