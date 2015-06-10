@@ -2,7 +2,6 @@ import {use, expect} from 'chai';
 import {spy as spyOn} from 'sinon';
 import Project from '../../../src/models/project';
 import Ui from '../mock/ui.mock';
-import SilentError from '../../../src/errors/silent';
 
 use(require('chai-as-promised'));
 use(require('sinon-chai'));

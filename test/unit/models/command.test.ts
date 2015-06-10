@@ -1,21 +1,55 @@
 import {use, expect} from 'chai';
-import {spy as spyOn} from 'sinon';
+import {spy as spyOn, stub} from 'sinon';
 import Command from '../../../src/models/command';
 import Ui from '../mock/ui.mock';
-import SilentError from '../../../src/errors/silent';
+import NotImplementedError from '../../../src/errors/notimplemented';
+import ValidationError from '../../../src/errors/validation';
 
 use(require('chai-as-promised'));
 use(require('sinon-chai'));
 
 describe('Command', () => {
-	it('should throw an error when trying to run', (done) => {
+	it('should throw a NotImplementedError when trying to run', (done) => {
 		var command = new Command({
 			ui: new Ui()
 		});
 
-		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(SilentError).notify(done);
+		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(NotImplementedError).notify(done);
 	});
-	
+
+	it('should throw a ValidationError when command is invalid', (done) => {
+		var command = new Command({
+			ui: new Ui()
+		});
+
+		stub(command, 'validate', () => {
+			return false;
+		});
+
+		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(ValidationError);
+		expect(command.validateAndRun({ commands: ['create'] })).to.eventually.rejectedWith(ValidationError).notify(done);
+	});
+
+	it('should call help when -h or --help are passed through', (done) => {
+		var command = new Command({
+			ui: new Ui()
+		});
+
+		var spy = spyOn(command, 'help');
+
+		command.validateAndRun({ commands: ['create'], h: true }).then(() => {
+			expect(spy).to.have.been.calledOnce;
+			return command.validateAndRun({ commands: ['create'], help: true });
+		}).then(() => {
+			expect(spy).to.have.been.calledTwice;
+			return command.validateAndRun({ commands: ['create'] });
+		}).then(() => {
+			expect(spy).to.have.been.calledTwice;
+		}, () => {
+			expect(spy).to.have.been.calledTwice;
+		}).then(done, done);
+	});
+
 	it('should log on help', () => {
 		var spy = spyOn(),
 			command = new Command({

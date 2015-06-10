@@ -1,7 +1,8 @@
 import {Promise} from 'es6-promise';
 import Base from './base';
 import Environment from '../environment/environment';
-import NotFoundError from '../errors/silent';
+import ValidationError from '../errors/validation';
+import NotImplementedError from '../errors/notimplemented';
 
 export default class Command extends Base {
 	static commandName: string = 'command';
@@ -37,7 +38,7 @@ export default class Command extends Base {
 						message = 'Please specify a command. Use `platypi -h` for more information.';
 					}
 
-					throw new NotFoundError(message);
+					throw new ValidationError(message);
 				}
 
 				this.args = args;
@@ -50,7 +51,9 @@ export default class Command extends Base {
 		return true;
 	}
 
-	protected run(): any {}
+	protected run(): any {
+		throw new NotImplementedError(`The command exists, but has not been implemented.`);
+	}
 	
 	protected needsHelp(args: IParsedArgs) {
 		return args.commands.length === 1 && (args.hasOwnProperty('h') || args.hasOwnProperty('help'));

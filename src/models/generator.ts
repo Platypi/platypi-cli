@@ -6,7 +6,6 @@ import {registerHelpers} from 'swag';
 import {Promise} from 'es6-promise';
 import Command from './command';
 import Environment from '../environment/environment';
-import NotFoundError from '../errors/silent';
 
 registerHelpers(Handlebars);
 

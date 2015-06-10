@@ -1,11 +1,11 @@
 import {expect} from 'chai';
-import SilentError from '../../../src/errors/silent';
+import NotImplementedError from '../../../src/errors/notimplemented';
 
-describe('SilentError', () => {
-	it('should be named SilentError', () => {
-		var error = new SilentError();
+describe('NotImplementedError', () => {
+	it('should be named NotImplementedError', () => {
+		var error = new NotImplementedError();
 
-		expect(error.name).to.equal('SilentError');
+		expect(error.name).to.equal('NotImplementedError');
 	});
 
 	it('should include a stack when PLATYPI_VERBOSE_ERRORS', () => {
@@ -13,11 +13,11 @@ describe('SilentError', () => {
 		var env = process.env.PLATYPI_VERBOSE_ERRORS;
 
 		delete process.env.PLATYPI_VERBOSE_ERRORS;
-		var error = new SilentError();
+		var error = new NotImplementedError();
 		expect(error.stack).to.be.an('undefined');
 
 		process.env.PLATYPI_VERBOSE_ERRORS = true;
-		error = new SilentError();
+		error = new NotImplementedError();
 		expect(error.stack).to.be.a('string');
 
 		process.env.PLATYPI_VERBOSE_ERRORS = env;
