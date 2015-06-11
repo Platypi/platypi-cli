@@ -8,8 +8,8 @@ export default class Invalid extends Command {
 		this.ui.info(`Platypi CLI Help`);
 	}
 
-	validate(args: IParsedArgs): any {
-		var command = args.commands[0];
+	validate(): any {
+		var command = this.commands[0];
 		if(this.utils.isString(command)) {
 			throw new NotFoundError(`\`${command}\` is not a valid command.`);
 		}

@@ -18,7 +18,7 @@ describe('Command', () => {
 	});
 
 	it('should throw a NotImplementedError when trying to run', (done) => {
-		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(NotImplementedError).notify(done);
+		expect(command.validateAndRun([''])).to.eventually.rejectedWith(NotImplementedError).notify(done);
 	});
 
 	it('should throw a ValidationError when command is invalid', (done) => {
@@ -26,19 +26,19 @@ describe('Command', () => {
 			return false;
 		});
 
-		expect(command.validateAndRun({ commands: [] })).to.eventually.rejectedWith(ValidationError);
-		expect(command.validateAndRun({ commands: ['create'] })).to.eventually.rejectedWith(ValidationError).notify(done);
+		expect(command.validateAndRun([''])).to.eventually.rejectedWith(ValidationError);
+		expect(command.validateAndRun(['create'])).to.eventually.rejectedWith(ValidationError).notify(done);
 	});
 
 	it('should call help when -h or --help are passed through', (done) => {
 		var spy = spyOn(command, 'help');
 
-		command.validateAndRun({ commands: ['create'], h: true }).then(() => {
+		command.validateAndRun(['create', '-h']).then(() => {
 			expect(spy).to.have.been.calledOnce;
-			return command.validateAndRun({ commands: ['create'], help: true });
+			return command.validateAndRun(['create', '--help']);
 		}).then(() => {
 			expect(spy).to.have.been.calledTwice;
-			return command.validateAndRun({ commands: ['create'] });
+			return command.validateAndRun(['create']);
 		}).then(() => {
 			expect(spy).to.have.been.calledTwice;
 		}, () => {

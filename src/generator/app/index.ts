@@ -15,9 +15,8 @@ export default class AppGenerator extends Generator {
 		var generator = this.instantiate(ViewControl, {
 			env: this.env,
 			directory: this.directory
-		});
-
-		var options = {
+		}),
+		options = {
 			appName: 'TEST',
 			vcName: 'home'
 		};

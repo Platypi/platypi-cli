@@ -4,6 +4,20 @@ declare module models {
 		project?: Project;
 	}
 
+	interface ICommandOption {
+		name?: string;
+		aliases?: Array<string>;
+		description?: string;
+		defaults?: any;
+		hide?: boolean;
+	}
+
+	interface IParsedArgs {
+		[key: string]: any;
+		h?: boolean;
+		help?: boolean;
+	}
+
 	interface IProjectOptions extends IModelOptions {
 		/**
 		 * The root directory for the project

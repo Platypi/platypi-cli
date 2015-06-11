@@ -55,11 +55,6 @@ interface IQuestion {
 	when?: boolean|((answers: any) => boolean);
 }
 
-interface IParsedArgs {
-	[key: string]: any;
-	commands: Array<string>;
-}
-
 interface IEnvironment {
 	args?: Array<string>;
 	commands?: any;
