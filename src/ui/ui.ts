@@ -91,7 +91,7 @@ export default class Ui {
 	}
 
 	log(message: any, logLevel: number = LOG_LEVEL.INFO): void {
-		if(this.utils.isString(message)) {
+		if(this.utils.isString(message) && message.indexOf('\u001b') === -1) {
 			message = (<string>message).replace(/`[^`]*`/g, (substr) => {
 				return <string><any>this.chalk.cyan(substr);
 			});

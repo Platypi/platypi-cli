@@ -4,6 +4,10 @@ declare module models {
 		project?: Project;
 	}
 
+	interface ICommandOptions extends IModelOptions {
+		parent?: any;
+	}
+
 	interface ICommandOption {
 		name?: string;
 		aliases?: Array<string>;

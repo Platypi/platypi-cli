@@ -13,13 +13,18 @@ export default class AppGenerator extends Generator {
 		this.ui.debug('Generating the `default` app');
 
 		var generator = this.instantiate(ViewControl, {
-			env: this.env,
-			directory: this.directory
-		}),
-		options = {
-			appName: 'TEST',
-			vcName: 'home'
-		};
+				env: this.env,
+				directory: this.directory
+			}),
+				vcName = 'home',
+			options = {
+				appName: 'TEST',
+				vcName: vcName
+			};
+	
+			generator.options = {
+				name: vcName
+			};
 
 		return Promise.all([
 			this.render('package.json', '../package.json', options),

@@ -26,9 +26,6 @@
     "node-uuid/node-uuid.d.ts": {
       "commit": "52dc8fc39354569838b7bc09e24df690b852b4d9"
     },
-    "glob/glob.d.ts": {
-      "commit": "52dc8fc39354569838b7bc09e24df690b852b4d9"
-    },
     "minimatch/minimatch.d.ts": {
       "commit": "52dc8fc39354569838b7bc09e24df690b852b4d9"
     },
@@ -58,6 +55,9 @@
     },
     "mkdirp/mkdirp.d.ts": {
       "commit": "52dc8fc39354569838b7bc09e24df690b852b4d9"
+    },
+    "glob/glob.d.ts": {
+      "commit": "066819c65ff561ca109955e0b725c253e243f0a2"
     }
   }
 }

@@ -45,7 +45,7 @@
   "devDependencies": {
     "chai": "latest",
     "chai-as-promised": "latest",
-    "glob": "latest",
+    "glob": "^5.0.10",
     "istanbul": "latest",
     "mocha": "latest",
     "sinon": "latest",

@@ -10,16 +10,18 @@ export default class Command extends Base {
 	static aliases: Array<string> = [];
 
 	protected env: Environment;
-	protected args: Array<string> = [];
+	protected parent: Command;
+	protected args: Array<string>;
 	protected options: models.IParsedArgs = {};
 	protected commands: Array<string>;
 
+	private _originalArgs: Array<string>;
 	private _options: { [key: string]: models.ICommandOption; } = {};
 
-	constructor(options: models.IModelOptions) {
+	constructor(options: models.ICommandOptions) {
 		super(options);
 		this.env = new Environment(options);
-
+		this.parent = options.parent;
 		this.option('help', {
 			aliases: ['h'],
 			description: 'Get help information for this command'
@@ -27,26 +29,14 @@ export default class Command extends Base {
 	}
 
 	help(command: string): void {
-		this.ui.info(`Help for command \`${command}\`:`);
+		this.ui.info(`Help for command \`${this.buildFullCommand().join(' ')}\`:\n`);
+		this.aliasesHelp(command);
 		this.optionsHelp();
 	}
 
-	protected optionsHelp(): void {
-		var options = this._options;
-		this.utils.forEach(options, (option) => {
-			if(this.utils.isArray(option.aliases)) {
-				this.ui.info(`    ${option.aliases.map(alias => `-${alias}`).join(', ')}, --${option.name}                ${option.description}`);
-			} else {
-				this.ui.info(`    \`--${option.name}\`: ${option.description}`);
-			}
-			if(!this.utils.isUndefined(option.defaults)) {
-				this.ui.info(`        default: ${option.defaults}`);
-			}
-		});
-	}
-
 	validateAndRun(commandArgs: Array<string>): Thenable<any> {
-		this.args = commandArgs;
+		this.args = commandArgs.slice(0);
+		this._originalArgs = this.args.slice(0);
 		this.defineOptions();
 		this.parseOptions();
 
@@ -87,7 +77,77 @@ export default class Command extends Base {
 	}
 
 	protected run(): any {
-		throw new NotImplementedError(`The command exists, but has not been implemented.`);
+		throw new NotImplementedError(`The command \`${(<any>this.constructor).commandName}\` exists, but has not been implemented.`);
+	}
+
+	protected buildFullCommand(): Array<string> {
+		var parent = this;
+
+		while(this.utils.isObject(parent.parent)) {
+			parent = parent.parent;
+		}
+
+		return <any>minimist(parent._originalArgs)._;
+	}
+
+	protected aliasesHelp(command: string): void {
+		var aliases: Array<string> = (<any>this).constructor.aliases;
+
+		if(this.utils.isArray(aliases)) {
+			aliases = aliases.slice(0);
+
+			var commandName = (<any>this.constructor).commandName;
+
+			if(this.utils.isString(commandName)) {
+				aliases.unshift(commandName);
+			}
+
+			this.utils.remove(aliases, alias => alias === command);
+
+			if(aliases.length > 0) {
+				this.ui.info(`\n  Aliases:\n`);
+				this.ui.info(`    ${aliases.join(', ')}`);
+			}
+		}
+	}
+
+	protected optionsHelp(): void {
+		this.ui.info(`\n  Options:\n`);
+		var options = this._options,
+			longest = 0,
+			lines: Array<{ command: string; description: string; defaults?: any; }> = [];
+
+		this.utils.forEach(options, (option) => {
+			var prepend = '--',
+				aliasPrepend = '-';
+
+			if(option.defaults === true) {
+				prepend +='no-';
+				aliasPrepend += '-no-';
+			}
+
+			var commands: string;
+
+			if(this.utils.isArray(option.aliases) && option.aliases.length > 0) {
+				commands = `${option.aliases.map(alias => `${aliasPrepend}${alias}`).join(', ')}, ${prepend}${option.name}`;
+			} else {
+				commands = `${prepend}${option.name}`;
+			}
+
+			if(commands.length > longest) {
+				longest = commands.length;
+			}
+
+			lines.push({ command: commands, description: option.description, defaults: option.defaults });
+		});
+
+		this.utils.forEach(lines, (line) => {
+			this.ui.info(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`);
+
+			if(!this.utils.isUndefined(line.defaults) && line.defaults !== true) {
+				this.ui.info(`        default: ${line.defaults}\n`);
+			}
+		});
 	}
 
 	protected parseOptions(): void {

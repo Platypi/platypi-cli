@@ -8,8 +8,8 @@ class Create extends Command {
 
 	run(): any {
 		var component = this.commands[0];
-
-		return this.env.generator(component).validateAndRun(this.args);
+		return this.env.generator(component, this)
+			.then(generator => generator.validateAndRun(this.args));
 	}
 }
 

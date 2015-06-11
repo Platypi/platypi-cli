@@ -1,47 +1,72 @@
 import * as path from 'path';
+import * as fs from 'fs';
+import {isObject, isEmpty, values} from 'lodash';
 import Base from '../models/base';
+import Command from '../models/command';
 import Generator from '../models/generator';
 import NotFoundError from '../errors/notfound';
+import {findCommand, dirs, requireAll} from '../utils/utils';
 
 export default class Environment extends Base {
-	generator(component: string): Generator {
-		var Gen: typeof Generator,
-			original = component;
+	generator(component: string = '', parent?: Command): Thenable<Generator> {
+		var original = component,
+			components = component.split(/:(?!\\|\/)/),
+			module = components.shift();
 
-		component = this.findGenerator(component);
+		this.ui.debug('Locating generators for: `' + (module || 'default') + '`');
 
-		if(!/:(?!\\|\/)/.test(component)) {
-			component += ':app';
-		}
+		return this._generators(module)
+			.then((response) => {
+				var generators = response.generators,
+					isDefault = response.isDefault;
 
-		var split = component.split(/:(?!\\|\/)/),
-			directory = split[0];
+				if(isDefault) {
+					component = module;
+				} else {
+					component = components.shift();
+				}
 
-		component = split.join('/');
-		component = component.toLowerCase();
+				if(isEmpty(component)) {
+					component = 'app';
+				}
 
-		this.ui.debug('Locating generator at: `' + component + '`');
+				var Gen: typeof Generator = generators[component];
 
-		try {
-			return this.instantiate(<typeof Generator>require(component).default, {
-				env: this,
-				directory: path.resolve(directory)
+				if(!isObject(Gen)) {
+					Gen = <typeof Generator>findCommand(values(generators), component);
+				}
+
+				try {
+					return this.instantiate(Gen, {
+						env: this,
+						parent: parent,
+						directory: path.resolve(path.resolve(__dirname, '..', 'generator'))
+					});
+				} catch(e) {
+					if(e.message.indexOf('Cannot find module') > -1) {
+						throw new NotFoundError('Unrecognized component: `' + original + '`');
+					}
+		
+					throw e;
+				}
 			});
-		} catch(e) {
-			if(e.message.indexOf('Cannot find module') > -1) {
-				throw new NotFoundError('Unrecognized component: `' + original + '`');
-			}
-
-			throw e;
-		}
 	}
 
-	private findGenerator(generator: string): string {
-		if(this.utils.isEmpty(generator)) {
-			return path.resolve(__dirname, '..', 'generator');
-		}
+	private _generators(module: string): Thenable<{ generators: { [key: string]: typeof Generator; }, isDefault?: boolean; }> {
+		return dirs(path.resolve(__dirname, '..', 'generator'), [
+			'templates',
+			/^_.*$/
+		]).then((values) => {
+			var generators: { [key: string]: typeof Generator; } = requireAll(path.resolve(__dirname, '..', 'generator'), values);
 
-		// logic to find external generators
-		return `${path.resolve(__dirname, '..', 'generator')}:${generator}`;
+			this.utils.forEach(generators, (generator, name) => {
+				generator.commandName = name;
+			});
+
+			return {
+				generators: generators,
+				isDefault: true
+			};
+		});
 	}
 }

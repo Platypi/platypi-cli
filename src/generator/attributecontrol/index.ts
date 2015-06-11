@@ -1,12 +1,13 @@
 import Generator from '../_models/control';
 
 export default class TemplateControlGenerator extends Generator {
-	static aliases: Array<string> = ['tc'];
+	static aliases: Array<string> = ['ac'];
 
 	constructor(options: any) {
 		super(options, {
-			type: 'TemplateControl',
-			ext: 'tc'
+			type: 'AttributeControl',
+			ext: 'ac',
+			noLessOrHtml: true
 		});
 	}
 }
