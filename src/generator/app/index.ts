@@ -3,10 +3,57 @@ import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
 import ViewControl from '../viewcontrol/index';
 
+var validate: any = require('validate-npm-package-name');
+
 export default class AppGenerator extends Generator {
+	options: IOptions;
+
 	constructor(options: any) {
 		super(options);
 		this.destRoot('project/app');
+	}
+
+	defineOptions(): void {
+		this.option('name', {
+			aliases: ['n'],
+			description: `The name of the app`
+		});
+	}
+
+	askQuestions(): any {
+		var options = this.options;
+
+		return this.promptName(options.name).then((name) => {
+			options.name = name;
+		});
+	}
+
+	promptName(name: string = ''): Thenable<string> {
+		name = name.trim();
+
+		if(!this.utils.isEmpty(name)) {
+			var valid = validate(name);
+
+			if(this.utils.isArray(valid.errors) || this.utils.isArray(valid.warnings)) {
+				this.ui.warn('');
+				this.utils.forEach(valid.errors, (err: string) => {
+					this.ui.warn(err);
+				});
+
+				this.utils.forEach(valid.warnings, (err: string) => {
+					this.ui.warn(err);
+				});
+				this.ui.warn('');
+			} else {
+				return Promise.resolve(name);
+			}
+		}
+
+		return this.ui.prompt([
+			{ name: 'name', type: 'input', message: `What is the name of your app?` }
+		]).then((answer: { name: string; }) => {
+			return this.promptName(answer.name);
+		});
 	}
 
 	run(): any {
@@ -18,7 +65,7 @@ export default class AppGenerator extends Generator {
 			}),
 				vcName = 'home',
 			options = {
-				appName: 'TEST',
+				appName: this.options.name,
 				vcName: vcName
 			};
 
@@ -41,13 +88,13 @@ export default class AppGenerator extends Generator {
 				'../test'
 			)
 		];
-	
+
 		generator.options = {
 			name: vcName,
 			less: true,
 			html: true
 		};
-		
+
 		promises.push(generator.run().then(() => {
 			generator.options = {
 				name: 'base',
@@ -62,4 +109,8 @@ export default class AppGenerator extends Generator {
 
 		return Promise.all(promises);
 	}
+}
+
+interface IOptions extends models.IParsedArgs {
+	name: string;
 }

@@ -35,7 +35,7 @@ export function dirs(src: string, ignores: Array<string|RegExp> = []): Thenable<
 			directories = directories.filter((dir) => {
 				var isDir = statSync(path.join(src, dir)).isDirectory(),
 					index = ignores.indexOf(dir);
-				
+
 				if(!isDir || index > -1) {
 					return false;
 				}

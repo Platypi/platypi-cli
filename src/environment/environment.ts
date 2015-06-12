@@ -46,7 +46,7 @@ export default class Environment extends Base {
 					if(e.message.indexOf('Cannot find module') > -1) {
 						throw new NotFoundError('Unrecognized component: `' + original + '`');
 					}
-		
+
 					throw e;
 				}
 			});

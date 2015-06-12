@@ -40,12 +40,13 @@
     "resolve": "latest",
     "rimraf": "latest",
     "swag": "^0.7.0",
-    "through": "latest"
+    "through": "latest",
+    "validate-npm-package-name": "latest"
   },
   "devDependencies": {
     "chai": "latest",
     "chai-as-promised": "latest",
-    "glob": "^5.0.10",
+    "glob": "latest",
     "istanbul": "latest",
     "mocha": "latest",
     "sinon": "latest",

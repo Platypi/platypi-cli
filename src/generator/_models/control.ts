@@ -4,10 +4,10 @@ import Generator from '../../models/generator';
 
 export default class ViewControlGenerator extends Generator {
 	options: IOptions;
-	type: string;
-	ext: string;
-	allowExtends: boolean;
-	noLessOrHtml: boolean;
+	protected type: string;
+	protected ext: string;
+	protected allowExtends: boolean;
+	protected noLessOrHtml: boolean;
 
 	constructor(options: any, controlOptions: IControlOptions) {
 		super(options);
@@ -52,7 +52,7 @@ export default class ViewControlGenerator extends Generator {
 				description: `Do not generate a less file`,
 				defaults: true
 			});
-			
+
 			this.option('html', {
 				description: `Do not generate an html file`,
 				defaults: true
@@ -114,14 +114,13 @@ export default class ViewControlGenerator extends Generator {
 		root += `/${name}.${this.ext}`;
 		root = root.toLowerCase();
 
-
 		var promises = [this.render(`${srcExt}.ts`, `${root}.ts`, config)];
 
 		if(!this.noLessOrHtml) {
 			if(options.less) {
 				promises.push(this.render(`${this.ext}.less`, `${root}.less`, config));
 			}
-			
+
 			if(options.html) {
 				promises.push(this.render(`${this.ext}.html`, `${root}.html`, config));
 			}
@@ -130,7 +129,7 @@ export default class ViewControlGenerator extends Generator {
 		return Promise.all(promises);
 	}
 
-	protected findExtends(root: string) {
+	protected findExtends(root: string): string {
 		var ext: string = this.options.extends;
 
 		if(this.utils.isString(ext)) {
@@ -138,7 +137,7 @@ export default class ViewControlGenerator extends Generator {
 		}
 
 		var dest = this.destRoot();
-		
+
 		return path.relative(path.resolve(dest, root), path.resolve(dest, `base/base.${this.ext}`));
 	}
 }
