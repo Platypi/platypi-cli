@@ -5,5 +5,7 @@ export default class {{capitalizeFirst name}}ViewControl extends ui.ViewControl 
 	templateString: string = require('./{{lowercase name}}.vc.html');
 	{{/if}}
 }
+{{#if register}}
 
-register.viewControl('{{lowercase name}}-vc', {{capitalizeFirst name}}ViewControl);
+register.viewControl('{{lowercase type}}-vc', {{capitalizeFirst name}}ViewControl);
+{{/if}}

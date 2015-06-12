@@ -52,6 +52,7 @@ export default class AppGenerator extends Generator {
 			generator.options = {
 				name: 'base',
 				extends: false,
+				register: false,
 				less: false,
 				html: false
 			};

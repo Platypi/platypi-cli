@@ -37,18 +37,24 @@ export default class ViewControlGenerator extends Generator {
 		if(this.allowExtends) {
 			this.option('extends', {
 				aliases: ['x'],
-				description: `Specify the relative import path to the ${this.type} to extend.`
+				description: `Specify the relative import path to the ${this.type} to extend`
 			});
 		}
 
+		this.option('register', {
+			aliases: ['r'],
+			description: `Do not register this ${this.type} with the framework`,
+			defaults: true
+		});
+
 		if(!this.noLessOrHtml) {
 			this.option('less', {
-				description: `Don't generate a less file`,
+				description: `Do not generate a less file`,
 				defaults: true
 			});
 			
 			this.option('html', {
-				description: `Don't generate an html file`,
+				description: `Do not generate an html file`,
 				defaults: true
 			});
 		}
@@ -73,7 +79,9 @@ export default class ViewControlGenerator extends Generator {
 			name = options.name,
 			config: any = {
 				name: name,
-				html: options.html
+				type: name,
+				html: options.html,
+				register: options.register !== false
 			},
 			dir = options.dir,
 			root: string;
@@ -97,8 +105,15 @@ export default class ViewControlGenerator extends Generator {
 			config.ext = this.findExtends(root).replace(/\\/g, '/');
 		}
 
+		if(this.allowExtends) {
+			var dest = this.destRoot();
+
+			config.type = path.relative(path.resolve(dest), path.resolve(dest, root)).replace(/\\|\//g, '-');
+		}
+
 		root += `/${name}.${this.ext}`;
 		root = root.toLowerCase();
+
 
 		var promises = [this.render(`${srcExt}.ts`, `${root}.ts`, config)];
 
@@ -131,6 +146,7 @@ export default class ViewControlGenerator extends Generator {
 interface IOptions extends models.IParsedArgs {
 	name: string;
 	dir?: string;
+	register?: boolean;
 	extends?: any;
 	less?: boolean;
 	html?: boolean;

@@ -2,5 +2,7 @@ import {register, AttributeControl} from 'platypus';
 
 export default class {{capitalizeFirst name}}AttributeControl extends AttributeControl {
 }
+{{#if register}}
 
-register.control('{{lowercase name}}', {{capitalizeFirst name}}AttributeControl);
+register.control('{{lowercase type}}', {{capitalizeFirst name}}AttributeControl);
+{{/if}}

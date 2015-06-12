@@ -5,5 +5,7 @@ export default class {{capitalizeFirst name}}TemplateControl extends ui.Template
 	templateString: string = require('./{{lowercase name}}.tc.html');
 	{{/if}}
 }
+{{#if register}}
 
-register.control('{{lowercase name}}', {{capitalizeFirst name}}TemplateControl);
+register.control('{{lowercase type}}', {{capitalizeFirst name}}TemplateControl);
+{{/if}}
