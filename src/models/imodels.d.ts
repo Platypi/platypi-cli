@@ -12,6 +12,7 @@ declare module models {
 		name?: string;
 		aliases?: Array<string>;
 		description?: string;
+		canNegate?: boolean;
 		defaults?: any;
 		hide?: boolean;
 	}

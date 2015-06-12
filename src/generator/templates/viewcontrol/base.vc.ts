@@ -1,7 +1,6 @@
-import {register} from 'platypus';
-import BaseViewControl from '{{ext}}';
+import {register, ui} from 'platypus';
 
-export default class {{capitalizeFirst name}}ViewControl extends BaseViewControl {
+export default class {{capitalizeFirst name}}ViewControl extends ui.ViewControl {
 	{{#if html}}
 	templateString: string = require('./{{lowercase name}}.vc.html');
 	{{/if}}

@@ -6,7 +6,8 @@ export default class ViewControlGenerator extends Generator {
 	constructor(options: any) {
 		super(options, {
 			type: 'ViewControl',
-			ext: 'vc'
+			ext: 'vc',
+			allowExtends: true
 		});
 	}
 }

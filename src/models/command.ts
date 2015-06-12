@@ -144,7 +144,7 @@ export default class Command extends Base {
 		this.utils.forEach(lines, (line) => {
 			this.ui.info(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`);
 
-			if(!this.utils.isUndefined(line.defaults) && line.defaults !== true) {
+			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {
 				this.ui.info(`        default: ${line.defaults}\n`);
 			}
 		});

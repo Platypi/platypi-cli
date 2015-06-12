@@ -21,18 +21,14 @@ export default class AppGenerator extends Generator {
 				appName: 'TEST',
 				vcName: vcName
 			};
-	
-			generator.options = {
-				name: vcName
-			};
 
-		return Promise.all([
+		var promises: Array<Thenable<any>> = [
 			this.render('package.json', '../package.json', options),
 			this.render('tsconfig.json', '../tsconfig.json', options),
+			this.render('main.ts', 'src/main.ts', options),
 			this.render('tsd.json', '../tsd.json', options),
 			this.render('app/app.ts', 'src/app/app.ts', options),
 			this.render('styles/main.less', 'styles/main.less', options),
-			generator.run(),
 			this.mkdirDest(
 				'src/attributecontrols',
 				'src/injectables',
@@ -44,6 +40,25 @@ export default class AppGenerator extends Generator {
 				'images',
 				'../test'
 			)
-		]);
+		];
+	
+		generator.options = {
+			name: vcName,
+			less: true,
+			html: true
+		};
+		
+		promises.push(generator.run().then(() => {
+			generator.options = {
+				name: 'base',
+				extends: false,
+				less: false,
+				html: false
+			};
+
+			return generator.run();
+		}));
+
+		return Promise.all(promises);
 	}
 }
