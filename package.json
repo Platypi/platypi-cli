@@ -9,6 +9,9 @@
   "bin": {
     "platypi": "bin/platypi"
   },
+  "engines": {
+    "node": ">= 0.12.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Platypi/platypi-cli.git"
