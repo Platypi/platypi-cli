@@ -11,7 +11,7 @@ export default class Project extends Base {
 	 * The root directory for the project
 	 */
 	root: string;
-
+	version: string;
 	protected pkg: any;
 
 	static project(ui: ui.Ui, root: string): Thenable<Project> {
@@ -91,6 +91,7 @@ export default class Project extends Base {
 	constructor(options: models.IProjectOptions) {
 		super(options);
 
+		this.version = require('../../package.json').version;
 		this.root = options.root;
 		this.pkg = options.pkg;
 	}

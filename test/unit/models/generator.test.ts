@@ -46,7 +46,8 @@ describe('Generators', () => {
 			env: undefined,
 			directory: '.',
 			project: {
-				root: '.'
+				root: '.',
+				version: '1.0.0'
 			}
 		});
 	});

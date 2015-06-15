@@ -93,6 +93,10 @@ export default class Ui {
 		this.logLine(message, LOG_LEVEL.TRACE);
 	}
 
+	help(message: string): void {
+		this.logLine(message, 999);
+	}
+
 	log(message: any, logLevel: number = LOG_LEVEL.INFO): void {
 		if(this.utils.isString(message) && message.indexOf('\u001b') === -1) {
 			message = (<string>message).replace(/`[^`]*`/g, (substr) => {

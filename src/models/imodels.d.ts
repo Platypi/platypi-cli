@@ -40,6 +40,7 @@ declare module models {
 		 * The root directory for the project
 		 */
 		root: string;
+		version: string;
 		static project(root: string, ui: ui.Ui): Thenable<Project>;
 	}
 }

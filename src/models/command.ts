@@ -36,8 +36,11 @@ export default class Command extends Base {
 		});
 	}
 
-	help(command: string): void {
-		this.ui.info(`Help for command \`${this.buildFullCommand().join(' ')}\`:\n`);
+	help(command?: string): void {
+		if(!this.utils.isEmpty(command)) {
+			this.ui.help(`Help for command \`${this.buildFullCommand().join(' ')}\`:\n`);
+		}
+
 		this.aliasesHelp(command);
 		this.optionsHelp();
 	}
@@ -113,14 +116,14 @@ export default class Command extends Base {
 			this.utils.remove(aliases, alias => alias === command);
 
 			if(aliases.length > 0) {
-				this.ui.logLine(`\n  Aliases:\n`, this.ui.LOG_LEVEL.ERROR);
-				this.ui.logLine(`    ${aliases.join(', ')}`, this.ui.LOG_LEVEL.ERROR);
+				this.ui.help(`\n  Aliases:\n`);
+				this.ui.help(`    ${aliases.join(', ')}`);
 			}
 		}
 	}
 
 	protected optionsHelp(): void {
-		this.ui.info(`\n  Options:\n`);
+		this.ui.help(`\n  Options:\n`);
 		var options = this._options,
 			longest = 0,
 			lines: Array<{ command: string; description: string; defaults?: any; }> = [];
@@ -150,10 +153,10 @@ export default class Command extends Base {
 		});
 
 		this.utils.forEach(lines, (line) => {
-			this.ui.logLine(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`, this.ui.LOG_LEVEL.ERROR);
+			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`);
 
 			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {
-				this.ui.logLine(`        default: ${line.defaults}\n`, this.ui.LOG_LEVEL.ERROR);
+				this.ui.help(`        default: ${line.defaults}\n`);
 			}
 		});
 	}

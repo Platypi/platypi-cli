@@ -12,6 +12,7 @@ declare module ui {
 		info(message: string): void;
 		debug(message: string): void;
 		trace(message: string): void;
+		help(message: string): void;
 		log(message: any, logLevel?: number): void;
 		logLine(message: any, logLevel?: number): void;
 		prompt(questions: Array<IQuestion>): Thenable<any>;
