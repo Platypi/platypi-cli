@@ -30,6 +30,7 @@ export default class Command extends Base {
 
 	help(command: string): void {
 		this.ui.info(`Help for command \`${this.buildFullCommand().join(' ')}\`:\n`);
+		this.logHelp();
 		this.aliasesHelp(command);
 		this.optionsHelp();
 	}
@@ -90,6 +91,10 @@ export default class Command extends Base {
 		return <any>minimist(parent._originalArgs)._;
 	}
 
+	protected logHelp(): void {
+		
+	}
+
 	protected aliasesHelp(command: string): void {
 		var aliases: Array<string> = (<any>this).constructor.aliases;
 
@@ -105,7 +110,7 @@ export default class Command extends Base {
 			this.utils.remove(aliases, alias => alias === command);
 
 			if(aliases.length > 0) {
-				this.ui.info(`\n  Aliases:\n`);
+				this.ui.logLine(`\n  Aliases:\n`, this.ui.LOG_LEVEL.ERROR);
 				this.ui.info(`    ${aliases.join(', ')}`);
 			}
 		}

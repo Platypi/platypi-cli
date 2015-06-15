@@ -28,6 +28,9 @@ export default class Ui {
 	static LOG_LEVEL: ui.ILogLevels = LOG_LEVEL;
 	static PROMPTS: ui.IPrompts = PROMPTS;
 
+	LOG_LEVEL: ui.ILogLevels = Ui.LOG_LEVEL;
+	PROMPTS: ui.IPrompts = Ui.PROMPTS;
+
 	protected chalk: Chalk.ChalkModule = chalk;
 	protected Prompt: any = inquirer.ui.Prompt;
 	protected input: NodeJS.ReadableStream;
