@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as Handlebars from 'handlebars';
 import * as mkdir from 'mkdirp';
+import * as chalk from 'chalk';
 import {registerHelpers} from 'swag';
 import {Promise} from 'es6-promise';
 import Command from './command';
@@ -36,8 +37,26 @@ export default class Generator extends Command {
 			data = Handlebars.compile(data, {
 				noEscape: true
 			})(options.context);
+			return this.read(dest, options).then((data) => {
+				this.ui.warn(`The file \`${dest.replace(this.project.root, '').replace(/\\/g, '/')}\` already exists.`);
+				return this.ui.prompt([
+					{ 
+						type: 'confirm', 
+						default: <any>true, 
+						name: 'force', 
+						choices: ['Y', 'n'], 
+						message: 'Are you sure you want to overwrite it?'
+					}
+				]).then((answer: { force: boolean; }) => {
+					if(!answer.force) {
+						return;
+					}
 
-			return this.write(dest, data, options);
+					return this.write(dest, data, options);
+				});
+			}, (err) => {
+				return this.write(dest, data, options);
+			});
 		});
 	}
 

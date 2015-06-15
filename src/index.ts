@@ -33,7 +33,7 @@ function getLogLevel(args: Array<string>): string|number {
 	} else if(args.indexOf('--verbose') > -1) {
 		return Ui.LOG_LEVEL.TRACE;
 	} else if(args.indexOf('--silent') > -1) {
-		return Ui.LOG_LEVEL.ERROR;
+		return Ui.LOG_LEVEL.WARN;
 	}
 }
 
