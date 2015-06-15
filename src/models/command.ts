@@ -26,11 +26,18 @@ export default class Command extends Base {
 			aliases: ['h'],
 			description: 'Get help information for this command'
 		});
+
+		this.option('verbose', {
+			description: 'Print all log statements'
+		});
+
+		this.option('silent', {
+			description: 'Print only warnings and errors'
+		});
 	}
 
 	help(command: string): void {
 		this.ui.info(`Help for command \`${this.buildFullCommand().join(' ')}\`:\n`);
-		this.logHelp();
 		this.aliasesHelp(command);
 		this.optionsHelp();
 	}
@@ -91,10 +98,6 @@ export default class Command extends Base {
 		return <any>minimist(parent._originalArgs)._;
 	}
 
-	protected logHelp(): void {
-		
-	}
-
 	protected aliasesHelp(command: string): void {
 		var aliases: Array<string> = (<any>this).constructor.aliases;
 
@@ -111,7 +114,7 @@ export default class Command extends Base {
 
 			if(aliases.length > 0) {
 				this.ui.logLine(`\n  Aliases:\n`, this.ui.LOG_LEVEL.ERROR);
-				this.ui.info(`    ${aliases.join(', ')}`);
+				this.ui.logLine(`    ${aliases.join(', ')}`, this.ui.LOG_LEVEL.ERROR);
 			}
 		}
 	}
@@ -147,10 +150,10 @@ export default class Command extends Base {
 		});
 
 		this.utils.forEach(lines, (line) => {
-			this.ui.info(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`);
+			this.ui.logLine(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`, this.ui.LOG_LEVEL.ERROR);
 
 			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {
-				this.ui.info(`        default: ${line.defaults}\n`);
+				this.ui.logLine(`        default: ${line.defaults}\n`, this.ui.LOG_LEVEL.ERROR);
 			}
 		});
 	}

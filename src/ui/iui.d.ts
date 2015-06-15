@@ -4,6 +4,9 @@ declare module ui {
 
 		static PROMPTS: IPrompts;
 
+		LOG_LEVEL: ILogLevels;
+		PROMPTS: IPrompts;
+
 		error(error: any): void;
 		warn(message: string): void;
 		info(message: string): void;
