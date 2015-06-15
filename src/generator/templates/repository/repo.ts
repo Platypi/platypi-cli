@@ -1,9 +1,10 @@
 import {register} from 'platypus';
+import BaseRepository from '{{ext}}';
 
-export default class {{capitalizeFirst name}}Repository {
+export default class {{capitalizeFirst name}}Repository extends BaseRepository {
 
 }
 {{#if register}}
 
-register.injectable('{{lowercase type}}', {{capitalizeFirst name}}Repository);
+register.injectable('{{lowercase type}}-repo', {{capitalizeFirst name}}Repository);
 {{/if}}

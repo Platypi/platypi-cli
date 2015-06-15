@@ -116,14 +116,20 @@ export default class Command extends Base {
 			this.utils.remove(aliases, alias => alias === command);
 
 			if(aliases.length > 0) {
-				this.ui.help(`\n  Aliases:\n`);
-				this.ui.help(`    ${aliases.join(', ')}`);
+				this.ui.help(
+`
+  Aliases:
+    ${aliases.join(', ')}
+`
+				);
 			}
 		}
 	}
 
 	protected optionsHelp(): void {
-		this.ui.help(`\n  Options:\n`);
+		this.ui.help(
+`  Options:
+`);
 		var options = this._options,
 			longest = 0,
 			lines: Array<{ command: string; description: string; defaults?: any; }> = [];
@@ -156,7 +162,10 @@ export default class Command extends Base {
 			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`);
 
 			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {
-				this.ui.help(`        default: ${line.defaults}\n`);
+				this.ui.help(
+`
+        default: ${line.defaults}
+`);
 			}
 		});
 	}

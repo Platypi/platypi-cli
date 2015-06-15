@@ -6,7 +6,8 @@ export default class RepositoryGenerator extends Generator {
 	constructor(options: any) {
 		super(options, {
 			type: 'Repository',
-			ext: 'repo'
+			ext: 'repo',
+			allowExtends: true
 		});
 	}
 }

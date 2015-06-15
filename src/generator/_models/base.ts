@@ -1,6 +1,7 @@
 import * as path from 'path';
 import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
+import {pluralize} from '../../utils/utils';
 
 export default class BaseGenerator extends Generator {
 	options: generator.IOptions;
@@ -19,7 +20,7 @@ export default class BaseGenerator extends Generator {
 		var type = this.type.toLowerCase();
 
 		this.srcRoot(type);
-		this.destRoot(`project/app/src/${type}s`);
+		this.destRoot(`project/app/src/${pluralize(type)}`);
 	}
 
 	defineOptions(): void {

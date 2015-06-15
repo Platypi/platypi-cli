@@ -4,6 +4,8 @@ export default class {{capitalizeFirst name}}ViewControl extends ui.ViewControl 
 	{{#if html}}
 	templateString: string = require('./{{lowercase name}}.vc.html');
 	{{/if}}
+
+	context: any = {};
 }
 {{#if register}}
 

@@ -5,5 +5,5 @@ export default class {{capitalizeFirst name}} {
 }
 {{#if register}}
 
-register.injectable('{{lowercase type}}', {{capitalizeFirst name}});
+register.injectable('{{lowercase type}}-mdl', {{capitalizeFirst name}});
 {{/if}}

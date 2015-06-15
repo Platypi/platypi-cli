@@ -1,6 +1,8 @@
 import * as path from 'path';
 import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
+import Repository from '../repository/index';
+import Service from '../service/index';
 import ViewControl from '../viewcontrol/index';
 
 var validate: any = require('validate-npm-package-name');
@@ -59,11 +61,19 @@ export default class AppGenerator extends Generator {
 	run(): any {
 		this.ui.debug('Generating the `default` app');
 
-		var generator = this.instantiate(ViewControl, {
+		var vcGenerator = this.instantiate(ViewControl, {
 				env: this.env,
 				directory: this.directory
 			}),
-				vcName = 'home',
+			repoGenerator = this.instantiate(Repository, {
+				env: this.env,
+				directory: this.directory
+			}),
+			svcGenerator = this.instantiate(Service, {
+				env: this.env,
+				directory: this.directory
+			}),
+			vcName = 'home',
 			options = {
 				appName: this.options.name,
 				vcName: vcName
@@ -80,8 +90,6 @@ export default class AppGenerator extends Generator {
 				'src/attributecontrols',
 				'src/injectables',
 				'src/models',
-				'src/repositories',
-				'src/services',
 				'src/templatecontrols',
 				'fonts',
 				'images',
@@ -89,14 +97,14 @@ export default class AppGenerator extends Generator {
 			)
 		];
 
-		generator.options = {
+		vcGenerator.options = {
 			name: vcName,
 			less: true,
 			html: true
 		};
 
-		promises.push(generator.run().then(() => {
-			generator.options = {
+		promises.push(vcGenerator.run().then(() => {
+			vcGenerator.options = {
 				name: 'base',
 				extends: false,
 				register: false,
@@ -104,8 +112,15 @@ export default class AppGenerator extends Generator {
 				html: false
 			};
 
-			return generator.run();
+			return vcGenerator.run();
 		}));
+
+		repoGenerator.options = svcGenerator.options = {
+			name: 'base',
+			extends: false
+		};
+
+		promises.push(repoGenerator.run(), svcGenerator.run());
 
 		return Promise.all(promises);
 	}

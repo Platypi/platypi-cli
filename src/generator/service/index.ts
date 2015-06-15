@@ -6,7 +6,8 @@ export default class ServiceGenerator extends Generator {
 	constructor(options: any) {
 		super(options, {
 			type: 'Service',
-			ext: 'svc'
+			ext: 'svc',
+			allowExtends: true
 		});
 	}
 }
