@@ -9,6 +9,7 @@ export default class Command extends Base {
 	static commandName: string = 'command';
 	static aliases: Array<string> = [];
 
+	protected needsProject: boolean = false;
 	protected env: Environment;
 	protected parent: Command;
 	protected args: Array<string>;
@@ -46,6 +47,10 @@ export default class Command extends Base {
 	}
 
 	validateAndRun(commandArgs: Array<string>): Thenable<any> {
+		if(this.needsProject && !this.utils.isObject(this.project)) {
+			return Promise.reject(new ValidationError(`This command can only be run inside a project.`));
+		}
+
 		this.args = commandArgs.slice(0);
 		this._originalArgs = this.args.slice(0);
 		this.defineOptions();

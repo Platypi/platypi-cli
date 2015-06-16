@@ -22,7 +22,14 @@ export default class Generator extends Command {
 		this.env = options.env;
 		this.directory = options.directory;
 		this.srcRoot(path.resolve(options.directory, 'templates'));
-		this.destRoot(this.project.root);
+		var project = this.project,
+			root: string;
+
+		if(this.utils.isObject(project)) {
+			root = project.root;
+		}
+
+		this.destRoot(root || process.cwd());
 	}
 
 	protected render(source: string, destination: string, context?: any): Thenable<void> {

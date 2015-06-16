@@ -12,7 +12,6 @@ export default class AppGenerator extends Generator {
 
 	constructor(options: any) {
 		super(options);
-		this.destRoot('project/app');
 	}
 
 	defineOptions(): void {
@@ -20,12 +19,21 @@ export default class AppGenerator extends Generator {
 			aliases: ['n'],
 			description: `The name of the app`
 		});
+
+		this.option('dir', {
+			aliases: ['d'],
+			description: `Specify the relative path to a directory in which to create the app`,
+			defaults: ''
+		});
 	}
 
 	askQuestions(): any {
 		var options = this.options;
 
-		return this.promptName(options.name).then((name) => {
+		return this.promptDir(options.dir).then((dir) => {
+			options.dir = dir;
+			return this.promptName(options.name);
+		}).then((name) => {
 			options.name = name;
 		});
 	}
@@ -58,7 +66,22 @@ export default class AppGenerator extends Generator {
 		});
 	}
 
+	promptDir(dir: string = ''): Thenable<string> {
+		dir = dir.trim();
+
+		if(!this.utils.isEmpty(dir)) {
+			return Promise.resolve(dir);
+		}
+
+		return this.ui.prompt([
+			{ name: 'dir', default: '.', type: 'input', message: `Where should this app be created?` }
+		]).then((answer: { dir: string; }) => {
+			return answer.dir;
+		});
+	}
+
 	run(): any {
+		this.destRoot(this.options.dir + '/app');
 		this.ui.debug('Generating the `default` app');
 
 		var vcGenerator = this.instantiate(ViewControl, {
@@ -132,4 +155,5 @@ export default class AppGenerator extends Generator {
 
 interface IOptions extends models.IParsedArgs {
 	name: string;
+	dir: string;
 }
