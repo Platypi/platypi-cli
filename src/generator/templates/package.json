@@ -30,6 +30,7 @@
     "clean": "rimraf app/**/*.css app/src/**/*.js app/dist/*",
     "clean:dist": "rimraf app/dist/*",
     "deploy": "npm run clean:dist && npm run build -- -- -p [minifyify --no-map]",
+    "start": "concurrent \"npm run watch\" \"http-server -p 3000 app\"",
     "less": "mkdirp app/dist && lessc app/styles/main.less > app/dist/app.css --clean-css=\"--s0 --advanced\"",
     "lint": "tsconfig-lint --use-glob",
     "ts": "tsc -p .",

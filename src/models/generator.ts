@@ -15,6 +15,7 @@ export default class Generator extends Command {
 	protected directory: string;
 	private _srcRoot: string = '';
 	private _destRoot: string = '';
+	private _finishRender: Thenable<any> = Promise.resolve();
 
 	constructor(options: IGeneratorOptions) {
 		super(options);
@@ -33,7 +34,10 @@ export default class Generator extends Command {
 			encoding: 'utf8'
 		}, context);
 
-		return this.read(src, options).then((data: string) => {
+		return this._finishRender = this._finishRender.then(() => {
+			return this.read(src, options);
+		})
+		.then((data: string) => {
 			data = Handlebars.compile(data, {
 				noEscape: true
 			})(options.context);
@@ -60,8 +64,12 @@ export default class Generator extends Command {
 		});
 	}
 
-	protected read(source: string, options: any): Thenable<string> {
+	protected read(source: string, options: any = {}): Thenable<string> {
 		this.ui.debug(`Reading from \`${source}\``);
+
+		this.utils.defaults(options, {
+			encoding: 'utf8'
+		});
 
 		return new Promise<string>((resolve, reject) => {
 			fs.readFile(source, options, (err, data) => {
@@ -75,8 +83,12 @@ export default class Generator extends Command {
 		});
 	}
 
-	protected write(dest: string, data: string, options: any): Thenable<void> {
+	protected write(dest: string, data: string, options: any = {}): Thenable<void> {
 		this.ui.debug(`Writing to \`${dest}\``);
+
+		this.utils.defaults(options, {
+			encoding: 'utf8'
+		});
 
 		return this.ensureWritable(dest)
 			.then(() => {
@@ -124,6 +136,26 @@ export default class Generator extends Command {
 
 	protected destRoot(dest?: string): string {
 		return this._destRoot = this.getPath(this._destRoot, dest);
+	}
+
+	protected eol(data: string): string {
+		var cr = '\r',
+			lf = '\n',
+			r = data.indexOf(r),
+			n = data.indexOf(n);
+
+		if(r > -1 && r < n) {
+			return cr + lf;
+		}
+
+		return lf;
+	}
+
+	protected mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string {
+		var eol = this.eol(data),
+			lines = data.split(eol);
+
+		return this.utils.map(lines, handler).join(eol);
 	}
 
 	private getPath(source: string, append: string): string {
