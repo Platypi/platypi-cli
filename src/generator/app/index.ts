@@ -121,15 +121,21 @@ export default class AppGenerator extends Generator {
 			)
 		];
 
-		return Promise.all(promises).then(() => {
-			promises = [];
-			vcGenerator.options = {
-				name: vcName,
-				less: true,
-				html: true
-			};
-	
-			promises.push(vcGenerator.run().then(() => {
+		repoGenerator.options = svcGenerator.options = {
+			name: 'base',
+			extends: false
+		};
+
+		return Promise.all(promises)
+			.then(() => {
+				vcGenerator.options = {
+					name: vcName,
+					less: true,
+					html: true
+				};
+		
+				return vcGenerator.run();
+			}).then(() => {
 				vcGenerator.options = {
 					name: 'base',
 					extends: false,
@@ -139,17 +145,11 @@ export default class AppGenerator extends Generator {
 				};
 	
 				return vcGenerator.run();
-			}));
-	
-			repoGenerator.options = svcGenerator.options = {
-				name: 'base',
-				extends: false
-			};
-	
-			promises.push(repoGenerator.run(), svcGenerator.run());
-			
-			return Promise.all(promises);
-		});
+			}).then(() => {
+				return repoGenerator.run();
+			}).then(() => {
+				return svcGenerator.run();
+			});
 	}
 }
 

@@ -5,6 +5,7 @@ declare module generator {
 		dir?: string;
 		register?: boolean;
 		extends?: any;
+		declaration?: boolean;
 	}
 
 	interface IControlOptions extends IOptions {
@@ -17,6 +18,7 @@ declare module generator {
 		type: string;
 		allowExtends?: boolean;
 		noFileExtension?: boolean;
+		declaration?: boolean;
 	}
 
 	interface IControlConfig extends IConfig {

@@ -52,6 +52,15 @@ export default class Environment extends Base {
 			});
 	}
 
+	listGenerators(component: string = ''): Thenable<Array<string>> {
+		var components = component.split(/:(?!\\|\/)/),
+			module = components.shift();
+
+		return this._generators(module).then((response) => {
+			return this.utils.keys(response.generators);
+		});
+	}
+
 	private _generators(module: string): Thenable<{ generators: { [key: string]: typeof Generator; }, isDefault?: boolean; }> {
 		return dirs(path.resolve(__dirname, '..', 'generator'), [
 			'templates',

@@ -4,7 +4,7 @@ import {{capitalizeFirst vcName}}ViewControl from '../viewcontrols/{{lowercase v
 export default class App extends Base {
 	constructor(router: routing.Router) {
 		super();
-		
+
 		router.configure([
 			{ pattern: '', view: {{capitalizeFirst vcName}}ViewControl }
 		]);

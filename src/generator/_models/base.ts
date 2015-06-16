@@ -12,6 +12,7 @@ export default class BaseGenerator extends Generator {
 	protected ext: string;
 	protected allowExtends: boolean;
 	protected fileExtension: boolean;
+	protected declaration: boolean;
 
 	constructor(options: any, config: generator.IConfig) {
 		super(options);
@@ -19,6 +20,7 @@ export default class BaseGenerator extends Generator {
 		this.ext = config.ext.toLowerCase();
 		this.allowExtends = !!config.allowExtends;
 		this.fileExtension = !config.noFileExtension;
+		this.declaration = !!config.declaration;
 
 		var type = this.type.toLowerCase();
 
@@ -42,6 +44,14 @@ export default class BaseGenerator extends Generator {
 			this.option('extends', {
 				aliases: ['x'],
 				description: `Specify the relative import path to the ${this.type} to extend`
+			});
+		}
+
+		if(this.declaration) {
+			this.option('declaration', {
+				aliases: ['dts'],
+				description: 'Do not create a declaration file.',
+				defaults: true
 			});
 		}
 
@@ -97,9 +107,16 @@ export default class BaseGenerator extends Generator {
 	}
 
 	protected _render(src: string, dest: string, config: any): Thenable<any> {
-		return Promise.all([
+		var promises = [
 			this.render(`${src}.ts`, `${dest}.ts`, config)
-		]);
+		];
+
+		if(this.declaration && this.options.declaration) {
+			var dDest = dest.substring(0, dest.lastIndexOf('/')) + '/i' + dest.substring(dest.lastIndexOf('/') + 1);
+			promises.push(this.render(`i${src}.d.ts`, `${dDest}.d.ts`, config));
+		}
+
+		return Promise.all(promises);
 	}
 
 	protected processMain(): Thenable<any> {

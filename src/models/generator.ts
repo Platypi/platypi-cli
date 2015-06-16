@@ -48,7 +48,8 @@ export default class Generator extends Command {
 			data = Handlebars.compile(data, {
 				noEscape: true
 			})(options.context);
-			return this.read(dest, options).then((data) => {
+
+			return this.read(dest, options).then(() => {
 				this.ui.warn(`The file \`${dest.replace(this.project.root, '').replace(/\\/g, '/')}\` already exists.`);
 				return this.ui.prompt([
 					{ 

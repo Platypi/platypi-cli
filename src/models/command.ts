@@ -37,13 +37,21 @@ export default class Command extends Base {
 		});
 	}
 
-	help(command?: string): void {
+	help(command?: string): any {
 		if(!this.utils.isEmpty(command)) {
 			this.ui.help(`Help for command \`${this.buildFullCommand().join(' ')}\`:\n`);
 		}
 
-		this.aliasesHelp(command);
-		this.optionsHelp();
+		return Promise.resolve(this.generalHelp())
+			.then(() => {
+				return this.commandsHelp();
+			})
+			.then(() => {
+				return this.aliasesHelp(command);
+			})
+			.then(() => {
+				return this.optionsHelp();
+			});
 	}
 
 	validateAndRun(commandArgs: Array<string>): Thenable<any> {
@@ -106,7 +114,11 @@ export default class Command extends Base {
 		return <any>minimist(parent._originalArgs)._;
 	}
 
-	protected aliasesHelp(command: string): void {
+	protected generalHelp(): any {	}
+
+	protected commandsHelp(): any { }
+
+	protected aliasesHelp(command: string): any {
 		var aliases: Array<string> = (<any>this).constructor.aliases;
 
 		if(this.utils.isArray(aliases)) {
@@ -131,7 +143,7 @@ export default class Command extends Base {
 		}
 	}
 
-	protected optionsHelp(): void {
+	protected optionsHelp(): any {
 		this.ui.help(
 `  Options:
 `);
