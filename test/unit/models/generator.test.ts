@@ -24,16 +24,8 @@ class MockGenerator extends Generator {
 		return super.render(source, dest, context);
 	}
 
-	ensureWritable(file: string): any {
-		return super.ensureWritable(file);
-	}
-
 	mkdirDest(...dirs: Array<string>): any {
 		return super.mkdirDest.apply(this, dirs);
-	}
-
-	mkdir(...dirs: Array<string>): any {
-		return Promise.resolve();
 	}
 }
 
@@ -65,11 +57,4 @@ describe('Generators', () => {
 		command.mkdirDest('foo', 'bar');
 		expect(mkdir).to.have.been.calledWith(path.resolve(command.destRoot(), 'foo'), path.resolve(command.destRoot(), 'bar'));
 	});
-
-	it('should be able to ensure that a directory exists', () => {
-		var mkdir = stub(command, 'mkdir', () => { });
-		command.ensureWritable('foo/bar');
-		expect(mkdir).to.have.been.calledWith('foo');
-	});
-
 });

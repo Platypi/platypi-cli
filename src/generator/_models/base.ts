@@ -57,7 +57,7 @@ export default class BaseGenerator extends Generator {
 
 		this.option('register', {
 			aliases: ['r'],
-			description: `Do not register this ${this.type} with the framework`,
+			description: `Do not register the ${this.type} with the framework`,
 			defaults: true
 		});
 	}
@@ -132,7 +132,7 @@ export default class BaseGenerator extends Generator {
 		var file = destRoot + '/main.ts';
 
 		return Promise.all([
-			this.read(file),
+			this.fileUtils.read(file),
 			this.glob(root, paths)
 		]).then((results: Array<any>) => {
 			var data: string = results[0],
@@ -152,7 +152,7 @@ export default class BaseGenerator extends Generator {
 
 			return this.formatMain(data, append);
 		}).then((data) => {
-			return this.write(file, data);
+			return this.fileUtils.write(file, data);
 		});
 	}
 
@@ -216,7 +216,7 @@ export default class BaseGenerator extends Generator {
 	}
 
 	private formatMain(data: string, append: Array<string>): string {
-		var eol = this.eol(data),
+		var eol = this.fileUtils.eol(data),
 			appFound: boolean = false,
 			acFound: boolean = false,
 			injFound: boolean = false,

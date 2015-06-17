@@ -15,7 +15,7 @@ export default class BaseObject {
 			return;
 		}
 
-		options = this.utils.extend(options, {
+		this.utils.defaults(options, {
 			project: this.project,
 			ui: this.ui
 		});

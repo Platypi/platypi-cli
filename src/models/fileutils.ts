@@ -6,7 +6,7 @@ import {Promise} from 'es6-promise';
 import * as utils from 'lodash';
 import Base from './base';
 
-class FileUtils extends Base {
+export default class FileUtils extends Base {
 	protected utils: typeof utils = utils;
 
 	read(source: string, options: any = {}): Thenable<string> {
@@ -83,6 +83,54 @@ class FileUtils extends Base {
 			lines = data.split(eol);
 
 		return this.utils.map(lines, handler).join(eol);
+	}
+
+	dir(src: string, ignores: Array<string|RegExp> = []): Thenable<Array<string>> {
+		return new Promise((resolve, reject) => {
+			fs.readdir(path.resolve(src), (err, directories) => {
+				if(this.utils.isObject(err)) {
+					return reject(err);
+				}
+	
+				var ignoreStrings = <Array<string>>ignores.filter((ignore) => {
+						return this.utils.isString(ignore);
+					}),
+					ignoreRegex = <Array<RegExp>>ignores.filter((ignore) => {
+						return this.utils.isRegExp(ignore);
+					});
+	
+				directories = directories.filter((dir) => {
+					var isDir = fs.statSync(path.join(src, dir)).isDirectory(),
+						index = ignores.indexOf(dir);
+	
+					if(!isDir || index > -1) {
+						return false;
+					}
+	
+					return !ignoreRegex.some((regex) => {
+						return regex.test(dir);
+					});
+				});
+	
+				resolve(directories);
+			});
+		});
+	}
+
+	requireAll(src: string, directories: Array<string>): { [key: string]: any; } {
+		var modules: { [key: string]: any; } = {};
+	
+		directories.forEach((dir) => {
+			let module = require(path.resolve(src, dir));
+	
+			if(this.utils.isObject(module) && this.utils.isObject(module.default)) {
+				modules[dir] = module.default;
+			} else {
+				modules[dir] = module;
+			}
+		});
+	
+		return modules;
 	}
 
 	protected ensureWritable(file: string): Thenable<void> {

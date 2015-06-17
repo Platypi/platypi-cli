@@ -42,14 +42,14 @@ export default class Generator extends Command {
 		}, context);
 
 		return this._finishRender = this._finishRender.then(() => {
-			return this.read(src, options);
+			return this.fileUtils.read(src, options);
 		})
 		.then((data: string) => {
 			data = Handlebars.compile(data, {
 				noEscape: true
 			})(options.context);
 
-			return this.read(dest, options).then(() => {
+			return this.fileUtils.read(dest, options).then(() => {
 				this.ui.warn(`The file \`${dest.replace(this.project.root, '').replace(/\\/g, '/')}\` already exists.`);
 				return this.ui.prompt([
 					{
@@ -64,77 +64,17 @@ export default class Generator extends Command {
 						return;
 					}
 
-					return this.write(dest, data, options);
+					return this.fileUtils.write(dest, data, options);
 				});
 			}, (err) => {
-				return this.write(dest, data, options);
+				return this.fileUtils.write(dest, data, options);
 			});
 		});
-	}
-
-	protected read(source: string, options: any = {}): Thenable<string> {
-		this.ui.debug(`Reading from \`${source}\``);
-
-		this.utils.defaults(options, {
-			encoding: 'utf8'
-		});
-
-		return new Promise<string>((resolve, reject) => {
-			fs.readFile(source, options, (err, data) => {
-				if(err) {
-					reject(err);
-					return;
-				}
-
-				resolve(data);
-			});
-		});
-	}
-
-	protected write(dest: string, data: string, options: any = {}): Thenable<void> {
-		this.ui.debug(`Writing to \`${dest}\``);
-
-		this.utils.defaults(options, {
-			encoding: 'utf8'
-		});
-
-		return this.ensureWritable(dest)
-			.then(() => {
-				return new Promise<void>((resolve, reject) => {
-					fs.writeFile(dest, data, options, (err) => {
-						if(err) {
-							reject(err);
-							return;
-						}
-
-						resolve();
-					});
-				});
-			});
-	}
-
-	protected ensureWritable(file: string): Thenable<any> {
-		return this.mkdir(path.dirname(file));
 	}
 
 	protected mkdirDest(...dirs: Array<string>): Thenable<any> {
-		return this.mkdir.apply(this, dirs.map((dir) => {
+		return this.fileUtils.mkdir.apply(this, dirs.map((dir) => {
 			return this.getPath(this._destRoot, dir);
-		}));
-	}
-
-	protected mkdir(...dirs: Array<string>): Thenable<any> {
-		return Promise.all(dirs.map((dir) => {
-			return new Promise((resolve, reject) => {
-				mkdir(dir, (err) => {
-					if(this.utils.isObject(err)) {
-						reject(err);
-						return;
-					}
-
-					resolve();
-				});
-			});
 		}));
 	}
 
@@ -146,21 +86,8 @@ export default class Generator extends Command {
 		return this._destRoot = this.getPath(this._destRoot, dest);
 	}
 
-	protected eol(data: string): string {
-		var cr = '\r',
-			lf = '\n',
-			r = data.indexOf(r),
-			n = data.indexOf(n);
-
-		if(r > -1 && r < n) {
-			return cr + lf;
-		}
-
-		return lf;
-	}
-
 	protected mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string {
-		var eol = this.eol(data),
+		var eol = this.fileUtils.eol(data),
 			lines = data.split(eol);
 
 		return this.utils.map(lines, handler).join(eol);

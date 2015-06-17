@@ -5,9 +5,18 @@ import Base from '../models/base';
 import Command from '../models/command';
 import Generator from '../models/generator';
 import NotFoundError from '../errors/notfound';
-import {findCommand, dirs, requireAll} from '../utils/utils';
+import FileUtils from '../models/fileutils';
+import {findCommand} from '../utils/utils';
 
 export default class Environment extends Base {
+	fileUtils: FileUtils;
+
+	constructor(options: models.IModelOptions) {
+		super(options);
+
+		this.fileUtils = this.instantiate(FileUtils, options);
+	}
+
 	generator(component: string = '', parent?: Command): Thenable<Generator> {
 		var original = component,
 			components = component.split(/:(?!\\|\/)/),
@@ -62,11 +71,11 @@ export default class Environment extends Base {
 	}
 
 	private _generators(module: string): Thenable<{ generators: { [key: string]: typeof Generator; }, isDefault?: boolean; }> {
-		return dirs(path.resolve(__dirname, '..', 'generator'), [
+		return this.fileUtils.dir(path.resolve(__dirname, '..', 'generator'), [
 			'templates',
 			/^_.*$/
 		]).then((values) => {
-			var generators: { [key: string]: typeof Generator; } = requireAll(path.resolve(__dirname, '..', 'generator'), values);
+			var generators: { [key: string]: typeof Generator; } = this.fileUtils.requireAll(path.resolve(__dirname, '..', 'generator'), values);
 
 			this.utils.forEach(generators, (generator, name) => {
 				generator.commandName = name;
