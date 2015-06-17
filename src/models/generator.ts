@@ -7,6 +7,7 @@ import {registerHelpers} from 'swag';
 import {Promise} from 'es6-promise';
 import Command from './command';
 import Environment from '../environment/environment';
+import {isAbsolute} from '../utils/utils';
 
 registerHelpers(Handlebars);
 
@@ -94,7 +95,7 @@ export default class Generator extends Command {
 	}
 
 	private getPath(source: string, append: string): string {
-		if(this.utils.isEmpty(source) || path.isAbsolute(append)) {
+		if(this.utils.isEmpty(source) || isAbsolute(append)) {
 			source = append;
 		} else {
 			source = path.resolve(source, append || '.');

@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {find, isFunction, isString} from 'lodash';
 import {EOL} from 'os';
 import Command from '../models/command';
@@ -40,4 +41,8 @@ export function wrap(str: string, width: number = 60, brk: string = EOL, cut: bo
 	}
 
     return match.join(brk);
+}
+
+export function isAbsolute(srcPath: string): boolean {
+	return path.resolve(srcPath) === path.normalize(srcPath);
 }
