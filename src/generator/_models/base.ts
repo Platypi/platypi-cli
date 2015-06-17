@@ -92,7 +92,7 @@ export default class BaseGenerator extends Generator {
 		if(ext === false) {
 			src = `base.${src}`;
 		} else {
-			config.ext = this.findExtends(dest).replace(/\\/g, '/');
+			config.ext = this.findExtends(dest).replace(/\\/g, '/').replace(/'/g, '');
 		}
 
 		if(this.allowExtends) {
