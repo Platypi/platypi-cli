@@ -78,20 +78,24 @@ export default class AppGenerator extends Generator {
 
 	run(): any {
 		this.destRoot(this.options.dir + '/app');
-		this.project.root = path.resolve(this.destRoot(), '..');
+
 		this.ui.debug('Generating the `default` app');
 
-		var vcGenerator = this.instantiate(ViewControl, {
+		var destRoot = path.resolve(this.destRoot(), '..'),
+			vcGenerator = this.instantiate(ViewControl, {
 				env: this.env,
-				directory: this.directory
+				directory: this.directory,
+				destRoot: destRoot
 			}),
 			repoGenerator = this.instantiate(Repository, {
 				env: this.env,
-				directory: this.directory
+				directory: this.directory,
+				destRoot: destRoot
 			}),
 			svcGenerator = this.instantiate(Service, {
 				env: this.env,
-				directory: this.directory
+				directory: this.directory,
+				destRoot: destRoot
 			}),
 			vcName = 'home',
 			options = {

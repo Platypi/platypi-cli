@@ -30,7 +30,7 @@ export default class Generator extends Command {
 			root = project.root;
 		}
 
-		this.destRoot(root || process.cwd());
+		this.destRoot(root || options.destRoot || process.cwd());
 	}
 
 	protected render(source: string, destination: string, context?: any): Thenable<void> {
@@ -108,4 +108,5 @@ export default class Generator extends Command {
 interface IGeneratorOptions extends models.IModelOptions {
 	env: Environment;
 	directory: string;
+	destRoot?: string;
 }
