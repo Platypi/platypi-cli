@@ -14,8 +14,8 @@ export class Ui extends UiBase {
 		this.onLog(message, level);
 	}
 
-	prompt(): Thenable<Array<any>> {
-		return Promise.resolve([]);
+	prompt(): Thenable<any> {
+		return Promise.resolve({});
 	}
 
 	startProgress(): void { }

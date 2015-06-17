@@ -60,19 +60,6 @@ describe('Generators', () => {
 		expect(command.destRoot()).to.equal(path.resolve('.'));
 	});
 
-	it('should read from srcRoot and write to destRoot when calling render', (done) => {
-		var readStub = stub(command, 'read', (src: string, options: any) => {
-			return Promise.resolve('');
-		}), writeStub = stub(command, 'write', (dest: string, data: any, options: any) => {
-			return Promise.resolve();
-		});
-
-		command.render('app/app.ts', 'app/app.ts').then(() => {
-			expect(readStub).to.have.been.calledWith(path.resolve(command.srcRoot(), 'app/app.ts'));
-			expect(writeStub).to.have.been.calledWith(path.resolve(command.destRoot(), 'app/app.ts'));
-		}).then(done, done);
-	});
-
 	it('should make a directory using destRoot when use mkdirDest', () => {
 		var mkdir = stub(command, 'mkdir', () => { });
 		command.mkdirDest('foo', 'bar');

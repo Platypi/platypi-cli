@@ -9,7 +9,7 @@ export class Create extends CreateBase {
 
 	validateAndRun(options: any): any {
 		cb();
-		return super.validateAndRun(options);
+		return Promise.resolve();
 	}
 }
 

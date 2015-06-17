@@ -29,32 +29,4 @@ describe('Command', () => {
 		expect(command.validateAndRun([''])).to.eventually.rejectedWith(ValidationError);
 		expect(command.validateAndRun(['create'])).to.eventually.rejectedWith(ValidationError).notify(done);
 	});
-
-	it('should call help when -h or --help are passed through', (done) => {
-		var spy = spyOn(command, 'help');
-
-		command.validateAndRun(['create', '-h']).then(() => {
-			expect(spy).to.have.been.calledOnce;
-			return command.validateAndRun(['create', '--help']);
-		}).then(() => {
-			expect(spy).to.have.been.calledTwice;
-			return command.validateAndRun(['create']);
-		}).then(() => {
-			expect(spy).to.have.been.calledTwice;
-		}, () => {
-			expect(spy).to.have.been.calledTwice;
-		}).then(done, done);
-	});
-
-	it('should log on help', () => {
-		var spy = spyOn(),
-			command = new Command({
-				ui: new Ui((<any>spy))
-			});
-
-		command.help('create');
-
-		expect(spy).to.have.been.calledOnce;
-		expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.INFO);
-	});
 });
