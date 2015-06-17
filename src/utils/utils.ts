@@ -44,5 +44,9 @@ export function wrap(str: string, width: number = 60, brk: string = EOL, cut: bo
 }
 
 export function isAbsolute(srcPath: string): boolean {
+	if(!isString(srcPath)) {
+		return false;
+	}
+
 	return path.resolve(srcPath) === path.normalize(srcPath);
 }
