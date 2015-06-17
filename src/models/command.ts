@@ -45,7 +45,7 @@ export default class Command extends Base {
 
 	help(command?: string): any {
 		if(!this.utils.isEmpty(command)) {
-			this.ui.help(`Help for command \`${this.buildFullCommand().join(' ')}\`:\n`);
+			this.ui.help(`Help for command \`${this.buildFullCommand().join(' ')}\`:` + EOL);
 		}
 
 		return Promise.resolve(this.generalHelp())
