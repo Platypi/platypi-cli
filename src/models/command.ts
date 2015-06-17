@@ -48,20 +48,20 @@ export default class Command extends Base {
 			this.ui.help(`Help for command \`${this.buildFullCommand().join(' ')}\`:` + EOL);
 		}
 
-		return Promise.resolve(this.generalHelp())
+		return Promise.resolve(this.generalHelp(command))
 			.then(() => {
-				return this.commandsHelp();
+				return this.commandsHelp(command);
 			})
 			.then(() => {
 				return this.aliasesHelp(command);
 			})
 			.then(() => {
-				return this.optionsHelp();
+				return this.optionsHelp(command);
 			});
 	}
 
 	validateAndRun(commandArgs: Array<string>): Thenable<any> {
-		if(this.needsProject && !this.utils.isObject(this.project)) {
+		if(this.needsProject && !this.utils.isString(this.project.root)) {
 			return Promise.reject(new ValidationError(`This command can only be run inside a project.`));
 		}
 
@@ -117,12 +117,18 @@ export default class Command extends Base {
 			parent = parent.parent;
 		}
 
-		return <any>minimist(parent._originalArgs)._;
+		return [this.project.bin].concat(<any>minimist(parent._originalArgs)._);
 	}
 
-	protected generalHelp(): any {	}
+	protected generalHelp(command: string): any {
+				this.ui.help(`
+  General Usage:
 
-	protected commandsHelp(): any { }
+    ${this.buildFullCommand().join(' ')} [...options]
+`);
+	}
+
+	protected commandsHelp(command: string): any { }
 
 	protected aliasesHelp(command: string): any {
 		var aliases: Array<string> = (<any>this).constructor.aliases;
@@ -149,7 +155,7 @@ export default class Command extends Base {
 		}
 	}
 
-	protected optionsHelp(): any {
+	protected optionsHelp(command: string): any {
 		this.ui.help(
 `  Options:
 `);

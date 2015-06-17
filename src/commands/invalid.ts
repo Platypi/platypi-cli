@@ -15,7 +15,7 @@ export default class Invalid extends Command {
 
   Commands:
 
-    plat create <component>
+    plat create -h
 
   Options:
 

@@ -12,6 +12,7 @@ export default class Project extends Base {
 	 */
 	root: string;
 	version: string;
+	bin: string;
 	protected pkg: any;
 
 	static project(ui: ui.Ui, root: string): Thenable<Project> {
@@ -62,7 +63,7 @@ export default class Project extends Base {
 			ui.debug(`Searching for ${configName} at and above ${root}`);
 			findup(root, configName, (err: any, directory: string) => {
 				if(isObject(err)) {
-					resolve(Project.handleError(root, err));
+					resolve(Project.handleError(ui, root, err));
 					return;
 				}
 				resolve(directory);
@@ -80,9 +81,13 @@ export default class Project extends Base {
 		});
 	}
 
-	protected static handleError(root: string, err: any): any {
+	protected static handleError(ui: ui.Ui, root: string, err: any): any {
 		if(isObject(err) && /not found/i.test(err.message)) {
-			return new NotFoundError(`No project found at or up from: \`${root}\``);
+			ui.warn(`No project found at or up from: \`${root}\``);
+			return {
+				directory: undefined,
+				pkg: undefined,
+			};
 		} else {
 			return err;
 		}
@@ -90,8 +95,9 @@ export default class Project extends Base {
 
 	constructor(options: models.IProjectOptions) {
 		super(options);
-
-		this.version = require('../../package.json').version;
+		var pkg: any = require('../../package.json');
+		this.bin = this.utils.keys(pkg.bin)[0];
+		this.version = pkg.version;
 		this.root = options.root;
 		this.pkg = options.pkg;
 	}
