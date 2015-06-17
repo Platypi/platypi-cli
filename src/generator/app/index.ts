@@ -133,7 +133,7 @@ export default class AppGenerator extends Generator {
 					less: true,
 					html: true
 				};
-		
+
 				return vcGenerator.run();
 			}).then(() => {
 				vcGenerator.options = {
@@ -143,7 +143,7 @@ export default class AppGenerator extends Generator {
 					less: false,
 					html: false
 				};
-	
+
 				return vcGenerator.run();
 			}).then(() => {
 				return repoGenerator.run();

@@ -52,11 +52,11 @@ export default class Generator extends Command {
 			return this.read(dest, options).then(() => {
 				this.ui.warn(`The file \`${dest.replace(this.project.root, '').replace(/\\/g, '/')}\` already exists.`);
 				return this.ui.prompt([
-					{ 
-						type: 'confirm', 
-						default: <any>true, 
-						name: 'force', 
-						choices: ['Y', 'n'], 
+					{
+						type: 'confirm',
+						default: <any>true,
+						name: 'force',
+						choices: ['Y', 'n'],
 						message: 'Are you sure you want to overwrite it?'
 					}
 				]).then((answer: { force: boolean; }) => {
