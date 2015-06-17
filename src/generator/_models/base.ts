@@ -76,7 +76,7 @@ export default class BaseGenerator extends Generator {
 		});
 	}
 
-	run() {
+	run(): any {
 		var options = this.options,
 			name = options.name,
 			config: any = {
@@ -102,7 +102,7 @@ export default class BaseGenerator extends Generator {
 		}
 
 		return this._render(src, dest, config).then(() => {
-			return this.processMain();	
+			return this.processMain();
 		});
 	}
 
@@ -170,7 +170,7 @@ export default class BaseGenerator extends Generator {
 		}).then((out) => {
 			if(files.length > 0) {
 				return this.glob(root, files).then((result) => {
-					return out.concat(result);	
+					return out.concat(result);
 				});
 			}
 
@@ -178,7 +178,7 @@ export default class BaseGenerator extends Generator {
 		});
 	}
 
-	protected getDestination() {
+	protected getDestination(): string {
 		var options = this.options,
 			name = options.name,
 			dir = options.dir,
@@ -273,7 +273,7 @@ export default class BaseGenerator extends Generator {
 		} else if((ai && btc) || (aac && (bi || btc)) || (aa && (bac || bi || btc))) {
 			return -1;
 		}
-		
+
 		return 1;
 	}
 }

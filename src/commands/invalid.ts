@@ -46,7 +46,7 @@ export default class Invalid extends Command {
 	}
 
 	protected aliasesHelp(command: string): void {}
-	
+
 	protected get version(): string {
 		if(this.utils.isObject(this.project) && this.utils.isString(this.project.version)) {
 			return this.project.version;

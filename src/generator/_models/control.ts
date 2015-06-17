@@ -26,7 +26,7 @@ export default class ControlGenerator extends Generator {
 			});
 		}
 	}
-	
+
 	protected _render(src: string, dest: string, config: any): Thenable<any> {
 		var options = this.options;
 		config.html = options.html;
@@ -34,7 +34,6 @@ export default class ControlGenerator extends Generator {
 		var promises = [
 				this.render(`${src}.ts`, `${dest}.ts`, config)
 			];
-
 
 		if(!this.noLessOrHtml) {
 			if(options.less) {

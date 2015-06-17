@@ -91,27 +91,27 @@ export default class FileUtils extends Base {
 				if(this.utils.isObject(err)) {
 					return reject(err);
 				}
-	
+
 				var ignoreStrings = <Array<string>>ignores.filter((ignore) => {
 						return this.utils.isString(ignore);
 					}),
 					ignoreRegex = <Array<RegExp>>ignores.filter((ignore) => {
 						return this.utils.isRegExp(ignore);
 					});
-	
+
 				directories = directories.filter((dir) => {
 					var isDir = fs.statSync(path.join(src, dir)).isDirectory(),
 						index = ignores.indexOf(dir);
-	
+
 					if(!isDir || index > -1) {
 						return false;
 					}
-	
+
 					return !ignoreRegex.some((regex) => {
 						return regex.test(dir);
 					});
 				});
-	
+
 				resolve(directories);
 			});
 		});
@@ -119,17 +119,17 @@ export default class FileUtils extends Base {
 
 	requireAll(src: string, directories: Array<string>): { [key: string]: any; } {
 		var modules: { [key: string]: any; } = {};
-	
+
 		directories.forEach((dir) => {
 			let module = require(path.resolve(src, dir));
-	
+
 			if(this.utils.isObject(module) && this.utils.isObject(module.default)) {
 				modules[dir] = module.default;
 			} else {
 				modules[dir] = module;
 			}
 		});
-	
+
 		return modules;
 	}
 
