@@ -2,3 +2,6 @@
 
 platypi text eol=lf
 *.ts text eol=lf
+*.html text eol=lf
+*.less text eol=lf
+*.json text eol=lf
