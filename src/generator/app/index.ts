@@ -10,10 +10,6 @@ var validate: any = require('validate-npm-package-name');
 export default class AppGenerator extends Generator {
 	options: IOptions;
 
-	constructor(options: any) {
-		super(options);
-	}
-
 	defineOptions(): void {
 		this.option('name', {
 			aliases: ['n'],
@@ -82,6 +78,7 @@ export default class AppGenerator extends Generator {
 
 	run(): any {
 		this.destRoot(this.options.dir + '/app');
+		this.project.root = path.resolve(this.destRoot(), '..');
 		this.ui.debug('Generating the `default` app');
 
 		var vcGenerator = this.instantiate(ViewControl, {
