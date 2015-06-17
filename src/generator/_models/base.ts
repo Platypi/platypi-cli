@@ -146,68 +146,11 @@ export default class BaseGenerator extends Generator {
 				}
 			});
 
-			var eol = this.eol(data);
-
 			if(append.length > 0) {
 				append.push('');
 			}
 
-			var appFound: boolean = false,
-				acFound: boolean = false,
-				injFound: boolean = false,
-				tcFound: boolean = false;
-
-			return data.split(eol)
-				.concat(append)
-				.filter((value) => {
-					return !this.utils.isEmpty(value.trim());
-				})
-				.sort((a, b) => {
-					var aa = a.indexOf('app') > -1,
-						ba = b.indexOf('app') > -1,
-						aac = a.indexOf('attributecontrols') > -1,
-						bac = b.indexOf('attributecontrols') > -1,
-						ai = a.indexOf('injectables') > -1,
-						bi = b.indexOf('injectables') > -1,
-						atc = a.indexOf('templatecontrols') > -1,
-						btc = b.indexOf('templatecontrols') > -1;
-
-					if(!(aa || aac || ai || atc)) {
-						return -1;
-					} else if(!(ba || bac || bi || btc)) {
-						return 1;
-					} else if((aa && ba) || (aac && bac) || (ai && bi) || (atc && btc)) {
-						if(a > b) {
-							return 1;
-						} else if (b > a) {
-							return -1;
-						}
-						return 0;
-					} else if((ai && btc) || (aac && (bi || btc)) || (aa && (bac || bi || btc))) {
-						return -1;
-					}
-					
-					return 1;
-				})
-				.map((value, index, lines) => {
-					if(value.indexOf('./app/') > -1 && !appFound) {
-						appFound = true;
-						value = eol + value;
-					} else if(value.indexOf('./attributecontrols') > -1 && !acFound) {
-						acFound = true;
-						value = eol + value;
-					} else if(value.indexOf('./injectables') > -1 && !injFound) {
-						injFound = true;
-						value = eol + value;
-					} else if(value.indexOf('./templatecontrols') > -1 && !tcFound) {
-						tcFound = true;
-						value = eol + value;
-					}
-
-					return value;
-				})
-				.concat([''])
-				.join(eol);
+			return this.formatMain(data, append);
 		}).then((data) => {
 			return this.write(file, data);
 		});
@@ -270,5 +213,67 @@ export default class BaseGenerator extends Generator {
 		var dest = this.destRoot();
 
 		return path.relative(path.resolve(dest, root, '..'), path.resolve(dest, `base/base.${this.ext}`));
+	}
+
+	private formatMain(data: string, append: Array<string>): string {
+		var eol = this.eol(data),
+			appFound: boolean = false,
+			acFound: boolean = false,
+			injFound: boolean = false,
+			tcFound: boolean = false;
+
+		return data.split(eol)
+			.concat(append)
+			.filter((value) => {
+				return !this.utils.isEmpty(value.trim());
+			})
+			.sort(this.sortMain.bind(this))
+			.map((value, index, lines) => {
+				if(value.indexOf('./app/') > -1 && !appFound) {
+					appFound = true;
+					value = eol + value;
+				} else if(value.indexOf('./attributecontrols') > -1 && !acFound) {
+					acFound = true;
+					value = eol + value;
+				} else if(value.indexOf('./injectables') > -1 && !injFound) {
+					injFound = true;
+					value = eol + value;
+				} else if(value.indexOf('./templatecontrols') > -1 && !tcFound) {
+					tcFound = true;
+					value = eol + value;
+				}
+
+				return value;
+			})
+			.concat([''])
+			.join(eol);
+	}
+
+	private sortMain(a: string, b: string): number {
+		var aa = a.indexOf('app') > -1,
+			ba = b.indexOf('app') > -1,
+			aac = a.indexOf('attributecontrols') > -1,
+			bac = b.indexOf('attributecontrols') > -1,
+			ai = a.indexOf('injectables') > -1,
+			bi = b.indexOf('injectables') > -1,
+			atc = a.indexOf('templatecontrols') > -1,
+			btc = b.indexOf('templatecontrols') > -1;
+
+		if(!(aa || aac || ai || atc)) {
+			return -1;
+		} else if(!(ba || bac || bi || btc)) {
+			return 1;
+		} else if((aa && ba) || (aac && bac) || (ai && bi) || (atc && btc)) {
+			if(a > b) {
+				return 1;
+			} else if (b > a) {
+				return -1;
+			}
+			return 0;
+		} else if((ai && btc) || (aac && (bi || btc)) || (aa && (bac || bi || btc))) {
+			return -1;
+		}
+		
+		return 1;
 	}
 }
