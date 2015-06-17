@@ -51,7 +51,7 @@ export default class Generator extends Command {
 			})(options.context);
 
 			return this.fileUtils.read(dest, options).then(() => {
-				this.ui.warn(`The file \`${dest.replace(this.project.root, '').replace(/\\/g, '/')}\` already exists.`);
+				this.ui.warn(`The file \`${path.normalize(dest.replace(this.project.root, ''))}\` already exists.`);
 				return this.ui.prompt([
 					{
 						type: 'confirm',
