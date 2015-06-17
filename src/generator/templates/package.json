@@ -30,12 +30,12 @@
     "clean": "rimraf app/**/*.css app/src/**/*.js app/dist/*",
     "clean:dist": "rimraf app/dist/*",
     "deploy": "npm run clean:dist && npm run build -- -- -p [minifyify --no-map]",
-    "start": "concurrent \"npm run watch\" \"http-server -p 3000 app\"",
+    "start": "concurrent -r \"npm run watch\" \"http-server -p 3000 app\"",
     "less": "mkdirp app/dist && lessc app/styles/main.less > app/dist/app.css --clean-css=\"--s0 --advanced\"",
     "lint": "tsconfig-lint --use-glob",
     "ts": "tsc -p .",
     "tsd": "tsd update -so && tsd link",
-    "watch": "concurrent \"npm run watch:ts\" \"npm run watch:less\"",
+    "watch": "concurrent -r \"npm run watch:ts\" \"npm run watch:less\"",
     "watch:less": "nodemon -w app -e less --exec npm run less",
     "watch:ts": "nodemon -w app -e ts --exec npm run build:ts"
   }
