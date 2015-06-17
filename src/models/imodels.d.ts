@@ -43,4 +43,12 @@ declare module models {
 		version: string;
 		static project(root: string, ui: ui.Ui): Thenable<Project>;
 	}
+
+	class FileUtils {
+		read(source: string, options?: any): Thenable<string>;
+		write(dest: string, data: string, options?: any): Thenable<void>;
+		mkdir(...dirs: Array<string>): Thenable<void>;
+		eol(data: string): string;
+		mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string;
+	}
 }

@@ -7,7 +7,7 @@ export default class Invalid extends Command {
 	options: IOptions;
 
 	help(): any {
-		this.ui.help(`Platypi CLI \`v${this.project.version}\` Help`);
+		this.ui.help(`Platypi CLI \`v${this.version}\` Help`);
 		this.ui.help(`
   General Usage:
 
@@ -38,14 +38,22 @@ export default class Invalid extends Command {
 	}
 
 	run(): any {
-		if(this.options.version) {
-			this.ui.help(`Platypi CLI \`v${this.project.version}\``);
+		if(!!this.options.version) {
+			this.ui.help(`Platypi CLI \`v${this.version}\``);
 		} else {
 			this.help();
 		}
 	}
 
 	protected aliasesHelp(command: string): void {}
+	
+	protected get version(): string {
+		if(this.utils.isObject(this.project) && this.utils.isString(this.project.version)) {
+			return this.project.version;
+		}
+
+		return require('../../package.json').version;
+	}
 }
 
 interface IOptions extends models.IParsedArgs {
