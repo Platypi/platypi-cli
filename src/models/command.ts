@@ -1,3 +1,4 @@
+import {EOL} from 'os';
 import {Promise} from 'es6-promise';
 import Base from './base';
 import Environment from '../environment/environment';
@@ -5,6 +6,7 @@ import ValidationError from '../errors/validation';
 import NotImplementedError from '../errors/notimplemented';
 import * as minimist from 'minimist';
 import FileUtils from './fileutils';
+import {wrap} from '../utils/utils';
 
 export default class Command extends Base {
 	static commandName: string = 'command';
@@ -180,7 +182,8 @@ export default class Command extends Base {
 		});
 
 		this.utils.forEach(lines, (line) => {
-			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${line.description}`);
+			var padding: string = EOL + (<any>this.utils).fill(Array(longest + 8), ' ').join('');
+			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${wrap(line.description, 60, padding)}`);
 
 			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {
 				this.ui.help(

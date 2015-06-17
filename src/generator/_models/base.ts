@@ -36,7 +36,7 @@ export default class BaseGenerator extends Generator {
 
 		this.option('dir', {
 			aliases: ['d'],
-			description: `Specify the relative path to a directory in which to store the ${this.type}`,
+			description: `Specify the path relative to \`app/src/${pluralize(this.type.toLowerCase())}\` in which to store the ${this.type}`,
 			defaults: ''
 		});
 

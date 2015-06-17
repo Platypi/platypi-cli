@@ -1,4 +1,5 @@
-import {find, isFunction} from 'lodash';
+import {find, isFunction, isString} from 'lodash';
+import {EOL} from 'os';
 import Command from '../models/command';
 import InvalidCommand from '../commands/invalid';
 
@@ -24,4 +25,19 @@ export function pluralize(str: string): string {
     }
 
     return str + 's';
+}
+
+export function wrap(str: string, width: number = 60, brk: string = EOL, cut: boolean = false): string {
+    if (!isString(str)) {
+		return str;
+	}
+
+    var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)'),
+		match = str.match(new RegExp(regex, 'g'));
+
+	if(match.length > 1) {
+		return match.join(brk) + EOL;
+	}
+
+    return match.join(brk);
 }
