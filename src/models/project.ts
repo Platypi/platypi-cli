@@ -39,7 +39,10 @@ export default class Project extends Base {
 				platypiError = !isString(platypi.directory);
 
 			if(pkgError && platypiError) {
-				throw pkg;
+				return {
+					directory: undefined,
+					pkg: {}
+				};
 			} else if(pkgError) {
 				pkg = {
 					directory: platypi.directory,

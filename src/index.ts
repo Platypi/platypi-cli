@@ -51,10 +51,5 @@ export default function(options: { args: Array<string>; input: NodeJS.ReadableSt
 			ui: ui,
 			project: project
 		})).run(environment);
-	}, (err) => {
-		return (new Cli({
-			ui: ui,
-			project: null
-		})).run(environment);
 	}).then(undefined, ui.error.bind(ui));
 };
