@@ -6,21 +6,28 @@ export default class Invalid extends Command {
 
 	options: IOptions;
 
-	help(): any {
+	help(command: string): any {
 		this.ui.help(`Platypi CLI \`v${this.version}\` Help`);
+		var commands = this.utils.keys(require('require-all')({
+				dirname: __dirname,
+				filter: /^((?!invalid).*)\.js$/
+			})),
+			baseCommand = this.buildFullCommand().join(' ');
+
 		this.ui.help(`
   General Usage:
 
     plat <command> [...options]
 
   Commands:
-
-    plat create -h
-
-  Options:
-
-    -h    Print help for any command
 `);
+
+		commands.forEach((c) => {
+			this.ui.help(`    ${baseCommand} ${c} -h`);
+		});
+
+		this.ui.help('');
+		this.optionsHelp(command);
 	}
 
 	defineOptions(): void {
@@ -41,7 +48,7 @@ export default class Invalid extends Command {
 		if(!!this.options.version) {
 			this.ui.help(`Platypi CLI \`v${this.version}\``);
 		} else {
-			this.help();
+			this.help('');
 		}
 	}
 
@@ -53,6 +60,10 @@ export default class Invalid extends Command {
 		}
 
 		return require('../../package.json').version;
+	}
+
+	protected getCommands() {
+		
 	}
 }
 

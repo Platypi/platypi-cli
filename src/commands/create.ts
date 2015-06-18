@@ -7,17 +7,18 @@ class Create extends Command {
 	protected options: ICreateArgs;
 
 	generalHelp(command: string): any {
-		var component = this.commands[0];
+		var component = this.commands[0],
+			baseCommand = this.buildFullCommand().join(' ');
 		return this.env.listGenerators(component).then((commands) => {
 			this.ui.help(`
   General Usage:
 
-    ${this.buildFullCommand().join(' ')} <component> [...options]
+    ${baseCommand} <component> [...options]
 
   Commands:
 `);
 			commands.forEach((c) => {
-				this.ui.help(`    ${this.buildFullCommand().join(' ')} ${c} -h`);
+				this.ui.help(`    ${baseCommand} ${c} -h`);
 			});
 		});
 	}

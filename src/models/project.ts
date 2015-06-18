@@ -83,7 +83,7 @@ export default class Project extends Base {
 
 	protected static handleError(ui: ui.Ui, root: string, err: any): any {
 		if(isObject(err) && /not found/i.test(err.message)) {
-			ui.warn(`No project found at or up from: \`${root}\``);
+			ui.debug(`No project found at or up from: \`${root}\``);
 			return {
 				directory: undefined,
 				pkg: undefined,
