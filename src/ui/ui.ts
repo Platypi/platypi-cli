@@ -65,20 +65,20 @@ export default class Ui {
 			stack: string = error.stack;
 
 		if(this.utils.isString(stack)) {
-			this.logLine(chalk.red(stack.slice(0, stack.indexOf(message) + message.length)), LOG_LEVEL.ERROR);
+			this.logLine(this.makePretty(stack.slice(0, stack.indexOf(message) + message.length), chalk.red), LOG_LEVEL.ERROR);
 			this.logLine(stack.slice(stack.indexOf(message) + message.length + 1), LOG_LEVEL.ERROR);
 			return;
 		}
 
 		if(this.utils.isString(message)) {
-			this.logLine(chalk.red(message), LOG_LEVEL.ERROR);
+			this.logLine(this.makePretty(message, chalk.red), LOG_LEVEL.ERROR);
 		} else {
-			this.logLine(chalk.red(error), LOG_LEVEL.ERROR);
+			this.logLine(this.makePretty(error, chalk.red), LOG_LEVEL.ERROR);
 		}
 	}
 
 	warn(message: string): void {
-		this.logLine(message, LOG_LEVEL.WARN);
+		this.logLine(this.makePretty(message, chalk.magenta), LOG_LEVEL.WARN);
 	}
 
 	info(message: string): void {
@@ -86,11 +86,11 @@ export default class Ui {
 	}
 
 	debug(message: string): void {
-		this.logLine(message, LOG_LEVEL.DEBUG);
+		this.logLine(this.makePretty(message, chalk.yellow), LOG_LEVEL.DEBUG);
 	}
 
 	trace(message: string): void {
-		this.logLine(message, LOG_LEVEL.TRACE);
+		this.logLine(this.makePretty(message, chalk.green), LOG_LEVEL.TRACE);
 	}
 
 	help(message: string): void {
@@ -103,6 +103,7 @@ export default class Ui {
 				return <string><any>this.chalk.cyan(substr);
 			});
 		}
+
 		if(this.shouldLog(logLevel)) {
 			this.output.write(message);
 		}
@@ -145,6 +146,20 @@ export default class Ui {
 		}
 
 		this.logLevel = <number>level;
+	}
+
+	protected makePretty(message: string, color: Chalk.ChalkChain): string {
+		if(!this.utils.isString(message)) {
+			return <any>color(message);
+		}
+
+		return this.utils.map(message.split(/(`[^`]*`)/g), (val) => {
+			if(val[0] === '`') {
+				return chalk.cyan(val);
+			}
+
+			return color(val);
+		}).join('');
 	}
 
 	protected shouldLog(logLevel: number): boolean {

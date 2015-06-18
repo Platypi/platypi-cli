@@ -2,7 +2,7 @@ import Command from '../models/command';
 
 class Create extends Command {
 	static commandName: string = 'create';
-	static aliases: Array<string> = ['c', 'generate', 'gen'];
+	static aliases: Array<string> = ['c'];
 
 	protected options: ICreateArgs;
 

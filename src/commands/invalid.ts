@@ -8,10 +8,7 @@ export default class Invalid extends Command {
 
 	help(command: string): any {
 		this.ui.help(`Platypi CLI \`v${this.version}\` Help`);
-		var commands = this.utils.keys(require('require-all')({
-				dirname: __dirname,
-				filter: /^((?!invalid).*)\.js$/
-			})),
+		var commands = this.getCommands(),
 			baseCommand = this.buildFullCommand().join(' ');
 
 		this.ui.help(`
@@ -40,7 +37,7 @@ export default class Invalid extends Command {
 	validate(): any {
 		var command = this.commands[0];
 		if(this.utils.isString(command)) {
-			throw new NotFoundError(`\`${command}\` is not a valid command.`);
+			throw new NotFoundError(`Cannot execute \`${this.buildFullCommand().join(' ')}\`, \`${command}\` is not a valid command.`);
 		}
 	}
 
@@ -62,8 +59,11 @@ export default class Invalid extends Command {
 		return require('../../package.json').version;
 	}
 
-	protected getCommands() {
-		
+	protected getCommands(): Array<string> {
+		return this.utils.keys(require('require-all')({
+			dirname: __dirname,
+			filter: /^((?!invalid).*)\.js$/
+		}));
 	}
 }
 

@@ -86,7 +86,7 @@ export default class Project extends Base {
 			ui.debug(`No project found at or up from: \`${root}\``);
 			return {
 				directory: undefined,
-				pkg: undefined,
+				pkg: undefined
 			};
 		} else {
 			return err;
