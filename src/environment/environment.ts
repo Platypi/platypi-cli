@@ -1,12 +1,13 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import {isObject, isEmpty, values} from 'lodash';
 import Base from '../models/base';
 import Command from '../models/command';
 import Generator from '../models/generator';
 import NotFoundError from '../errors/notfound';
 import FileUtils from '../models/fileutils';
-import {findCommand} from '../utils/utils';
+import {findCommand, isAbsolute} from '../utils/utils';
+
+var win32 = process.platform === 'win32';
 
 export default class Environment extends Base {
 	fileUtils: FileUtils;
@@ -17,74 +18,149 @@ export default class Environment extends Base {
 		this.fileUtils = this.instantiate(FileUtils, options);
 	}
 
-	generator(component: string = '', parent?: Command): Thenable<Generator> {
-		var original = component,
-			components = component.split(/:(?!\\|\/)/),
-			module = components.shift();
+	command(defaults: IComponent, command: string = '', parent?: Command): Thenable<any> {
+		defaults = this.utils.clone(defaults);
+		var component = this.parseComponent(defaults, command),
+			prefix = defaults.prefix;
 
-		this.ui.debug('Locating generators for: `' + (module || 'default') + '`');
+		return this._commands(component.component, prefix).then((response) => {
+			if(!this.utils.isEmpty(response.commands)) {
+				return response;
+			}
+			
+			component.command = component.component;
+			component.component = defaults.component;
+			return this._commands(component.component, prefix);
+		}).then((response) => {
+			var commands = response.commands,
+				Com = commands[component.command];
 
-		return this._generators(module)
-			.then((response) => {
-				var generators = response.generators,
-					isDefault = response.isDefault;
+			if(!this.utils.isObject(Com)) {
+				Com = findCommand(this.utils.values(commands), component.command);
+			}
 
-				if(isDefault) {
-					component = module;
-				} else {
-					component = components.shift();
+			try {
+				return this.instantiate(Com, {
+					env: this,
+					parent: parent,
+					directory: component.component
+				});
+			} catch(e) {
+				if(e.message.indexOf('Cannot find module') > -1) {
+					throw new NotFoundError('Unrecognized component: `' + command + '`');
 				}
 
-				if(isEmpty(component)) {
-					component = 'app';
-				}
-
-				var Gen: typeof Generator = generators[component];
-
-				if(!isObject(Gen)) {
-					Gen = <typeof Generator>findCommand(values(generators), component);
-				}
-
-				try {
-					return this.instantiate(Gen, {
-						env: this,
-						parent: parent,
-						directory: path.resolve(path.resolve(__dirname, '..', 'generator'))
-					});
-				} catch(e) {
-					if(e.message.indexOf('Cannot find module') > -1) {
-						throw new NotFoundError('Unrecognized component: `' + original + '`');
-					}
-
-					throw e;
-				}
-			});
-	}
-
-	listGenerators(component: string = ''): Thenable<Array<string>> {
-		var components = component.split(/:(?!\\|\/)/),
-			module = components.shift();
-
-		return this._generators(module).then((response) => {
-			return this.utils.keys(response.generators);
+				throw e;
+			}
 		});
 	}
 
-	private _generators(module: string): Thenable<{ generators: { [key: string]: typeof Generator; }, isDefault?: boolean; }> {
-		return this.fileUtils.dir(path.resolve(__dirname, '..', 'generator'), [
-			'templates',
-			/^_.*$/
-		]).then((values) => {
-			var generators: { [key: string]: typeof Generator; } = this.fileUtils.requireAll(path.resolve(__dirname, '..', 'generator'), values);
+	listCommands(defaults: IComponent, command: string = ''): Thenable<Array<string>> {
+		defaults = this.utils.clone(defaults);
+		var component = this.parseComponent(defaults, command),
+			prefix = defaults.prefix;
 
-			this.utils.forEach(generators, (generator, name) => {
-				generator.commandName = name;
+		return this._commands(component.component, prefix).then((response) => {
+			if(!this.utils.isEmpty(response.commands)) {
+				return response;
+			}
+
+			component.command = component.component;
+			component.component = defaults.component;
+			return this._commands(component.component, prefix);
+		}).then((response) => {
+			return this.utils.keys(response.commands);
+		});
+	}
+
+	protected parseComponent(defaults: IComponent, command: string): IComponent {
+		if(this.utils.isEmpty(command)) {
+			command = defaults.command;
+		}
+
+		var components = command.split(/:(?!\\|\/)/),
+			component: string;
+
+		if(components.length > 0) {
+			component = components.shift();
+		} else {
+			component = defaults.component;
+		}
+
+		command = components.shift();
+
+		if(this.utils.isEmpty(command)) {
+			command = defaults.command;
+		}
+
+		return { component, command, prefix: defaults.prefix };
+	}
+
+	private getNpmPaths() {
+		var paths: Array<string> = [];
+
+		process.cwd().split(path.sep).forEach((part, index, parts) => {
+			let lookup = path.join.apply(path, parts.slice(0, index + 1).concat(['node_modules']));
+			
+			if(!win32) {
+				lookup = '/' + lookup;
+			}
+
+			paths.push(lookup);
+		});
+
+		if(process.env.NODE_PATH) {
+			paths = this.utils.compact<string>(process.env.NODE_PATH.split(path.delimiter)).concat(paths);
+		} else {
+		    if (win32) {
+		      paths.push(path.join(process.env.APPDATA, 'npm/node_modules'));
+		    } else {
+		      paths.push('/usr/lib/node_modules');
+		    }
+		}
+
+		return paths.reverse();
+	}
+
+	private _commands(component: string, prefix: string): Thenable<{ commands: { [key: string]: typeof Command; } }> {
+		return this._find(this.getNpmPaths(), component, prefix).then((info) => {
+			component = info.component;
+			var values = info.values,
+				commands: { [key: string]: typeof Command; } = this.fileUtils.requireAll(component, values);
+
+			this.utils.forEach(commands, (command, name) => {
+				command.commandName = name;
 			});
 
 			return {
-				generators: generators,
-				isDefault: true
+				commands: commands
 			};
+		}, () => {
+			return {
+				commands: <any>{}
+			};
+		});
+	}
+
+	private _find(paths: Array<string>, component: string, prefix: string): Thenable<{ component: string, values: Array<string> }> {
+		var absolute = component,
+			isRelative = !isAbsolute(absolute);
+
+		if(isRelative) {
+			absolute = paths.shift() + path.sep + prefix + component;
+		}
+
+		return this.fileUtils.dir(absolute, [
+			'templates',
+			/^_.*$/
+		]).then((values) => {
+			return { component: absolute, values };
+		}, (err) => {
+			if(this.utils.isEmpty(paths)) {
+				throw err;
+			}
+
+			return this._find(paths, component, prefix);
 		});
 	}
 }

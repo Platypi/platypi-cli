@@ -59,3 +59,9 @@ interface IEnvironment {
 	args?: Array<string>;
 	commands?: any;
 }
+
+interface IComponent {
+	component: string;
+	command: string;
+	prefix: string;
+}

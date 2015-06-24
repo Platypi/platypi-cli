@@ -7,6 +7,10 @@ export default class Invalid extends Command {
 	options: IOptions;
 
 	help(command: string): any {
+		if(this.commands.length > 0 && this.options.help) {
+			return this.validate();
+		}
+
 		this.ui.help(`Platypi CLI \`v${this.version}\` Help`);
 		var commands = this.getCommands(),
 			baseCommand = this.buildFullCommand().join(' ');

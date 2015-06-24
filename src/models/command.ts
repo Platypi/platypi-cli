@@ -57,6 +57,8 @@ export default class Command extends Base {
 			})
 			.then(() => {
 				return this.optionsHelp(command);
+			}).then(() => {
+				this.ui.help('');	
 			});
 	}
 
@@ -124,8 +126,7 @@ export default class Command extends Base {
 				this.ui.help(`
   General Usage:
 
-    ${this.buildFullCommand().join(' ')} [...options]
-`);
+    ${this.buildFullCommand().join(' ')} [...options]`);
 	}
 
 	protected commandsHelp(command: string): any { }
@@ -145,20 +146,16 @@ export default class Command extends Base {
 			this.utils.remove(aliases, alias => alias === command);
 
 			if(aliases.length > 0) {
-				this.ui.help(
-`
+				this.ui.help(`
   Aliases:
-    ${aliases.join(', ')}
-`
-				);
+    ${aliases.join(', ')}`);
 			}
 		}
 	}
 
 	protected optionsHelp(command: string): any {
-		this.ui.help(
-`  Options:
-`);
+		this.ui.help(`
+  Options:`);
 		var options = this._options,
 			longest = 0,
 			lines: Array<{ command: string; description: string; defaults?: any; }> = [];
