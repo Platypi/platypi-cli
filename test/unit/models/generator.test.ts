@@ -37,7 +37,7 @@ describe('Generators', () => {
 			ui: new Ui(),
 			env: undefined,
 			directory: '.',
-			project: {
+			project: <any>{
 				root: '.',
 				version: '1.0.0',
 				bin: 'plat'

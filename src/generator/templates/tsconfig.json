@@ -1,52 +1,6 @@
 {
     "lintOptions": {
-        "rules": {
-            "interface-name": true,
-            "jsdoc-format": true,
-            "member-ordering": [
-                true,
-                "public-before-private",
-                "static-before-instance",
-                "variables-before-functions"
-            ],
-            "no-any": false,
-            "no-consecutive-blank-lines": true,
-            "no-constructor-vars": false,
-            "no-empty": false,
-            "no-unreachable": true,
-            "no-unused-variable": true,
-            "quotemark": [
-                true,
-                "single"
-            ],
-            "typedef": [
-                true,
-                "property-declaration"
-            ],
-            "typedef-whitespace": [
-                true,
-                [
-                    "call-signature",
-                    "nospace"
-                ],
-                [
-                    "parameter",
-                    "nospace"
-                ],
-                [
-                    "property-declaration",
-                    "nospace"
-                ],
-                [
-                    "variable-declaration",
-                    "nospace"
-                ],
-                [
-                    "member-variable-declaration",
-                    "nospace"
-                ]
-            ]
-        }
+        "rules": {}
     },
     "compilerOptions": {
         "module": "commonjs",

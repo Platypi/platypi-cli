@@ -23,6 +23,33 @@ declare module models {
 		help?: boolean;
 	}
 
+	interface IPackage {
+		[key: string]: any;
+		version: string;
+		name: string;
+		bin: {
+			[key: string]: string;
+		};
+	}
+
+	interface ILocalPackage {
+		[key: string]: any;
+		version: string;
+		name: string;
+		platypi?: any;
+	}
+
+	interface IExecOptions {
+        cwd?: string;
+        stdio?: any;
+        customFds?: any;
+        env?: any;
+        encoding?: string;
+        timeout?: number;
+        maxBuffer?: number;
+        killSignal?: string;
+    }
+
 	interface IProjectOptions extends IModelOptions {
 		/**
 		 * The root directory for the project
@@ -41,8 +68,10 @@ declare module models {
 		 */
 		root: string;
 		bin: string;
-		version: string;
 		static project(root: string, ui: ui.Ui): Thenable<Project>;
+		getConfig(property: string): any;
+		cliPackage(): IPackage;
+		package(): ILocalPackage;
 	}
 
 	class FileUtils {

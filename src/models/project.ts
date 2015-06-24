@@ -11,9 +11,14 @@ export default class Project extends Base {
 	 * The root directory for the project
 	 */
 	root: string;
-	version: string;
 	bin: string;
-	protected pkg: any;
+
+	get name(): string {
+		return this.pkg.name;
+	}
+
+	protected pkg: models.ILocalPackage;
+	protected cliPkg: models.IPackage;
 
 	static project(ui: ui.Ui, root: string): Thenable<Project> {
 		return Project.closestPackage(ui, root).then((info: { directory: string; pkg: any; }) => {
@@ -98,10 +103,23 @@ export default class Project extends Base {
 
 	constructor(options: models.IProjectOptions) {
 		super(options);
-		var pkg: any = require('../../package.json');
-		this.bin = this.utils.keys(pkg.bin)[0];
-		this.version = pkg.version;
+		var cliPackage: any = this.cliPkg = require('../../package.json');
+		this.bin = this.utils.keys(cliPackage.bin)[0];
 		this.root = options.root;
 		this.pkg = options.pkg;
+	}
+
+	getConfig(property: string): any {
+		var config = this.pkg.platypi || {};
+
+		return config[property];
+	}
+
+	cliPackage(): models.IPackage {
+		return this.utils.cloneDeep(this.cliPkg);
+	}
+
+	package(): models.ILocalPackage {
+		return this.utils.cloneDeep(this.pkg);
 	}
 }

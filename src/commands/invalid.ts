@@ -56,7 +56,7 @@ export default class Invalid extends Command {
 	protected aliasesHelp(command: string): void {}
 
 	protected get version(): string {
-		return this.project.version;
+		return this.project.cliPackage().version;
 	}
 
 	protected getCommands(): Array<string> {
