@@ -149,9 +149,10 @@ export default class Environment extends Base {
 		if(isRelative) {
 			absolute = paths.shift() + path.sep + prefix + component;
 		}
-
+		console.log(absolute);
 		return this.fileUtils.dir(absolute, [
 			'templates',
+			'node_modules',
 			/^_.*$/
 		]).then((values) => {
 			return { component: absolute, values };
