@@ -27,7 +27,7 @@ export default class Environment extends Base {
 			if(!this.utils.isEmpty(response.commands)) {
 				return response;
 			}
-			
+
 			component.command = component.component;
 			component.component = defaults.component;
 			return this._commands(component.component, prefix);
@@ -96,12 +96,12 @@ export default class Environment extends Base {
 		return { component, command, prefix: defaults.prefix };
 	}
 
-	private getNpmPaths() {
+	private getNpmPaths(): Array<string> {
 		var paths: Array<string> = [];
 
 		process.cwd().split(path.sep).forEach((part, index, parts) => {
 			let lookup = path.join.apply(path, parts.slice(0, index + 1).concat(['node_modules']));
-			
+
 			if(!win32) {
 				lookup = '/' + lookup;
 			}
@@ -149,7 +149,7 @@ export default class Environment extends Base {
 		if(isRelative) {
 			absolute = paths.shift() + path.sep + prefix + component;
 		}
-		console.log(absolute);
+
 		return this.fileUtils.dir(absolute, [
 			'templates',
 			'node_modules',

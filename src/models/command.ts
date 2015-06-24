@@ -58,7 +58,7 @@ export default class Command extends Base {
 			.then(() => {
 				return this.optionsHelp(command);
 			}).then(() => {
-				this.ui.help('');	
+				this.ui.help('');
 			});
 	}
 
