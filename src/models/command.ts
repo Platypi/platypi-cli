@@ -6,6 +6,7 @@ import ValidationError from '../errors/validation';
 import NotImplementedError from '../errors/notimplemented';
 import * as minimist from 'minimist';
 import FileUtils from './fileutils';
+import ProcessUtils from './processutils';
 import {wrap} from '../utils/utils';
 
 export default class Command extends Base {
@@ -18,7 +19,8 @@ export default class Command extends Base {
 	protected args: Array<string>;
 	protected options: models.IParsedArgs = {};
 	protected commands: Array<string>;
-	protected fileUtils: FileUtils;
+	protected file: FileUtils;
+	protected process: ProcessUtils;
 
 	private _originalArgs: Array<string>;
 	private _options: { [key: string]: models.ICommandOption; } = {};
@@ -26,7 +28,8 @@ export default class Command extends Base {
 	constructor(options: models.ICommandOptions) {
 		super(options);
 
-		this.fileUtils = this.instantiate(FileUtils, options);
+		this.file = this.instantiate(FileUtils, options);
+		this.process = this.instantiate(ProcessUtils, options);
 		this.env = new Environment(options);
 		this.parent = options.parent;
 		this.option('help', {

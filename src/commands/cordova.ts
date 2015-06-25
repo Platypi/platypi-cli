@@ -9,6 +9,12 @@ class Cordova extends Command {
 		prefix: 'plat-cordova-'
 	};
 
+	help(command: string): any {
+		return this.process.exec('cordova', this.args.slice(1), {
+			cwd: path.resolve(this.project.root, 'app/cordova')
+		});
+	}
+
 	generalHelp(command: string): any {
 		var baseCommand = this.buildFullCommand().join(' ');
 
@@ -27,8 +33,9 @@ class Cordova extends Command {
 	}
 
 	run(): any {
-		return this.env.command(this.defaultComponent, this.commands[0], this)
-			.then(generator => generator.validateAndRun(this.args));
+		return this.process.exec('cordova', this.args, {
+			cwd: path.resolve(this.project.root, 'app/cordova')
+		});
 	}
 }
 

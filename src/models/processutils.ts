@@ -1,8 +1,8 @@
 import {exec} from 'child_process';
 import {Promise} from 'es6-promise';
-import Command from './command';
+import Base from './base';
 
-export default class Process extends Command {
+export default class ProcessUtils extends Base {
 	exec(command: string, args: Array<string> = [], options?: models.IExecOptions): Thenable<any> {
 		return new Promise<any>((resolve, reject) => {
 			var cmd = [command].concat(args).join(' ');

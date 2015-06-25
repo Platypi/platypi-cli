@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import Base from '../models/base';
 import Command from '../models/command';
 import Generator from '../models/generator';

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import {use, expect} from 'chai';
 import {spy as spyOn, stub} from 'sinon';
 import Generator from '../../../src/models/generator';

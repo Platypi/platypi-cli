@@ -82,6 +82,7 @@ export default class AppGenerator extends Generator {
 		this.ui.debug('Generating the `default` app');
 
 		var destRoot = path.resolve(this.destRoot(), '..'),
+			name = this.options.name,
 			vcGenerator = this.instantiate(ViewControl, {
 				env: this.env,
 				directory: this.directory,
@@ -99,7 +100,8 @@ export default class AppGenerator extends Generator {
 			}),
 			vcName = 'home',
 			options = {
-				appName: this.options.name,
+				appName: name,
+				appTitle: this.utils.startCase(name),
 				vcName: vcName
 			};
 
@@ -111,6 +113,8 @@ export default class AppGenerator extends Generator {
 			this.render('tsd.json', '../tsd.json', options),
 			this.render('app/app.ts', 'src/app/app.ts', options),
 			this.render('styles/main.less', 'styles/main.less', options),
+			this.render('cordova/config.xml', 'cordova/config.xml', options),
+			this.copy('cordova/resources', 'cordova/resources'),
 			this.mkdirDest(
 				'src/attributecontrols',
 				'src/injectables',

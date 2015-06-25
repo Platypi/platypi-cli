@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as mkdir from 'mkdirp';
 import * as path from 'path';
 import * as minimist from 'minimist';
@@ -10,6 +10,7 @@ export default class FileUtils extends Base {
 	protected utils: typeof utils = utils;
 
 	read(source: string, options: any = {}): Thenable<string> {
+		source = path.normalize(source);
 		this.ui.debug(`Reading from \`${source}\``);
 
 		this.utils.defaults(options, {
@@ -29,6 +30,7 @@ export default class FileUtils extends Base {
 	}
 
 	write(dest: string, data: string, options: any = {}): Thenable<void> {
+		dest = path.normalize(dest);
 		this.ui.debug(`Writing to \`${dest}\``);
 
 		this.utils.defaults(options, {
@@ -48,6 +50,18 @@ export default class FileUtils extends Base {
 					});
 				});
 			});
+	}
+
+	copy(src: string, dest: string): Thenable<void> {
+		return new Promise<void>((resolve, reject) => {
+			fs.copy(src, dest, (err) => {
+				if(this.utils.isObject(err)) {
+					return reject(err);
+				}
+
+				resolve();
+			});
+		});
 	}
 
 	mkdir(...dirs: Array<string>): Thenable<void> {

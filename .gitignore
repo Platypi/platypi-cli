@@ -30,5 +30,6 @@ typings
 *.js
 *.map
 project/
+cordova/
 
 !build/*/*.js

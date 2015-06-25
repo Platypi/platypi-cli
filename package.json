@@ -33,6 +33,7 @@
     "es6-promise": "latest",
     "exit": "latest",
     "findup": "latest",
+    "fs-extra": "^0.20.1",
     "glob": "^5.0.10",
     "handlebars": "^3.0.3",
     "inquirer": "latest",

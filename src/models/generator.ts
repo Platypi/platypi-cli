@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as Handlebars from 'handlebars';
 import * as mkdir from 'mkdirp';
@@ -43,14 +43,14 @@ export default class Generator extends Command {
 		}, context);
 
 		return this._finishRender = this._finishRender.then(() => {
-			return this.fileUtils.read(src, options);
+			return this.file.read(src, options);
 		})
 		.then((data: string) => {
 			data = Handlebars.compile(data, {
 				noEscape: true
 			})(options.context);
 
-			return this.fileUtils.read(dest, options).then(() => {
+			return this.file.read(dest, options).then(() => {
 				this.ui.warn(`The file \`${path.normalize(dest.replace(this.project.root, ''))}\` already exists.`);
 				return this.ui.prompt([
 					{
@@ -65,16 +65,22 @@ export default class Generator extends Command {
 						return;
 					}
 
-					return this.fileUtils.write(dest, data, options);
+					return this.file.write(dest, data, options);
 				});
 			}, (err) => {
-				return this.fileUtils.write(dest, data, options);
+				return this.file.write(dest, data, options);
 			});
 		});
 	}
 
+	protected copy(src: string, dest: string): Thenable<void> {
+		src = this.getPath(this._srcRoot, src);
+		dest = this.getPath(this._destRoot, dest);
+		return this.file.copy(src, dest);
+	}
+
 	protected mkdirDest(...dirs: Array<string>): Thenable<any> {
-		return this.fileUtils.mkdir.apply(this, dirs.map((dir) => {
+		return this.file.mkdir.apply(this, dirs.map((dir) => {
 			return this.getPath(this._destRoot, dir);
 		}));
 	}
@@ -88,7 +94,7 @@ export default class Generator extends Command {
 	}
 
 	protected mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string {
-		var eol = this.fileUtils.eol(data),
+		var eol = this.file.eol(data),
 			lines = data.split(eol);
 
 		return this.utils.map(lines, handler).join(eol);
