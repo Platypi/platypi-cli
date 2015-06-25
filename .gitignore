@@ -31,5 +31,7 @@ typings
 *.map
 project/
 cordova/
+!src/generator/cordova
+!src/generator/templates/cordova
 
 !build/*/*.js
