@@ -4,11 +4,13 @@ import Generator from '../../models/generator';
 import Repository from '../repository/index';
 import Service from '../service/index';
 import ViewControl from '../viewcontrol/index';
+import Cordova from '../cordova/index';
 
 var validate: any = require('validate-npm-package-name');
 
 export default class AppGenerator extends Generator {
 	options: IOptions;
+	protected title: string;
 
 	defineOptions(): void {
 		this.option('name', {
@@ -20,6 +22,11 @@ export default class AppGenerator extends Generator {
 			aliases: ['d'],
 			description: `Specify the relative path to a directory in which to create the app`,
 			defaults: ''
+		});
+
+		this.option('cordova', {
+			description: `Don't create a cordova app`,
+			defaults: true
 		});
 	}
 
@@ -38,6 +45,9 @@ export default class AppGenerator extends Generator {
 		name = name.trim();
 
 		if(!this.utils.isEmpty(name)) {
+			this.title = name;
+
+			name = this.utils.kebabCase(name).toLowerCase();
 			var valid = validate(name);
 
 			if(this.utils.isArray(valid.errors) || this.utils.isArray(valid.warnings)) {
@@ -82,28 +92,28 @@ export default class AppGenerator extends Generator {
 		this.ui.debug('Generating the `default` app');
 
 		var destRoot = path.resolve(this.destRoot(), '..'),
+			genOptions = {
+				env: this.env,
+				directory: this.directory,
+				destRoot: destRoot
+			},
 			name = this.options.name,
-			vcGenerator = this.instantiate(ViewControl, {
-				env: this.env,
-				directory: this.directory,
-				destRoot: destRoot
-			}),
-			repoGenerator = this.instantiate(Repository, {
-				env: this.env,
-				directory: this.directory,
-				destRoot: destRoot
-			}),
-			svcGenerator = this.instantiate(Service, {
-				env: this.env,
-				directory: this.directory,
-				destRoot: destRoot
-			}),
+			vcGenerator = this.instantiate(ViewControl, genOptions),
+			repoGenerator = this.instantiate(Repository, genOptions),
+			svcGenerator = this.instantiate(Service, genOptions),
+			cordovaGenerator = this.instantiate(Cordova,  genOptions),
 			vcName = 'home',
+			title = this.utils.startCase(this.title),
 			options = {
 				appName: name,
-				appTitle: this.utils.startCase(name),
+				appTitle: title,
 				vcName: vcName
 			};
+
+		cordovaGenerator.options = {
+			id: name,
+			name: title
+		};
 
 		var promises: Array<Thenable<any>> = [
 			this.render('package.json', '../package.json', options),
@@ -113,8 +123,6 @@ export default class AppGenerator extends Generator {
 			this.render('tsd.json', '../tsd.json', options),
 			this.render('app/app.ts', 'src/app/app.ts', options),
 			this.render('styles/main.less', 'styles/main.less', options),
-			this.render('cordova/config.xml', 'cordova/config.xml', options),
-			this.copy('cordova/resources', 'cordova/resources'),
 			this.mkdirDest(
 				'src/attributecontrols',
 				'src/injectables',
@@ -125,6 +133,10 @@ export default class AppGenerator extends Generator {
 				'../test'
 			)
 		];
+
+		if(this.options.cordova) {
+			promises.push(cordovaGenerator.run());
+		}
 
 		repoGenerator.options = svcGenerator.options = {
 			name: 'base',
@@ -161,4 +173,5 @@ export default class AppGenerator extends Generator {
 interface IOptions extends models.IParsedArgs {
 	name: string;
 	dir: string;
+	cordova: boolean;
 }

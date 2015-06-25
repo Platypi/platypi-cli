@@ -34,7 +34,7 @@ class Cordova extends Command {
 
 	run(): any {
 		return this.process.exec('cordova', this.args, {
-			cwd: path.resolve(this.project.root, 'app/cordova')
+			cwd: path.resolve(this.project.root, 'cordova')
 		});
 	}
 }
