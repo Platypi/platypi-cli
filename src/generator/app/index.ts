@@ -122,8 +122,7 @@ export default class AppGenerator extends Generator {
 			options = {
 				appName: name,
 				appTitle: title,
-				vcName: vcName,
-				cordova: this.options.cordova
+				vcName: vcName
 			};
 
 		cordovaGenerator.options = {
@@ -179,7 +178,7 @@ export default class AppGenerator extends Generator {
 			}).then(() => {
 				return svcGenerator.run();
 			}).then(() => {
-				if(options.cordova) {
+				if(this.options.cordova) {
 					return cordovaGenerator.run();
 				}	
 			});
