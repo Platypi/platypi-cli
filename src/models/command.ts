@@ -189,7 +189,7 @@ export default class Command extends Base {
 
 		this.utils.forEach(lines, (line) => {
 			var padding: string = EOL + (<any>this.utils).fill(Array(longest + 10), ' ').join('');
-			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${wrap(line.description, 60, padding)}`);
+			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${wrap(line.description, 58, padding)}`);
 
 			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {
 				this.ui.help(
