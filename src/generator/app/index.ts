@@ -38,6 +38,21 @@ export default class AppGenerator extends Generator {
 			return this.promptName(options.name);
 		}).then((name) => {
 			options.name = name;
+			return this.promptCordova(options.cordova);
+		}).then((cordova) => {
+			options.cordova = cordova;	
+		});
+	}
+
+	promptCordova(cordova: boolean): Thenable<boolean> {
+		if(!cordova) {
+			return Promise.resolve(cordova);
+		}
+
+		return this.ui.prompt([
+			{ name: 'cordova', default: true, type: 'confirm', message: `Should we create a Cordova project?` }
+		]).then((answer: { cordova: boolean; }) => {
+			return answer.cordova;
 		});
 	}
 
@@ -134,10 +149,6 @@ export default class AppGenerator extends Generator {
 			)
 		];
 
-		if(this.options.cordova) {
-			promises.push(cordovaGenerator.run());
-		}
-
 		repoGenerator.options = svcGenerator.options = {
 			name: 'base',
 			extends: false
@@ -166,6 +177,10 @@ export default class AppGenerator extends Generator {
 				return repoGenerator.run();
 			}).then(() => {
 				return svcGenerator.run();
+			}).then(() => {
+				if(this.options.cordova) {
+					return cordovaGenerator.run();
+				}	
 			});
 	}
 }
