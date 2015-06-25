@@ -157,7 +157,7 @@ export default class Environment extends Base {
 		]).then((values) => {
 			return { component: absolute, values };
 		}, (err) => {
-			if(this.utils.isEmpty(paths)) {
+			if(this.utils.isEmpty(paths) || !isRelative) {
 				throw err;
 			}
 

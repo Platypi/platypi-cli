@@ -10,8 +10,10 @@ class Cordova extends Command {
 	};
 
 	help(command: string): any {
-		return this.process.exec('cordova', this.args.slice(1), {
-			cwd: path.resolve(this.project.root, 'app/cordova')
+		return super.help(command).then(() => {
+			this.ui.help(`Here is the \`cordova\` help:`);
+			this.ui.help(`..........................................................`);
+			return this.exec(this.args);
 		});
 	}
 
@@ -33,7 +35,15 @@ class Cordova extends Command {
 	}
 
 	run(): any {
-		return this.process.exec('cordova', this.args, {
+		return this.exec(this.args);
+	}
+
+	protected exec(args: Array<string>): Thenable<any> {
+		if(args[0] === 'cordova') {
+			args = args.slice(1);
+		}
+
+		return this.process.exec('cordova', args, {
 			cwd: path.resolve(this.project.root, 'cordova')
 		});
 	}
