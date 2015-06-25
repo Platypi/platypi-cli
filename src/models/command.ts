@@ -188,7 +188,7 @@ export default class Command extends Base {
 		});
 
 		this.utils.forEach(lines, (line) => {
-			var padding: string = EOL + (<any>this.utils).fill(Array(longest + 10), ' ').join('');
+			var padding: string = EOL + this.file.spaces(longest + 10);
 			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${wrap(line.description, 58, padding)}`);
 
 			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {

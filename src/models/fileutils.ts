@@ -92,6 +92,10 @@ export default class FileUtils extends Base {
 		return lf;
 	}
 
+	spaces(length: number): string {
+		return (<any>this.utils).fill(Array(length), ' ').join('')
+	}
+
 	mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string {
 		var eol = this.eol(data),
 			lines = data.split(eol);
