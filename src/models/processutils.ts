@@ -6,7 +6,7 @@ export default class ProcessUtils extends Base {
 	exec(command: string, args: Array<string> = [], options?: models.IExecOptions): Thenable<any> {
 		return new Promise<any>((resolve, reject) => {
 			var cmd = [command].concat(args).join(' ');
-			this.ui.debug(`Spawning command \`${cmd}\``);
+			this.ui.info(`Running command \`${cmd}\``);
 
 			var child = exec(cmd, options);
 
@@ -19,7 +19,7 @@ export default class ProcessUtils extends Base {
 			});
 
 			child.on('close', (code: string) => {
-				this.ui.info(`${command} exited with code ${code}`);
+				this.ui.debug(`${command} exited with code ${code}`);
 				resolve();
 			});
 		});

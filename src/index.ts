@@ -39,7 +39,7 @@ function getLogLevel(args: Array<string>): string|number {
 
 export default function(options: { args: Array<string>; input: NodeJS.ReadableStream; output: NodeJS.WritableStream; }): Thenable<any> {
 	var ui = new Ui(<ui.IOptions>utils.extend({
-			logLevel: getLogLevel(options.args) || Ui.LOG_LEVEL.TRACE
+			logLevel: getLogLevel(options.args) || Ui.LOG_LEVEL.INFO
 		}, options)),
 		environment: IEnvironment = {
 			commands: commands,

@@ -78,7 +78,7 @@ export default class Ui {
 	}
 
 	warn(message: string): void {
-		this.logLine(this.makePretty(message, chalk.magenta), LOG_LEVEL.WARN);
+		this.logLine(this.makePretty(message, chalk.yellow), LOG_LEVEL.WARN);
 	}
 
 	info(message: string): void {
@@ -86,11 +86,11 @@ export default class Ui {
 	}
 
 	debug(message: string): void {
-		this.logLine(this.makePretty(message, chalk.yellow), LOG_LEVEL.DEBUG);
+		this.logLine(this.makePretty(message, chalk.green), LOG_LEVEL.DEBUG);
 	}
 
 	trace(message: string): void {
-		this.logLine(this.makePretty(message, chalk.green), LOG_LEVEL.TRACE);
+		this.logLine(this.makePretty(message, chalk.magenta), LOG_LEVEL.TRACE);
 	}
 
 	help(message: string): void {
