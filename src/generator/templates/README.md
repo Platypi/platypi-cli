@@ -32,7 +32,7 @@ When you're ready to build for your cordova project there are a couple of things
 
 0. Compile/Bundle/minify your TypeScript, JavaScript, and Less files.
 0. Copy your assets (fonts, images) as well as your distribution source files (app.js, app.css, index.html) into the `cordova/www` directory
-0. Modify your index.html to include cordova specific tags (i.e. including `cordova.js`, specifying the CSP/viewport meta tags, etc)
+0. Modify your index.html to include cordova specific tags (i.e. including `cordova.js`, specifying the CSP meta tag, etc)
 0. Build your cordova project
 
 Your `package.json` has a `build:cordova` script that will do all of this for you. When you are ready to build your cordova project simple run:
