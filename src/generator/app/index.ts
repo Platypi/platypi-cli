@@ -28,6 +28,11 @@ export default class AppGenerator extends Generator {
 			description: `Don't create a cordova app`,
 			defaults: true
 		});
+
+		this.option('gitignore', {
+			description: `Don't create a .gitignore`,
+			defaults: true
+		});
 	}
 
 	askQuestions(): any {
@@ -40,7 +45,10 @@ export default class AppGenerator extends Generator {
 			options.name = name;
 			return this.promptCordova(options.cordova);
 		}).then((cordova) => {
-			options.cordova = cordova;	
+			options.cordova = cordova;
+			return this.promptGitIgnore(options.gitignore);
+		}).then((gitignore) => {
+			options.gitignore = gitignore;	
 		});
 	}
 
@@ -53,6 +61,18 @@ export default class AppGenerator extends Generator {
 			{ name: 'cordova', default: true, type: 'confirm', message: `Should we create a Cordova project?` }
 		]).then((answer: { cordova: boolean; }) => {
 			return answer.cordova;
+		});
+	}
+
+	promptGitIgnore(gitignore: boolean): Thenable<boolean> {
+		if(!gitignore) {
+			return Promise.resolve(gitignore);
+		}
+
+		return this.ui.prompt([
+			{ name: 'gitignore', default: true, type: 'confirm', message: `Should we create a .gitignore?` }
+		]).then((answer: { gitignore: boolean; }) => {
+			return answer.gitignore;
 		});
 	}
 
@@ -150,6 +170,10 @@ export default class AppGenerator extends Generator {
 			)
 		];
 
+		if(this.options.gitignore) {
+			promises.push(this.render('gitignore', '../.gitignore', options));
+		}
+
 		repoGenerator.options = svcGenerator.options = {
 			name: 'base',
 			extends: false
@@ -190,4 +214,5 @@ interface IOptions extends models.IParsedArgs {
 	name: string;
 	dir: string;
 	cordova: boolean;
+	gitignore: boolean;
 }
