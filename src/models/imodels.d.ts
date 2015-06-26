@@ -36,6 +36,7 @@ declare module models {
 		[key: string]: any;
 		version: string;
 		name: string;
+		scripts: any;
 		platypi?: any;
 	}
 
@@ -72,6 +73,7 @@ declare module models {
 		getConfig(property: string): any;
 		cliPackage(): IPackage;
 		package(): ILocalPackage;
+		addScripts(scripts: any): Thenable<void>;
 	}
 
 	class FileUtils {

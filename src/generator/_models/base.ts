@@ -102,7 +102,10 @@ export default class BaseGenerator extends Generator {
 		}
 
 		return this._render(src, dest, config).then(() => {
-			return this.processMain();
+			return Promise.all([
+				this.processMainTs(),
+				this.processMainLess()
+			]);
 		});
 	}
 
@@ -119,9 +122,9 @@ export default class BaseGenerator extends Generator {
 		return Promise.all(promises);
 	}
 
-	protected processMain(): Thenable<any> {
+	protected processMainTs(): Thenable<any> {
 		var destRoot = path.resolve(this.destRoot(), '..'),
-			root = path.relative('.', destRoot),
+			root = path.relative(this.project.root, destRoot),
 			paths = [
 				root + '/app/app.ts',
 				root + '/injectables/**/*.ts',
@@ -129,7 +132,7 @@ export default class BaseGenerator extends Generator {
 				root + '/templatecontrols/**/*.ts'
 			];
 
-		var file = destRoot + '/main.ts';
+		var file = path.resolve(destRoot, 'main.ts');
 
 		return Promise.all([
 			this.file.read(file),
@@ -156,20 +159,56 @@ export default class BaseGenerator extends Generator {
 		});
 	}
 
-	protected glob(root: string, files: Array<string>): Thenable<any> {
+	protected processMainLess(): Thenable<any> {
+		var destRoot = path.resolve(this.destRoot(), '..'),
+			root = path.relative(this.project.root, destRoot),
+			paths = [
+				root + '/attributecontrols/**/*.less',
+				root + '/templatecontrols/**/*.less',
+				root + '/viewcontrols/**/*.less',
+			];
+
+		var file = path.resolve(destRoot, '../styles/main.less');
+
+		return Promise.all([
+			this.file.read(file),
+			this.glob(root, paths, '../src/')
+		]).then((results: Array<any>) => {
+			var data: string = results[0],
+				files: Array<string> = results[1],
+				imprt = `@import '`,
+				append: Array<string> = [];
+
+			files.forEach((file) => {
+				if(data.indexOf(file) === -1) {
+					append.push(`${imprt}${file}';`);
+				}
+			});
+
+			if(append.length > 0) {
+				append.push('');
+			}
+
+			return this.formatMain(data, append);
+		}).then((data) => {
+			return this.file.write(file, data);
+		});
+	}
+
+	protected glob(root: string, files: Array<string>, replace: string = './'): Thenable<any> {
 		files = files.slice(0);
 		var firstFile = files.shift();
 		return new Promise<Array<string>>((resolve, reject) => {
 			glob(firstFile, (err, matches) => {
 				var out = matches.map((file) => {
-					return './' + path.relative(root, file).replace(/\\/g, '/').replace(/\.ts$/, '');
+					return replace + path.relative(root, file).replace(/\\/g, '/').replace(/\.ts$/, '');
 				});
 
 				resolve(out);
 			});
 		}).then((out) => {
 			if(files.length > 0) {
-				return this.glob(root, files).then((result) => {
+				return this.glob(root, files, replace).then((result) => {
 					return out.concat(result);
 				});
 			}

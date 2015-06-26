@@ -37,6 +37,7 @@
     "glob": "^5.0.10",
     "handlebars": "^3.0.3",
     "inquirer": "latest",
+    "json-stable-stringify": "^1.0.0",
     "lodash": "latest",
     "minimist": "latest",
     "mkdirp": "^0.5.1",

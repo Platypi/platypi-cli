@@ -3,8 +3,10 @@ import {Promise} from 'es6-promise';
 import Base from './base';
 import {isObject, isString, merge} from 'lodash';
 import NotFoundError from '../errors/notfound';
+import FileUtils from './fileutils';
 
-var findup = require('findup');
+var findup = require('findup'),
+	stringify = require('json-stable-stringify');
 
 export default class Project extends Base {
 	/**
@@ -19,6 +21,7 @@ export default class Project extends Base {
 
 	protected pkg: models.ILocalPackage;
 	protected cliPkg: models.IPackage;
+	protected file: FileUtils;
 
 	static project(ui: ui.Ui, root: string): Thenable<Project> {
 		return Project.closestPackage(ui, root).then((info: { directory: string; pkg: any; }) => {
@@ -105,8 +108,9 @@ export default class Project extends Base {
 		super(options);
 		var cliPackage: any = this.cliPkg = require('../../package.json');
 		this.bin = this.utils.keys(cliPackage.bin)[0];
-		this.root = options.root;
-		this.pkg = options.pkg;
+		this.root = options.root || process.cwd();
+		this.pkg = this.utils.cloneDeep(options.pkg);
+		this.file = this.instantiate(FileUtils, options);
 	}
 
 	getConfig(property: string): any {
@@ -121,5 +125,15 @@ export default class Project extends Base {
 
 	package(): models.ILocalPackage {
 		return this.utils.cloneDeep(this.pkg);
+	}
+
+	addScripts(scripts: any): Thenable<void> {
+		var file = path.resolve(this.root, 'package.json'),
+			pkg: models.ILocalPackage = require(file);
+
+		this.utils.extend(pkg.scripts, scripts);
+		pkg.scripts = JSON.parse(stringify(pkg.scripts));
+
+		return this.file.write(file, JSON.stringify(pkg, null, 2));
 	}
 }

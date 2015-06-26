@@ -103,7 +103,7 @@ export default class AppGenerator extends Generator {
 
 	run(): any {
 		this.destRoot(this.options.dir + '/app');
-
+		this.project.root = this.options.dir;
 		this.ui.debug('Generating the `default` app');
 
 		var destRoot = path.resolve(this.destRoot(), '..'),
