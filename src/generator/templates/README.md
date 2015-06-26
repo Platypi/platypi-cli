@@ -85,6 +85,10 @@ When creating an app you can choose whether or not you want to also create a Cor
 
 ### Requirements
 
+```
+$ npm install cordova -g
+```
+
 Refer to the [android](http://cordova.apache.org/docs/en/edge/guide_platforms_android_index.md.html#Android%20Platform%20Guide) and [ios](http://cordova.apache.org/docs/en/edge/guide_platforms_ios_index.md.html#iOS%20Platform%20Guide)
 platform guides to help you get setup with a Cordova environment.
 
