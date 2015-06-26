@@ -55,18 +55,12 @@ class Cordova extends Command {
 	generalHelp(command: string): any {
 		var baseCommand = this.buildFullCommand().join(' ');
 
-		return this.env.listCommands(this.defaultComponent, this.commands[0]).then((commands) => {
 			this.ui.help(`
+  This command will run \`cordova\` commands in the context of your cordova project directory.
+
   General Usage:
 
-    ${baseCommand} <component> [...options]
-
-  Commands:
-`);
-			commands.forEach((c) => {
-				this.ui.help(`    ${baseCommand} ${c} -h`);
-			});
-		});
+    ${baseCommand} <command> [...options]`);
 	}
 
 	run(): any {
