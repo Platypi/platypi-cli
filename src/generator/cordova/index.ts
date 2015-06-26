@@ -5,6 +5,7 @@ var validate: any = require('validate-npm-package-name');
 
 export default class CordovaGenerator extends Generator {
 	options: IOptions;
+	protected needsProject: boolean = true;
 
 	defineOptions(): any {
 		this.option('id', {

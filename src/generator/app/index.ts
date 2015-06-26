@@ -132,6 +132,7 @@ export default class AppGenerator extends Generator {
 
 		var promises: Array<Thenable<any>> = [
 			this.render('package.json', '../package.json', options),
+			this.render('README.md', '../README.md', options),
 			this.render('tsconfig.json', '../tsconfig.json', options),
 			this.render('index.html', 'index.html', options),
 			this.render('main.ts', 'src/main.ts', options),
@@ -145,7 +146,7 @@ export default class AppGenerator extends Generator {
 				'src/templatecontrols',
 				'fonts',
 				'images',
-				'../test'
+				'../test/unit'
 			)
 		];
 

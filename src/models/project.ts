@@ -1,7 +1,7 @@
 import * as path from 'path';
 import {Promise} from 'es6-promise';
 import Base from './base';
-import {isObject, isString, merge} from 'lodash';
+import {isObject, isString, merge, cloneDeep} from 'lodash';
 import NotFoundError from '../errors/notfound';
 import FileUtils from './fileutils';
 
@@ -87,7 +87,7 @@ export default class Project extends Base {
 			ui.debug(`Reading ${config}`);
 			return {
 				directory: directory,
-				pkg: require(config)
+				pkg: cloneDeep(require(config))
 			};
 		});
 	}
@@ -108,7 +108,7 @@ export default class Project extends Base {
 		super(options);
 		var cliPackage: any = this.cliPkg = require('../../package.json');
 		this.bin = this.utils.keys(cliPackage.bin)[0];
-		this.root = options.root || process.cwd();
+		this.root = options.root;
 		this.pkg = this.utils.cloneDeep(options.pkg);
 		this.file = this.instantiate(FileUtils, options);
 	}
@@ -129,7 +129,7 @@ export default class Project extends Base {
 
 	addScripts(scripts: any): Thenable<void> {
 		var file = path.resolve(this.root, 'package.json'),
-			pkg: models.ILocalPackage = require(file);
+			pkg: models.ILocalPackage = this.utils.cloneDeep(require(file));
 
 		this.utils.extend(pkg.scripts, scripts);
 		pkg.scripts = JSON.parse(stringify(pkg.scripts));
