@@ -187,14 +187,18 @@ export default class Command extends Base {
 			lines.push({ command: commands, description: option.description, defaults: option.defaults });
 		});
 
+		var utils = this.utils,
+			isNull = (val: any) => { return utils.isNull(val) || utils.isUndefined(val); },
+			isString = utils.isString,
+			isEmpty = utils.isEmpty;
+
 		this.utils.forEach(lines, (line) => {
 			var padding: string = EOL + this.file.spaces(longest + 10);
 			this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('')}${wrap(line.description, 58, padding)}`);
 
-			if(!this.utils.isEmpty(line.defaults) && line.defaults !== true) {
+			if(!isNull(line.defaults) && !(isString(line.defaults) && isEmpty(line.defaults)) && line.defaults !== true) {
 				this.ui.help(
-`
-        default: ${line.defaults}
+`      default: ${line.defaults}
 `);
 			}
 		});
