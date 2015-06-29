@@ -21,7 +21,7 @@ build/Release
 node_modules
 
 # TSD Declarations
-./typings
+/typings
 
 # JS, css, and map files
 *.js
