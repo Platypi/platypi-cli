@@ -38,11 +38,16 @@ export default class AppGenerator extends Generator {
 	askQuestions(): any {
 		var options = this.options;
 
-		return this.promptDir(options.dir).then((dir) => {
-			options.dir = dir;
-			return this.promptName(options.name);
-		}).then((name) => {
+		return this.promptName(options.name).then((name) => {
 			options.name = name;
+
+			if(this.utils.isEmpty(options.dir)) {
+				options.dir = name = this.utils.camelCase(name).toLowerCase();
+			}
+
+			return this.promptDir(options.dir, name);
+		}).then((dir) => {
+			options.dir = dir;
 			return this.promptCordova(options.cordova);
 		}).then((cordova) => {
 			options.cordova = cordova;
@@ -107,15 +112,17 @@ export default class AppGenerator extends Generator {
 		});
 	}
 
-	promptDir(dir: string = ''): Thenable<string> {
+	promptDir(dir: string = '', defaults?: string): Thenable<string> {
 		dir = dir.trim();
 
-		if(!this.utils.isEmpty(dir)) {
+		if(!this.utils.isEmpty(dir) && dir !== defaults) {
 			return Promise.resolve(dir);
+		} else if(this.utils.isEmpty(dir)) {
+			dir = '.';
 		}
 
 		return this.ui.prompt([
-			{ name: 'dir', default: '.', type: 'input', message: `Where should this app be created?` }
+			{ name: 'dir', default: dir, type: 'input', message: `Where should this app be created?` }
 		]).then((answer: { dir: string; }) => {
 			return answer.dir;
 		});
