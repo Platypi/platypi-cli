@@ -44,6 +44,10 @@ export default class Command extends Base {
 		this.option('silent', {
 			description: 'Print only warnings and errors'
 		});
+
+		this.option('loglevel', {
+			description: 'Print at and above a particular level                (ERROR > WARN > INFO > DEBUG > TRACE)'
+		});
 	}
 
 	help(command?: string): Thenable<void> {
