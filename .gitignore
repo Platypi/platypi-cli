@@ -26,12 +26,20 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
-typings
-*.js
-*.map
-project/
-cordova/
-!src/generator/cordova
-!src/generator/templates/cordova
+# OSX Folder Attributes
+.DS_Store
 
+# TSD Declarations
+/typings
+
+# JS, css, and map files
+*.js
+*.css
+*.map
+
+# Non-essential directories
+/project
+/cordova
+
+# Build scripts
 !build/*/*.js
