@@ -73,6 +73,7 @@ declare module models {
 		getConfig(property: string): any;
 		cliPackage(): IPackage;
 		package(): ILocalPackage;
+		addDependencies(deps: any, dev?: boolean): Thenable<void>;
 		addScripts(scripts: any): Thenable<void>;
 	}
 

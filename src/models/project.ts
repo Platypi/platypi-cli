@@ -22,6 +22,11 @@ export default class Project extends Base {
 	protected pkg: models.ILocalPackage;
 	protected cliPkg: models.IPackage;
 	protected file: FileUtils;
+	protected get pkgLocation(): string {
+		return path.resolve(this.root, 'package.json');
+	};
+	protected finishReading: Thenable<void> = Promise.resolve<void>();
+	protected finishWriting: Thenable<void> = Promise.resolve<void>();
 
 	static project(ui: ui.Ui, root: string): Thenable<Project> {
 		return Project.closestPackage(ui, root).then((info: { directory: string; pkg: any; }) => {
@@ -127,13 +132,32 @@ export default class Project extends Base {
 		return this.utils.cloneDeep(this.pkg);
 	}
 
+	addDependencies(deps: any, dev?: boolean): Thenable<void> {
+		return this.extendPackageProperty((dev ? 'devD': 'd') + 'ependencies', deps);
+	}
+
 	addScripts(scripts: any): Thenable<void> {
-		var file = path.resolve(this.root, 'package.json'),
-			pkg: models.ILocalPackage = this.utils.cloneDeep(require(file));
+		return this.extendPackageProperty('scripts', scripts);
+	}
 
-		this.utils.extend(pkg.scripts, scripts);
-		pkg.scripts = JSON.parse(stringify(pkg.scripts));
+	protected extendPackageProperty(property: string, value: any): Thenable<void> {
+		return this.finishWriting = this.finishWriting.then(() => {
+			return this.readLocalPackage();
+		}).then((pkg) => {
+			this.utils.extend(pkg[property], value);
+			pkg[property] = JSON.parse(stringify(pkg[property]));
 
-		return this.file.write(file, JSON.stringify(pkg, null, 2));
+			return this.writeLocalPackage(pkg);
+		});
+	}
+
+	private readLocalPackage(): Thenable<models.ILocalPackage> {
+		return this.file.read(this.pkgLocation).then((pkg) => {
+			return JSON.parse(pkg);
+		});
+	}
+
+	private writeLocalPackage(pkg: models.ILocalPackage): Thenable<void> {
+		return this.file.write(this.pkgLocation, JSON.stringify(pkg, null, 2));
 	}
 }

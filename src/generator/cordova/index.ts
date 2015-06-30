@@ -7,6 +7,19 @@ export default class CordovaGenerator extends Generator {
 	options: IOptions;
 	protected needsProject: boolean = true;
 
+	protected deps: any = {
+		ncp: 'latest'
+	};
+
+	protected scripts: any = {
+		"build:cordova": "npm run deploy && npm run copy && plat cordova prepare && plat cordova build",
+	    copy: "mkdirp cordova/www && concurrent -r \"npm run copy:dist\" \"npm run copy:fonts\" \"npm run copy:images\" \"npm run copy:index\"",
+	    "copy:dist": "ncp app/dist cordova/www/dist",
+	    "copy:fonts": "ncp app/fonts cordova/www/fonts",
+	    "copy:images": "ncp app/images cordova/www/images",
+	    "copy:index": "ncp app/index.html cordova/www/index.html"
+	};
+
 	defineOptions(): any {
 		this.option('id', {
 			description: 'The id of your cordova app'
@@ -57,20 +70,14 @@ export default class CordovaGenerator extends Generator {
 			return this.promptName(answer.name);
 		});
 	}
-	scripts: any = {
-		"build:cordova": "npm run deploy && npm run copy && plat cordova prepare && plat cordova build",
-	    copy: "mkdirp cordova/www && concurrent -r \"npm run copy:dist\" \"npm run copy:fonts\" \"npm run copy:images\" \"npm run copy:index\"",
-	    "copy:dist": "ncp app/dist cordova/www/dist",
-	    "copy:fonts": "ncp app/fonts cordova/www/fonts",
-	    "copy:images": "ncp app/images cordova/www/images",
-	    "copy:index": "ncp app/index.html cordova/www/index.html"
-	};
+
 	run(): any {
 		this.normalizeOptions(this.options);
 
 		return Promise.all([
 			this.render('cordova/config.xml', 'cordova/config.xml', this.options),
 			this.copy('cordova/res', 'cordova/res'),
+			this.project.addDependencies(this.deps),
 			this.project.addScripts(this.scripts),
 			this.mkdirDest('cordova/www')
 		]);
