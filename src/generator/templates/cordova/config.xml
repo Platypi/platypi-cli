@@ -4,8 +4,8 @@
     <description>
         A Platypi CLI cordova app
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="support@platypi.io" href="https://platypi.io">
+        Platypi Team
     </author>
     <content src="index.html" />
     <access origin="*" />
