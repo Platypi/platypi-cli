@@ -25,6 +25,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="maps:*" />
 
     <platform name="android">
         <allow-intent href="market:*" />
@@ -87,4 +88,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
     <plugin name="cordova-plugin-network-information" spec="^1.0.1" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="^1.2.0" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
 </widget>
