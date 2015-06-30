@@ -35,7 +35,7 @@
         <icon src="res/platform/android/res/drawable-xhdpi/appicon.png" density="xhdpi" />
         <icon src="res/platform/android/res/drawable-xxhdpi/appicon.png" density="xxhdpi" />
         <icon src="res/platform/android/res/drawable-xxxhdpi/appicon.png" density="xxxhdpi" />
-    
+
         <splash src="res/app/assets/android/images/res-long-port-hdpi/default.png" density="port-hdpi"/>
         <splash src="res/app/assets/android/images/res-long-port-ldpi/default.png" density="port-ldpi"/>
         <splash src="res/app/assets/android/images/res-long-port-mdpi/default.png" density="port-mdpi"/>
@@ -86,4 +86,5 @@
     <engine name="android" spec="^4.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
     <plugin name="cordova-plugin-network-information" spec="^1.0.1" />
+    <plugin name="cordova-plugin-crosswalk-webview" spec="^1.2.0" />
 </widget>
