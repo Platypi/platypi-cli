@@ -131,7 +131,7 @@ class Cordova extends Command {
 		lines.splice(0, index + 1, this.indexAdd);
 	}
 
-	protected findHead(lines: Array<string>) {
+	protected findHead(lines: Array<string>): number {
 		var index = -1;
 
 		lines.some((line, i) => {

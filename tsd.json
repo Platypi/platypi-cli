@@ -6,61 +6,61 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "es6-promise/es6-promise.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "lodash/lodash.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "rimraf/rimraf.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "through/through.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "chalk/chalk.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "node-uuid/node-uuid.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "minimatch/minimatch.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "mocha/mocha.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "chai-as-promised/chai-as-promised.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "chai/chai.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "sinon-chai/sinon-chai.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "sinon/sinon.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "minimist/minimist.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "handlebars/handlebars.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "swag/swag.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "mkdirp/mkdirp.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "glob/glob.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
     "fs-extra/fs-extra.d.ts": {
-      "commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+      "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     }
   }
 }

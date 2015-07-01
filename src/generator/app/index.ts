@@ -53,7 +53,7 @@ export default class AppGenerator extends Generator {
 			options.cordova = cordova;
 			return this.promptGitIgnore(options.gitignore);
 		}).then((gitignore) => {
-			options.gitignore = gitignore;	
+			options.gitignore = gitignore;
 		});
 	}
 
@@ -212,7 +212,7 @@ export default class AppGenerator extends Generator {
 			}).then(() => {
 				if(this.options.cordova) {
 					return cordovaGenerator.run();
-				}	
+				}
 			});
 	}
 }

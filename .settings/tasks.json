@@ -8,26 +8,35 @@
 
 {
 	"version": "0.1.0",
-	"command": "npm run",
+	"command": "npm",
 	"isShellCommand": true,
 	"showOutput": "never",
 	"tasks": [
 		{
 			"taskName": "build",
+			"args": [
+				"run"
+			],
 			"isBuildCommand": true,
 			"problemMatcher": ["$tsc"]
 		},
 		{
-			"taskName": "clean"
+			"taskName": "clean",
+			"args": [
+				"run"
+			]
 		},
 		{
 			"taskName": "lint",
+			"args": [
+				"run"
+			],
 			"problemMatcher": [
 				{
 					"owner": "lint",
 					"fileLocation": "relative",
 					"pattern": {
-	                    "regexp": "^([a-z\\/-]*.ts)\\[(\\d*), (\\d*)\\]: (.*)?",
+	                    "regexp": "^([a-z\\/\\.-]*.ts)\\[(\\d*), (\\d*)\\]: (.*)?",
 	                    "file": 1,
 	                    "line": 2,
 	                    "column": 3,
@@ -38,11 +47,23 @@
 		},
 		{
 			"taskName": "test",
+			"args": [
+				"run"
+			],
 			"isTestCommand": true,
 			"showOutput": "always"
 		},
 		{
-			"taskName": "tsd"
+			"taskName": "tsd",
+			"args": [
+				"run"
+			]
+		},
+		{
+			"taskName": "tsconfig",
+			"args": [
+				"run"
+			]
 		}
 	]
 }

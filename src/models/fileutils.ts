@@ -93,7 +93,7 @@ export default class FileUtils extends Base {
 	}
 
 	spaces(length: number): string {
-		return (<any>this.utils).fill(Array(length), ' ').join('')
+		return (<any>this.utils).fill(Array(length), ' ').join('');
 	}
 
 	mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string {
