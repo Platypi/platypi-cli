@@ -32,12 +32,15 @@
     "deploy": "npm run clean:dist && npm run build -- -- -- -p [minifyify --no-map]",
     "less": "mkdirp app/dist && lessc app/styles/main.less > app/dist/app.css --clean-css=\"--s0 --advanced\"",
     "lint": "tsconfig-lint --use-glob",
+    "postless": "echo less done!",
+    "postbundle": "echo bundle done!",
     "prepublish": "npm run tsd && tsconfig",
     "start": "concurrent -r \"npm run watch\" \"http-server -p 3000 app\"",
     "ts": "tsconfig && tsc -p .",
     "tsd": "tsd update -so && tsd link",
-    "watch": "concurrent -r \"npm run watch:ts\" \"npm run watch:less\"",
-    "watch:less": "nodemon -w app -e less --exec npm run less",
-    "watch:ts": "nodemon -w app -e ts --exec npm run build:ts"
+    "watch": "concurrent -r \"npm run watch:ts\" \"npm run watch:html\" \"npm run watch:less\"",
+    "watch:less": "nodemon -q -w app -e less --exec npm run less",
+    "watch:html": "nodemon -q -w app -e html --exec npm run bundle",
+    "watch:ts": "nodemon -q -w app -e ts --exec npm run build:ts"
   }
 }
