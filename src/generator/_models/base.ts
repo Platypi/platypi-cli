@@ -261,23 +261,22 @@ export default class BaseGenerator extends Generator {
 			injFound: boolean = false,
 			tcFound: boolean = false;
 
-		return data.split(eol)
+		return this.sortMain(data.split(eol)
 			.concat(append)
 			.filter((value) => {
 				return !this.utils.isEmpty(value.trim());
-			})
-			.sort(this.sortMain.bind(this))
+			}))
 			.map((value, index, lines) => {
-				if(value.indexOf('./app/') > -1 && !appFound) {
+				if(value.indexOf('/app/') > -1 && !appFound) {
 					appFound = true;
 					value = eol + value;
-				} else if(value.indexOf('./attributecontrols') > -1 && !acFound) {
+				} else if(value.indexOf('/attributecontrols') > -1 && !acFound) {
 					acFound = true;
 					value = eol + value;
-				} else if(value.indexOf('./injectables') > -1 && !injFound) {
+				} else if(value.indexOf('/injectables') > -1 && !injFound) {
 					injFound = true;
 					value = eol + value;
-				} else if(value.indexOf('./templatecontrols') > -1 && !tcFound) {
+				} else if(value.indexOf('/templatecontrols') > -1 && !tcFound) {
 					tcFound = true;
 					value = eol + value;
 				}
@@ -288,7 +287,28 @@ export default class BaseGenerator extends Generator {
 			.join(eol);
 	}
 
-	private sortMain(a: string, b: string): number {
+	private sortMain(lines: Array<string>): Array<string> {
+		var imports: Array<string> = [],
+			others: Array<string> = [],
+			trim: string;
+
+		lines.forEach((line) => {
+			trim = line.trim();
+			if(trim.indexOf('require') === 0 || trim.indexOf('@import') === 0) {
+				imports.push(line);
+			} else {
+				others.push(line);
+			}
+		});
+
+		if(others[0] !== '') {
+			others.unshift('');
+		}
+
+		return imports.sort(this.sort.bind(this)).concat(others);
+	}
+
+	private sort(a: string, b: string): number {
 		var aa = a.indexOf('app') > -1,
 			ba = b.indexOf('app') > -1,
 			aac = a.indexOf('attributecontrols') > -1,
