@@ -8,7 +8,7 @@ Use `npm` to install this package.
 
 Globally (preferred)
 ```shell
-npm install platypi-cli -g 
+npm install platypi-cli -g
 ```
 
 or, Locally
@@ -50,7 +50,7 @@ plat create viewcontrol Single --dir ./app/viewcontrols/posts/
 
 Create a ViewControl component that extends another ViewControl
 ```shell
-plat create viewcontrol PostsByTag --extends ./app/viewcontrols/posts/list/list.viewcontrol.ts
+plat create viewcontrol PostsByTag --extends ./app/viewcontrols/posts/list/list.vc.ts
 ```
 
 > **NOTE:** When extending components, the file specified must have the component listed as its default export.
@@ -72,5 +72,5 @@ injectable       | inj
 
 ```shell
 -d,--dir <directory> Used to specify the directory in which to create the project or component
--e, --extends <file> A path (relative or absolute) to a file with which to extend the 
+-e,--extends <file> A path (relative or absolute) to a file with which to extend the
 ```
