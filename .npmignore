@@ -40,3 +40,7 @@ node_modules
 # Non-essential directories
 /project
 /cordova
+
+# Don't ignore template TS
+!src/generator/templates/*.ts
+!src/generator/templates/*/*.ts
