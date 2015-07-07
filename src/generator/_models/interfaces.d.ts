@@ -17,6 +17,7 @@ declare module generator {
 		ext: string;
 		type: string;
 		allowExtends?: boolean;
+		allowExtendsWithoutBase?: boolean;
 		noFileExtension?: boolean;
 		declaration?: boolean;
 	}

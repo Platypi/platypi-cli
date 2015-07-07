@@ -11,6 +11,7 @@ export default class BaseGenerator extends Generator {
 	protected type: string;
 	protected ext: string;
 	protected allowExtends: boolean;
+	protected allowExtendsWithoutBase: boolean;
 	protected fileExtension: boolean;
 	protected declaration: boolean;
 
@@ -19,6 +20,14 @@ export default class BaseGenerator extends Generator {
 		this.type = config.type;
 		this.ext = config.ext.toLowerCase();
 		this.allowExtends = !!config.allowExtends;
+		var allowExtendsWithoutBase = config.allowExtendsWithoutBase;
+
+		if(allowExtendsWithoutBase === false) {
+			this.allowExtendsWithoutBase = false;
+		} else {
+			this.allowExtendsWithoutBase = true;
+		}
+
 		this.fileExtension = !config.noFileExtension;
 		this.declaration = !!config.declaration;
 
@@ -40,7 +49,7 @@ export default class BaseGenerator extends Generator {
 			defaults: ''
 		});
 
-		if(this.allowExtends) {
+		if(this.allowExtends || this.allowExtendsWithoutBase) {
 			this.option('extends', {
 				aliases: ['x'],
 				description: `Specify the relative import path to the ${this.type} to extend`
@@ -89,7 +98,7 @@ export default class BaseGenerator extends Generator {
 		var ext = options.extends,
 			src = this.ext;
 
-		if(ext === false) {
+		if(ext === false && this.allowExtends) {
 			src = `base.${src}`;
 		} else {
 			config.ext = this.findExtends(dest).replace(/\\/g, '/').replace(/'/g, '');
@@ -247,6 +256,10 @@ export default class BaseGenerator extends Generator {
 
 		if(this.utils.isString(ext)) {
 			return ext;
+		}
+
+		if(!this.allowExtends && this.allowExtendsWithoutBase) {
+			return '';
 		}
 
 		var dest = this.destRoot();
