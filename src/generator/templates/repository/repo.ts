@@ -1,4 +1,4 @@
-import {register} from 'platypus';
+import {async, register} from 'platypus';
 import BaseRepository from '{{ext}}';
 
 export default class {{capitalizeFirst name}}Repository extends BaseRepository {

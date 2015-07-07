@@ -1,4 +1,4 @@
-import {register} from 'platypus';
+import {async, register} from 'platypus';
 import BaseService from '{{ext}}';
 
 export default class {{capitalizeFirst name}}Service extends BaseService {
