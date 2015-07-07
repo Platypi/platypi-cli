@@ -274,7 +274,7 @@ export default class BaseGenerator extends Generator {
 			injFound: boolean = false,
 			tcFound: boolean = false;
 
-		return this.sortMain(data.split(eol)
+		var sorted = this.sortMain(data.split(eol)
 			.concat(append)
 			.filter((value) => {
 				return !this.utils.isEmpty(value.trim());
@@ -296,8 +296,13 @@ export default class BaseGenerator extends Generator {
 
 				return value;
 			})
-			.concat([''])
-			.join(eol);
+			.concat(['']);
+
+		if(sorted[sorted.length - 2].trim() === '' && sorted[sorted.length - 1].trim() === '') {
+			sorted.pop();
+		}
+
+		return sorted.join(eol)
 	}
 
 	private sortMain(lines: Array<string>): Array<string> {
