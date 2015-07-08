@@ -149,12 +149,12 @@ export default class BaseGenerator extends Generator {
 		]).then((results: Array<any>) => {
 			var data: string = results[0],
 				files: Array<string> = results[1],
-				req = `require('`,
+				req = `import '`,
 				append: Array<string> = [];
 
 			files.forEach((file) => {
 				if(data.indexOf(file) === -1) {
-					append.push(`${req}${file}');`);
+					append.push(`${req}${file}';`);
 				}
 			});
 

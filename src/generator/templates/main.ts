@@ -1,4 +1,4 @@
-require('platypus');
-require('platypusui');
+import 'platypus';
+import 'platypusui';
 
-require('./app/app');
+import './app/app';
