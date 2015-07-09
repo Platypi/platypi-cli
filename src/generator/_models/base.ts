@@ -139,13 +139,18 @@ export default class BaseGenerator extends Generator {
 				root + '/injectables/**/*.ts',
 				root + '/attributecontrols/**/*.ts',
 				root + '/templatecontrols/**/*.ts'
-			];
+			],
+            ignore = [
+				root + '/injectables/**/*.d.ts',
+				root + '/attributecontrols/**/*.d.ts',
+				root + '/templatecontrols/**/*.d.ts'
+            ];
 
 		var file = path.resolve(destRoot, 'main.ts');
 
 		return Promise.all([
 			this.file.read(file),
-			this.glob(root, paths)
+			this.glob(root, paths, ignore)
 		]).then((results: Array<any>) => {
 			var data: string = results[0],
 				files: Array<string> = results[1],
@@ -181,7 +186,7 @@ export default class BaseGenerator extends Generator {
 
 		return Promise.all([
 			this.file.read(file),
-			this.glob(root, paths, '../src/')
+			this.glob(root, paths, undefined, '../src/')
 		]).then((results: Array<any>) => {
 			var data: string = results[0],
 				files: Array<string> = results[1],
@@ -204,11 +209,23 @@ export default class BaseGenerator extends Generator {
 		});
 	}
 
-	protected glob(root: string, files: Array<string>, replace: string = './'): Thenable<any> {
+	protected glob(root: string, files: Array<string>, ignore: Array<string> = [], replace: string = './'): Thenable<any> {
+        if(!this.utils.isArray(ignore)) {
+            ignore = [];
+        }
+
 		files = files.slice(0);
 		var firstFile = files.shift();
 		return new Promise<Array<string>>((resolve, reject) => {
-			glob(firstFile, (err, matches) => {
+            glob(firstFile, {
+                ignore: ignore.map((file) => {
+                    if(file[0] === '!') {
+                        return file.slice(1);
+                    }
+
+                    return file;
+                })
+            }, (err, matches) => {
 				var out = matches.map((file) => {
 					return replace + path.relative(root, file).replace(/\\/g, '/').replace(/\.ts$/, '');
 				});
@@ -217,7 +234,7 @@ export default class BaseGenerator extends Generator {
 			});
 		}).then((out) => {
 			if(files.length > 0) {
-				return this.glob(root, files, replace).then((result) => {
+				return this.glob(root, files, ignore, replace).then((result) => {
 					return out.concat(result);
 				});
 			}
