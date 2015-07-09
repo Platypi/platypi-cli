@@ -8,160 +8,160 @@ use(require('chai-as-promised'));
 use(require('sinon-chai'));
 
 describe('Ui', () => {
-	var ui: Ui,
-		spy: Sinon.SinonSpy;
+    var ui: Ui,
+        spy: Sinon.SinonSpy;
 
-	beforeEach(() => {
-		ui = new Ui({
-			input: through((data) => { }),
-			output: through((data) => { })
-		});
+    beforeEach(() => {
+        ui = new Ui({
+            input: through((data) => { }),
+            output: through((data) => { })
+        });
 
-		spy = spyOn(ui, 'log');
-	});
+        spy = spyOn(ui, 'log');
+    });
 
-	afterEach(() => {
-		spy.restore();
-	});
+    afterEach(() => {
+        spy.restore();
+    });
 
-	it('should log at info by default', () => {
-		var shouldLogSpy = spyOn(ui, 'shouldLog');
-		ui.log('test');
+    it('should log at info by default', () => {
+        var shouldLogSpy = spyOn(ui, 'shouldLog');
+        ui.log('test');
 
-		expect(spy).to.have.been.calledOnce;
-		expect(spy.lastCall.args[1]).to.be.an('undefined');
-		expect(shouldLogSpy.lastCall.args[0]).to.equal(Ui.LOG_LEVEL.INFO);
+        expect(spy).to.have.been.calledOnce;
+        expect(spy.lastCall.args[1]).to.be.an('undefined');
+        expect(shouldLogSpy.lastCall.args[0]).to.equal(Ui.LOG_LEVEL.INFO);
 
-		shouldLogSpy.restore();
-	});
+        shouldLogSpy.restore();
+    });
 
-	it('should prompt asynchronously', (done) => {
-		var promptStub = stub((<any>ui).inquirer, 'prompt', (obj: any, cb) => {
-			cb();
-		});
+    it('should prompt asynchronously', (done) => {
+        var promptStub = stub((<any>ui).inquirer, 'prompt', (obj: any, cb) => {
+            cb();
+        });
 
-		expect(ui.prompt([])).to.eventually.be.an('undefined').notify(done);
-		promptStub.restore();
-	});
+        expect(ui.prompt([])).to.eventually.be.an('undefined').notify(done);
+        promptStub.restore();
+    });
 
-	describe('progress', () => {
-		['start', 'stop'].forEach((value) => {
-			var progressStub: Sinon.SinonStub;
+    describe('progress', () => {
+        ['start', 'stop'].forEach((value) => {
+            var progressStub: Sinon.SinonStub;
 
-			beforeEach(() => {
-				progressStub = stub((<any>ui).progress, value);
-			});
+            beforeEach(() => {
+                progressStub = stub((<any>ui).progress, value);
+            });
 
-			afterEach(() => {
-				progressStub.restore();
-			});
+            afterEach(() => {
+                progressStub.restore();
+            });
 
-			it(`should ${value} at info level`, () => {
-				ui[value + 'Progress']();
+            it(`should ${value} at info level`, () => {
+                ui[value + 'Progress']();
 
-				expect(progressStub).to.have.been.calledOnce;
-			});
+                expect(progressStub).to.have.been.calledOnce;
+            });
 
-			it(`should ${value} below info level`, () => {
-				ui.setLogLevel(Ui.LOG_LEVEL.TRACE);
-				ui[value + 'Progress']();
+            it(`should ${value} below info level`, () => {
+                ui.setLogLevel(Ui.LOG_LEVEL.TRACE);
+                ui[value + 'Progress']();
 
-				expect(progressStub).to.have.been.calledOnce;
-			});
+                expect(progressStub).to.have.been.calledOnce;
+            });
 
-			it(`should not ${value} above info level`, () => {
-				ui.setLogLevel(Ui.LOG_LEVEL.WARN);
-				ui[value + 'Progress']();
+            it(`should not ${value} above info level`, () => {
+                ui.setLogLevel(Ui.LOG_LEVEL.WARN);
+                ui[value + 'Progress']();
 
-				expect(progressStub).not.to.have.been.called;
-			});
-		});
-	});
+                expect(progressStub).not.to.have.been.called;
+            });
+        });
+    });
 
-	function errorMethod(): void {
-		it('should do nothing if called with falsy values', () => {
-			var err;
+    function errorMethod(): void {
+        it('should do nothing if called with falsy values', () => {
+            var err;
 
-			ui.error(err);
-			err = null;
-			ui.error(err);
-			err = 0;
-			ui.error(err);
-			err = '';
-			ui.error(err);
+            ui.error(err);
+            err = null;
+            ui.error(err);
+            err = 0;
+            ui.error(err);
+            err = '';
+            ui.error(err);
 
-			expect(spy).not.to.have.been.called;
-		});
+            expect(spy).not.to.have.been.called;
+        });
 
-		it('should accept a string', () => {
-			var err = 'test message';
-			ui.error(err);
+        it('should accept a string', () => {
+            var err = 'test message';
+            ui.error(err);
 
-			expect(spy).to.have.been.calledOnce;
-			expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.ERROR);
-		});
+            expect(spy).to.have.been.calledOnce;
+            expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.ERROR);
+        });
 
-		it('should accept an object', () => {
-			var err = {
-				message: 'test message'
-			};
+        it('should accept an object', () => {
+            var err = {
+                message: 'test message'
+            };
 
-			ui.error(err);
+            ui.error(err);
 
-			expect(spy).to.have.been.calledOnce;
-			expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.ERROR);
-		});
+            expect(spy).to.have.been.calledOnce;
+            expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.ERROR);
+        });
 
-		it('should accept an error', () => {
-			var err = new Error('test message');
+        it('should accept an error', () => {
+            var err = new Error('test message');
 
-			ui.error(err);
+            ui.error(err);
 
-			expect(spy).to.have.been.calledTwice;
-			expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.ERROR);
-		});
-	}
+            expect(spy).to.have.been.calledTwice;
+            expect(spy.lastCall.args[1]).to.equal(Ui.LOG_LEVEL.ERROR);
+        });
+    }
 
-	['error', 'warn', 'info', 'debug', 'trace'].forEach((value) => {
-		var level = Ui.LOG_LEVEL[value.toUpperCase()];
-		describe(`${value} method`, () => {
-			beforeEach(() => {
-				ui.setLogLevel(value.toUpperCase());
-			});
+    ['error', 'warn', 'info', 'debug', 'trace'].forEach((value) => {
+        var level = Ui.LOG_LEVEL[value.toUpperCase()];
+        describe(`${value} method`, () => {
+            beforeEach(() => {
+                ui.setLogLevel(value.toUpperCase());
+            });
 
-			if(value === 'error') {
-				errorMethod();
-			}
+            if (value === 'error') {
+                errorMethod();
+            }
 
-			it(`should log at a ${value} level`, () => {
-				ui[value]('message');
+            it(`should log at a ${value} level`, () => {
+                ui[value]('message');
 
-				expect(spy).to.have.been.calledOnce;
-				expect(spy.lastCall.args[1]).to.equal(level);
-			});
+                expect(spy).to.have.been.calledOnce;
+                expect(spy.lastCall.args[1]).to.equal(level);
+            });
 
-			it(`should log below ${value} level`, () => {
-				ui.setLogLevel(level - 1);
-				ui[value]('message');
+            it(`should log below ${value} level`, () => {
+                ui.setLogLevel(level - 1);
+                ui[value]('message');
 
-				expect(spy).to.have.been.calledOnce;
-				expect(spy.lastCall.args[1]).to.equal(level);
-			});
+                expect(spy).to.have.been.calledOnce;
+                expect(spy.lastCall.args[1]).to.equal(level);
+            });
 
-			it(`should not log above ${value} level`, () => {
-				var outputSpy = spyOn((<any>ui).output, 'write');
-				ui.setLogLevel(level + 1);
-				ui[value]('message');
+            it(`should not log above ${value} level`, () => {
+                var outputSpy = spyOn((<any>ui).output, 'write');
+                ui.setLogLevel(level + 1);
+                ui[value]('message');
 
-				if(value !== 'error') {
-					expect(outputSpy).not.to.have.been.called;
-				} else {
-					expect(outputSpy).to.have.been.called;
-					expect(spy.lastCall.args[1]).to.equal(level);
-				}
+                if (value !== 'error') {
+                    expect(outputSpy).not.to.have.been.called;
+                } else {
+                    expect(outputSpy).to.have.been.called;
+                    expect(spy.lastCall.args[1]).to.equal(level);
+                }
 
-				outputSpy.restore();
-			});
-		});
-	});
+                outputSpy.restore();
+            });
+        });
+    });
 });

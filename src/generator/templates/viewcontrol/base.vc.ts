@@ -1,11 +1,11 @@
 import {register, ui} from 'platypus';
 
 export default class {{capitalizeFirst name}}ViewControl extends ui.ViewControl {
-	{{#if html}}
-	templateString: string = require('./{{lowercase name}}.vc.html');
-	{{/if}}
+    {{#if html}}
+    templateString: string = require('./{{lowercase name}}.vc.html');
+    {{/if}}
 
-	context: any = {};
+    context: any = {};
 }
 {{#if register}}
 

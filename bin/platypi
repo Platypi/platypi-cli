@@ -9,7 +9,7 @@ var exit = require('exit');
 
 resolve('platypi-cli', {
   basedir: process.cwd()
-}, function(error, localCli) {
+}, function (error, localCli) {
   var cli;
 
   if (error) {
@@ -22,7 +22,7 @@ resolve('platypi-cli', {
     args: process.argv.slice(2),
     input: process.stdin,
     output: process.stdout
-  }).then(function(result) {
+  }).then(function (result) {
     var exitCode = typeof result === 'object' ? result.exitCode : result;
     exit(exitCode);
   });

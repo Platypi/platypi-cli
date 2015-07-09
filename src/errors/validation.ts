@@ -1,7 +1,7 @@
 import {BaseError, extend} from './base';
 
 export default class ValidationError extends BaseError {
-	name: string = 'ValidationError';
+    name: string = 'ValidationError';
 }
 
 extend(ValidationError);

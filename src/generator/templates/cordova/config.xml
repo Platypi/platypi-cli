@@ -1,12 +1,8 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8' ?>
 <widget id="{{lowercase id}}" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>{{name}}</name>
-    <description>
-        A Platypi CLI cordova app
-    </description>
-    <author email="support@platypi.io" href="https://platypi.io">
-        Platypi Team
-    </author>
+    <description>A Platypi CLI cordova app</description>
+    <author email="support@platypi.io" href="https://platypi.io">Platypi Team</author>
     <content src="index.html" />
     <access origin="*" />
     <preference name="Orientation" value="portrait" />
@@ -14,11 +10,11 @@
     <preference name="KeyboardShrinksView" value="true" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="StatusBarOverlaysWebView" value="false"/>
+    <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-targetSdkVersion" value="22"/>
-    <preference name="android-minSdkVersion" value="16"/>
+    <preference name="android-targetSdkVersion" value="22" />
+    <preference name="android-minSdkVersion" value="16" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -26,33 +22,29 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="maps:*" />
-
     <platform name="android">
         <allow-intent href="market:*" />
-
         <icon src="res/platform/android/res/drawable-hdpi/appicon.png" density="hdpi" />
         <icon src="res/platform/android/res/drawable-ldpi/appicon.png" density="ldpi" />
         <icon src="res/platform/android/res/drawable-mdpi/appicon.png" density="mdpi" />
         <icon src="res/platform/android/res/drawable-xhdpi/appicon.png" density="xhdpi" />
         <icon src="res/platform/android/res/drawable-xxhdpi/appicon.png" density="xxhdpi" />
         <icon src="res/platform/android/res/drawable-xxxhdpi/appicon.png" density="xxxhdpi" />
-
-        <splash src="res/app/assets/android/images/res-long-port-hdpi/default.png" density="port-hdpi"/>
-        <splash src="res/app/assets/android/images/res-long-port-ldpi/default.png" density="port-ldpi"/>
-        <splash src="res/app/assets/android/images/res-long-port-mdpi/default.png" density="port-mdpi"/>
-        <splash src="res/app/assets/android/images/res-long-port-xhdpi/default.png" density="port-xhdpi"/>
-        <splash src="res/app/assets/android/images/res-long-port-xxhdpi/default.png" density="port-xxhdpi"/>
-        <splash src="res/app/assets/android/images/res-long-port-xxxhdpi/default.png" density="port-xxxhdpi"/>
+        <splash src="res/app/assets/android/images/res-long-port-hdpi/default.png" density="port-hdpi" />
+        <splash src="res/app/assets/android/images/res-long-port-ldpi/default.png" density="port-ldpi" />
+        <splash src="res/app/assets/android/images/res-long-port-mdpi/default.png" density="port-mdpi" />
+        <splash src="res/app/assets/android/images/res-long-port-xhdpi/default.png" density="port-xhdpi" />
+        <splash src="res/app/assets/android/images/res-long-port-xxhdpi/default.png" density="port-xxhdpi" />
+        <splash src="res/app/assets/android/images/res-long-port-xxxhdpi/default.png" density="port-xxxhdpi" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-
         <!-- iOS 8.0+ -->
-        <!-- iPhone 6 Plus  -->
+        <!-- iPhone 6 Plus -->
         <icon src="res/app/assets/iphone/appicon-60@3x.png" width="180" height="180" />
         <!-- iOS 7.0+ -->
-        <!-- iPhone / iPod Touch  -->
+        <!-- iPhone / iPod Touch -->
         <icon src="res/app/assets/iphone/appicon-60.png" width="60" height="60" />
         <icon src="res/app/assets/iphone/appicon-60@2x.png" width="120" height="120" />
         <!-- iPad -->

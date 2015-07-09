@@ -1,5 +1,3 @@
 declare module models {
-	interface I{{capitalizeFirst name}} {
-		
-	}
+    interface I{{capitalizeFirst name}} { }
 }
