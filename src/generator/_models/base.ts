@@ -319,7 +319,7 @@ export default class BaseGenerator extends Generator {
             sorted.pop();
         }
 
-        return sorted.join(eol)
+        return sorted.join(eol);
     }
 
     private sortMain(lines: Array<string>): Array<string> {
