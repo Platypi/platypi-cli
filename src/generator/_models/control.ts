@@ -32,19 +32,23 @@ export default class ControlGenerator extends Generator {
         config.html = options.html;
 
         var promises = [
-            this.render(`${src}.ts`, `${dest}.ts`, config)
+            this._renderFile('.ts', src, dest, config)
         ];
 
         if (!this.noLessOrHtml) {
             if (options.less) {
-                promises.push(this.render(`${this.ext}.less`, `${dest}.less`, config));
+                promises.push(this._renderFile('.less', this.ext, dest, config));
             }
 
             if (options.html) {
-                promises.push(this.render(`${this.ext}.html`, `${dest}.html`, config));
+                promises.push(this._renderFile('.html', this.ext, dest, config));
             }
         }
 
         return Promise.all(promises);
+    }
+
+    protected _renderFile(ext: string, src: string, dest: string, config: any): Thenable<any> {
+        return this.render(src + ext, dest + ext, config);
     }
 }

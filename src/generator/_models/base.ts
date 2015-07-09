@@ -65,7 +65,7 @@ export default class BaseGenerator extends Generator {
         }
 
         this.option('register', {
-            aliases: ['r'],
+            aliases: ['reg'],
             description: `Do not register the ${this.type} with the framework`,
             defaults: true
         });

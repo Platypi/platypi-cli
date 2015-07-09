@@ -194,13 +194,14 @@ export default class Command extends Base {
         var utils = this.utils,
             isNull = (val: any) => { return utils.isNull(val) || utils.isUndefined(val); },
             isString = utils.isString,
-            isEmpty = utils.isEmpty;
+            isEmpty = utils.isEmpty,
+            isBoolean = utils.isBoolean;
 
         this.utils.forEach(lines, (line) => {
             var padding: string = EOL + this.file.spaces(longest + 10);
             this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('') }${wrap(line.description, 58, padding) }`);
 
-            if (!isNull(line.defaults) && !(isString(line.defaults) && isEmpty(line.defaults)) && line.defaults !== true) {
+            if (!isNull(line.defaults) && !(isString(line.defaults) && isEmpty(line.defaults)) && !isBoolean(line.defaults)) {
                 this.ui.help(
                     `      default: ${line.defaults}
 `);
