@@ -114,6 +114,14 @@ export default class Ui {
     }
 
     prompt(questions: Array<IQuestion>): Thenable<any> {
+        questions = questions.map((question) => {
+           if(this.utils.isString(question.message)) {
+               question.message = this.makePretty(<string>question.message, chalk.reset);
+           }
+
+           return question;
+        });
+
         return new this.Promise((resolve) => {
             this.inquirer.prompt(questions, resolve);
         });

@@ -72,16 +72,27 @@ export default class BaseGenerator extends Generator {
     }
 
     askQuestions(): any {
-        var options = this.options;
+        var options = this.options,
+            name = options.name,
+            promise: Thenable<string>;
 
-        if (this.utils.isString(options.name)) {
-            return;
+        if(!this.utils.isString(options.name) && this.commands.length > 1) {
+            name = this.commands[1];
+            promise = this.ui.prompt([
+                { name: 'name', type: this.ui.PROMPTS.CONFIRM, default: true, message: `Did you mean \`${this.buildFullCommand().slice(0, -1).join(' ')} -n ${name}\`?` }
+            ]).then((answer: { name: boolean; } ) => {
+                if(answer.name) {
+                    return name;
+                }
+
+                return this.promptName(options.name);
+            });
+        } else {
+            promise = this.promptName(options.name);
         }
 
-        return this.ui.prompt([
-            { name: 'name', type: 'input', message: `What is the name of your ${this.type}?` }
-        ]).then((answer: { name: string; }) => {
-            options.name = answer.name;
+        return promise.then((name: string) => {
+            options.name = name;
         });
     }
 
@@ -115,6 +126,18 @@ export default class BaseGenerator extends Generator {
                 this.processMainTs(),
                 this.processMainLess()
             ]);
+        });
+    }
+
+    protected promptName(name: string): Thenable<string> {
+        if (this.utils.isString(name)) {
+            return Promise.resolve(name);
+        }
+
+        return this.ui.prompt([
+            { name: 'name', type: 'input', message: `What is the name of your ${this.type}?` }
+        ]).then((answer: { name: string; }) => {
+            return answer.name;
         });
     }
 
