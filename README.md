@@ -2,7 +2,7 @@
 
 The Platypi CLI is the primary way to create and manage Platypi apps. It can be used to create new projects as well as add different components (models, repositories, services, injectables, and controls) to the app.
 
-## Install
+## Installation
 
 Use `npm` to install this package.
 
