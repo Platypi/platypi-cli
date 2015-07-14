@@ -35,7 +35,6 @@
     "copy:fonts": "ncp app/fonts cordova/www/fonts",
     "copy:images": "ncp app/images cordova/www/images",
     "copy:index": "ncp app/index.html cordova/www/index.html",
-    "cordova": "npm run copy && plat cordova prepare && plat cordova build",
     "less": "mkdirp app/dist && lessc app/styles/main.less > app/dist/app.css --clean-css=\"--s0 --advanced\"",
     "lint": "tsconfig-lint --use-glob",
     "postbundle": "echo bundle done!",
