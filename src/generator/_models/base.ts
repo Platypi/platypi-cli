@@ -312,7 +312,8 @@ export default class BaseGenerator extends Generator {
             appFound: boolean = false,
             acFound: boolean = false,
             injFound: boolean = false,
-            tcFound: boolean = false;
+            tcFound: boolean = false,
+            vcFound: boolean = false;
 
         var sorted = this.sortMain(data.split(eol)
             .concat(append))
@@ -328,6 +329,9 @@ export default class BaseGenerator extends Generator {
                     value = eol + value;
                 } else if (value.indexOf('/templatecontrols') > -1 && !tcFound) {
                     tcFound = true;
+                    value = eol + value;
+                } else if (value.indexOf('/viewcontrols') > -1 && !vcFound) {
+                    vcFound = true;
                     value = eol + value;
                 }
 
