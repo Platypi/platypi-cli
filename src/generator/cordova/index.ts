@@ -12,12 +12,13 @@ export default class CordovaGenerator extends Generator {
     };
 
     protected scripts: any = {
-        'build:cordova': 'npm run deploy && npm run copy && plat cordova prepare && plat cordova build',
+        'build': 'npm run clean:dist && concurrent -r "npm run less" "npm run build:ts" && npm run cordova',
         copy: 'mkdirp cordova/www && concurrent -r "npm run copy:dist" "npm run copy:fonts" "npm run copy:images" "npm run copy:index"',
         'copy:dist': 'ncp app/dist cordova/www/dist',
         'copy:fonts': 'ncp app/fonts cordova/www/fonts',
         'copy:images': 'ncp app/images cordova/www/images',
-        'copy:index': 'ncp app/index.html cordova/www/index.html'
+        'copy:index': 'ncp app/index.html cordova/www/index.html',
+        'cordova': 'npm run copy && plat cordova prepare && plat cordova build'
     };
 
     defineOptions(): any {

@@ -43,7 +43,7 @@ $ npm run build:cordova
 
 ## Build Configuration
 
-This app uses `npm run-script` or `npm run` scripts to manage all the building/deployment. You can see all 
+This app uses `npm run-script` or `npm run` scripts to manage all the building/deployment. You can see all
 the scripts in the `package.json`. You can also print the scripts to the command line console by typing `npm run`.
 
 ### Useful Scripts
@@ -51,9 +51,6 @@ the scripts in the `package.json`. You can also print the scripts to the command
 The following are descriptions for a few of the useful npm scripts. All of these scripts can be executed using the `npm run <script>` command.
 
 - **build**
-  - Builds the `less` and `ts` files
-
-- **build:cordova**
   - Builds/bundles/minifies your `less` and `ts`
   - copies the necessary files to `/cordova/www`
   - runs `cordova build`
@@ -108,7 +105,7 @@ You can use the `config.xml` to store project configuration, so that other team 
 
 ### Interaction with the CLI
 
-The CLI tries to be non-invasive when it comes to Cordova. There is a `plat cordova` command which basically serves as a way to execute `cordova` 
+The CLI tries to be non-invasive when it comes to Cordova. There is a `plat cordova` command which basically serves as a way to execute `cordova`
 cli commands from anywhere in your project. In other words:
 
 - Normally any `cordova` commands must be run from within a cordova project
