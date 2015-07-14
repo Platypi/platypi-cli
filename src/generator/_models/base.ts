@@ -315,10 +315,7 @@ export default class BaseGenerator extends Generator {
             tcFound: boolean = false;
 
         var sorted = this.sortMain(data.split(eol)
-            .concat(append)
-            .filter((value) => {
-                return !this.utils.isEmpty(value.trim());
-            }))
+            .concat(append))
             .map((value, index, lines) => {
                 if (value.indexOf('/app/') > -1 && !appFound) {
                     appFound = true;
@@ -336,10 +333,21 @@ export default class BaseGenerator extends Generator {
 
                 return value;
             })
-            .concat(['']);
+            .join(eol)
+            .split(eol)
+            .filter((value, index: number, array: Array<string>) => {
+                let empty = this.utils.isEmpty(value.trim()),
+                    out = !empty || !this.utils.isEmpty(array[index - 1]);
+
+                return out;
+            });
 
         if (sorted[sorted.length - 2].trim() === '' && sorted[sorted.length - 1].trim() === '') {
             sorted.pop();
+        }
+
+        if(sorted[sorted.length - 1].trim() !== '') {
+            sorted.push('');
         }
 
         return sorted.join(eol);
@@ -348,22 +356,37 @@ export default class BaseGenerator extends Generator {
     private sortMain(lines: Array<string>): Array<string> {
         var imports: Array<string> = [],
             others: Array<string> = [],
-            trim: string;
+            trim: string,
+            isString = this.utils.isString,
+            isEmpty = this.utils.isEmpty;
 
         lines.forEach((line) => {
             trim = line.trim();
-            if (trim.indexOf('require') === 0 || trim.indexOf('@import') === 0) {
+            if ((trim.indexOf('require') === 0 || trim.indexOf('import') === 0 || trim.indexOf('@import') === 0) &&
+                this.hasComponent(trim)) {
                 imports.push(line);
             } else {
+                let last = others[others.length - 1];
+
+                if(isEmpty(trim) && isString(last) && isEmpty(last.trim())) {
+                    return;
+                }
+
                 others.push(line);
             }
         });
 
-        if (others[0] !== '') {
-            others.unshift('');
-        }
+        imports = imports.sort();
 
-        return imports.sort(this.sort.bind(this)).concat(others);
+        return others.concat(imports);
+    }
+
+    private hasComponent(line: string): boolean {
+        return line.indexOf('app/app') > -1 ||
+            line.indexOf('attributecontrols') > -1 ||
+            line.indexOf('injectables') > -1 ||
+            line.indexOf('templatecontrols') > -1 ||
+            line.indexOf('viewcontrols') > -1;
     }
 
     private sort(a: string, b: string): number {
@@ -374,13 +397,15 @@ export default class BaseGenerator extends Generator {
             ai = a.indexOf('injectables') > -1,
             bi = b.indexOf('injectables') > -1,
             atc = a.indexOf('templatecontrols') > -1,
-            btc = b.indexOf('templatecontrols') > -1;
+            btc = b.indexOf('templatecontrols') > -1,
+            avc = a.indexOf('viewcontrols') > -1,
+            bvc = b.indexOf('viewcontrols') > -1;
 
-        if (!(aa || aac || ai || atc)) {
+        if (!(aa || aac || ai || atc || avc)) {
             return -1;
-        } else if (!(ba || bac || bi || btc)) {
+        } else if (!(ba || bac || bi || btc || bvc)) {
             return 1;
-        } else if ((aa && ba) || (aac && bac) || (ai && bi) || (atc && btc)) {
+        } else if ((aa && ba) || (aac && bac) || (ai && bi) || (atc && btc) || (avc && bvc)) {
             if (a > b) {
                 return 1;
             } else if (b > a) {

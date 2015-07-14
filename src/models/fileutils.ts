@@ -82,10 +82,10 @@ export default class FileUtils extends Base {
     eol(data: string): string {
         var cr = '\r',
             lf = '\n',
-            r = data.indexOf(r),
-            n = data.indexOf(n);
+            r = /\r/.test(data),
+            n = /\n/.test(data);
 
-        if (r > -1 && r < n) {
+        if (r && n) {
             return cr + lf;
         }
 
