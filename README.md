@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/platypi-cli.svg)](http://badge.fury.io/js/platypi-cli)
+[![Downloads](http://img.shields.io/npm/dm/platypi-cli.svg)](https://npmjs.org/package/platypi-cli)
+
 # Platypi CLI
 
 The Platypi CLI is the primary way to create and manage Platypi apps. It can be used to create new projects as well as add different components (models, repositories, services, injectables, and controls) to the app.
