@@ -7,8 +7,7 @@ export default class InjectableGenerator extends Generator {
         super(options, {
             type: 'Model',
             ext: 'model',
-            noFileExtension: true,
-            declaration: true
+            noFileExtension: true
         });
     }
 }
