@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/platypi-cli.svg)](http://badge.fury.io/js/platypi-cli)
 [![Downloads](http://img.shields.io/npm/dm/platypi-cli.svg)](https://npmjs.org/package/platypi-cli)
-[![Dependency Status](https://david-dm.org/Platypi/platypi-cli.svg)](https://david-dm.org/DefinitelyTyped/tsd)
+[![Dependency Status](https://david-dm.org/Platypi/platypi-cli.svg)](https://david-dm.org/Platypi/platypus)
 [![devDependency Status](https://david-dm.org/Platypi/platypi-cli/dev-status.svg)](https://david-dm.org/Platypi/platypi-cli#info=devDependencies)
 
 # Platypi CLI
