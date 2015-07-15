@@ -167,7 +167,7 @@ export default class AppGenerator extends Generator {
             this.render('tsd.json', '../tsd.json', options),
             this.render('app/app.ts', 'src/app/app.ts', options),
             this.render('styles/main.less', 'styles/main.less', options),
-            this.render('models/models.d.ts', 'src/models/models.d.ts', options),
+            this.render('model/models.d.ts', 'src/models/models.d.ts', options),
             this.mkdirDest(
                 'src/attributecontrols',
                 'src/injectables',
