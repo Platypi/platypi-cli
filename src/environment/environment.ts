@@ -36,7 +36,7 @@ export default class Environment extends Base {
                 Com = commands[component.command];
 
             if (!this.utils.isObject(Com)) {
-                Com = findCommand(this.utils.values(commands), component.command);
+                Com = findCommand(this.utils.values<typeof Command>(commands), component.command);
             }
 
             try {

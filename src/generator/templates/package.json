@@ -16,7 +16,7 @@
     "tsconfig-glob": "latest",
     "tsconfig-lint": "latest",
     "tsd": "latest",
-    "typescript": "1.5.0-alpha"
+    "typescript": "latest"
   },
   "devDependencies": {
     "http-server": "latest",
