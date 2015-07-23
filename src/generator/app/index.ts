@@ -172,6 +172,7 @@ export default class AppGenerator extends Generator {
                 'src/attributecontrols',
                 'src/injectables',
                 'src/templatecontrols',
+                'lib',
                 'fonts',
                 'images',
                 '../test/unit'
