@@ -76,6 +76,63 @@ The following are descriptions for a few of the useful npm scripts. All of these
 - **tsd**
   - Installs/links TypeScript declarations using [tsd](http://definitelytyped.org/tsd/)
 
+## Project Structure
+
+This project is setup to be as flat as possible while still providing a separation of concerns and allowing for extensibility.
+The `app` directory contains all the public files used in the app. If you need to add a server/backend you can separate it out
+as a `server` directory on the same level as `app`. Inside of `app` you have:
+
+- **assets**
+  - contains images/fonts/media files used in the app
+
+- **lib**
+  - contains any JS/CSS libraries not installed using node
+
+- **src**
+  - contains all the TS, HTML, and componentized LESS files
+
+- **styles**
+  - contains any global LESS styles used in the app
+  - a `main.less` file exists in here as the entry point for all the styles in your app.
+  - the `main.less` file is automatically managed by the CLI for components in the `src` directory
+
+### The `src` Directory
+
+Inside the `src` directory you will find all the TS, HTML, and componentized LESS files. The following subdirectories exist
+inside `src` to help separate components in the app:
+
+- **app**
+  - contains the global plat.App object, used to configure your application and respond to global lifecycle events
+
+- **attributecontrols**
+  - contains any common AttributeControls
+
+- **injectables**
+  - contains the injectables used in the app (such as converters, helper classes, formatting classes)
+
+- **models**
+  - contains classes that help you convert server models into the frontend *view-models*
+  - contains a `models.d.ts` file, in which you can declare the interfaces for each model
+
+- **repositories**
+  - contains all the repository classes
+  - repositories are the hubs for communicating between ViewControls, Services, and Models
+  - repositories can locally cache information obtained from a service
+  - repositories are used to instantiate models to send to the server, and *view-models* to send to the ViewControl
+
+- **services**
+  - contains all the service classes
+  - service classes are used to communicate with external APIs
+
+- **templatecontrols**
+  - contains any common TemplateControls
+
+- **viewcontrols**
+  - contains all the ViewControls for the app
+
+There is also a `main.ts` file, which is used to pull all of your unreferenced TS sources together. You can reference any libraries
+here. The CLI will automatically manage this file for you for the components in the directories listed above.
+
 ## Cordova
 
 When creating an app you can choose whether or not you want to also create a Cordova app. There are a few things you want to know when creating/interacting with your Cordova app.
