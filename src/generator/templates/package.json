@@ -40,7 +40,7 @@
     "tsconfig": "tsconfig",
     "tsd": "tsd update -so && tsd link",
     "watch": "npm run ts && concurrent -r -k \"npm run watch:bundle\" \"npm run watch:ts\" \"npm run watch:less\"",
-    "watch:bundle": "watchify app/src/main.js -d -t stringify -o app/dist/app.js -v",
+    "watch:bundle": "mkdirp app/dist && watchify app/src/main.js -d -t stringify -o app/dist/app.js -v",
     "watch:less": "nodemon -q -w app -e less --exec npm run less",
     "watch:ts": "npm run ts -- -w"
   }
