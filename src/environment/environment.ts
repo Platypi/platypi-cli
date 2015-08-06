@@ -154,7 +154,8 @@ export default class Environment extends Base {
             'templates',
             'node_modules',
             'typings',
-            /^_.*$/
+            /^_.*$/,
+            /^\..*$/
         ]).then((values) => {
             return { component: absolute, values };
         }, (err) => {
