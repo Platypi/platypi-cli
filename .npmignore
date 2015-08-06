@@ -32,6 +32,12 @@ node_modules
 # TSD Declarations
 /typings
 
+# No typings in declaration file
+!/typings/node/node.d.ts
+!/typings/lodash/lodash.d.ts
+!/typings/glob/glob.d.ts
+!/typings/es6-promise/es6-promise.d.ts
+
 # TS, css, and map files
 *.ts
 *.css
