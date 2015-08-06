@@ -47,6 +47,7 @@ node_modules
 !/typings/node/node.d.ts
 !/typings/lodash/lodash.d.ts
 !/typings/glob/glob.d.ts
+!/typings/minimatch/minimatch.d.ts
 !/typings/es6-promise/es6-promise.d.ts
 
 # Don't ignore template TS or declaration
