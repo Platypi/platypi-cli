@@ -70,5 +70,8 @@
     "test": "npm run build && istanbul cover --dir test/coverage -- test/runner.js",
     "tsconfig": "tsconfig",
     "tsd": "tsd update -so && tsd link"
+  },
+  "typescript": {
+    "definition": "src/cli.d.ts"
   }
 }

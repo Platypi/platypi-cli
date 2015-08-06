@@ -67,6 +67,6 @@ export default class Invalid extends Command {
     }
 }
 
-interface IOptions extends models.IParsedArgs {
+export interface IOptions extends models.IParsedArgs {
     version: boolean;
 }

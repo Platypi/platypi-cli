@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as glob from 'glob';
 import {Promise} from 'es6-promise';
-import Generator from '../../models/generator';
+import {Generator} from '../../index';
 import {pluralize} from '../../utils/utils';
 
 export default class BaseGenerator extends Generator {

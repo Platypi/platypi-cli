@@ -1,15 +1,21 @@
 import * as path from 'path';
-import {find, isFunction, isString} from 'lodash';
+import {find, isFunction, isObject, isString} from 'lodash';
 import {EOL} from 'os';
 import Command from '../models/command';
 import InvalidCommand from '../commands/invalid';
 
 export function findCommand(commands: Array<typeof Command>, name: string): typeof Command {
     var command = find(commands, (command) => {
+        if(isFunction((<any>command).default)) {
+            command = (<any>command).default;
+        }
+
         return command.commandName === name || command.aliases.indexOf(name) > -1;
     });
 
-    if (!isFunction(command)) {
+    if(isObject(command) && isFunction((<any>command).default)) {
+        command = (<any>command).default;
+    } else if (!isFunction(command)) {
         command = InvalidCommand;
     }
 

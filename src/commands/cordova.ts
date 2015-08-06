@@ -146,4 +146,4 @@ class Cordova extends Command {
     }
 }
 
-export = Cordova;
+export default Cordova;

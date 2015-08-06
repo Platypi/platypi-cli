@@ -2,10 +2,15 @@ import {Promise} from 'es6-promise';
 import Ui from './ui/ui';
 import Cli from './cli/cli';
 import Project from './models/project';
+import Command from './models/command';
+import Generator from './models/generator';
 import * as utils from 'lodash';
 import * as uuid from 'node-uuid';
 
-var ConfigStore = require('configstore'),
+export {default as Command} from './models/command';
+export {default as Generator} from './models/generator';
+
+let ConfigStore = require('configstore'),
     pkg = require('../package.json'),
     commands = require('require-all')({
         dirname: __dirname + '/commands',

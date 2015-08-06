@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {Promise} from 'es6-promise';
-import CreateBase = require('../../../src/commands/create');
+import CreateBase from '../../../src/commands/create';
 
 var cb = () => { };
 

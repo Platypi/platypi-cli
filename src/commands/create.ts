@@ -38,8 +38,8 @@ class Create extends Command {
     }
 }
 
-export = Create;
+export default Create;
 
-interface ICreateArgs extends models.IParsedArgs {
+export interface ICreateArgs extends models.IParsedArgs {
 
 }
