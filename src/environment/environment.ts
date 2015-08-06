@@ -40,7 +40,6 @@ export default class Environment extends Base {
             }
 
             try {
-                console.log(response.directory);
                 return this.instantiate(Com, {
                     env: this,
                     parent: parent,
