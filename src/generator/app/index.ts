@@ -42,7 +42,7 @@ export default class AppGenerator extends Generator {
             options.name = name;
 
             if (this.utils.isEmpty(options.dir)) {
-                options.dir = name = this.utils.camelCase(name).toLowerCase();
+                name = this.utils.camelCase(name).toLowerCase();
             }
 
             return this.promptDir(options.dir, name);
@@ -115,14 +115,12 @@ export default class AppGenerator extends Generator {
     promptDir(dir: string = '', defaults?: string): Thenable<string> {
         dir = dir.trim();
 
-        if (!this.utils.isEmpty(dir) && dir !== defaults) {
+        if (!this.utils.isEmpty(dir)) {
             return Promise.resolve(dir);
-        } else if (this.utils.isEmpty(dir)) {
-            dir = '.';
         }
 
         return this.ui.prompt([
-            { name: 'dir', default: dir, type: 'input', message: `Where should this app be created?` }
+            { name: 'dir', default: defaults, type: 'input', message: `Where should this app be created?` }
         ]).then((answer: { dir: string; }) => {
             return answer.dir;
         });
