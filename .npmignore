@@ -41,6 +41,7 @@ node_modules
 /project
 /cordova
 
-# Don't ignore template TS
+# Don't ignore template TS or declaration
+!src/cli.d.ts
 !src/generator/templates/*.ts
 !src/generator/templates/*/*.ts
