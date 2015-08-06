@@ -40,10 +40,11 @@ export default class Environment extends Base {
             }
 
             try {
+                console.log(response.directory);
                 return this.instantiate(Com, {
                     env: this,
                     parent: parent,
-                    directory: component.component
+                    directory: response.directory
                 });
             } catch (e) {
                 if (e.message.indexOf('Cannot find module') > -1) {
@@ -122,7 +123,7 @@ export default class Environment extends Base {
         return paths.reverse();
     }
 
-    private _commands(component: string, prefix: string): Thenable<{ commands: { [key: string]: typeof Command; } }> {
+    private _commands(component: string, prefix: string): Thenable<{ commands: { [key: string]: typeof Command; }; directory: string; }> {
         return this._find(this.getNpmPaths(), component, prefix).then((info) => {
             component = info.component;
             var values = info.values,
@@ -133,11 +134,13 @@ export default class Environment extends Base {
             });
 
             return {
-                commands: commands
+                commands: commands,
+                directory: component
             };
         }, () => {
             return {
-                commands: <any>{}
+                commands: <any>{},
+                directory: ''
             };
         });
     }
