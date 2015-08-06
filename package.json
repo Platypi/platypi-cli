@@ -1,6 +1,6 @@
 {
   "name": "platypi-cli",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "A command line interface for working with PlatypusTS projects.",
   "author": "Platypi <support@platypi.io>",
   "homepage": "https://platypi.io",
