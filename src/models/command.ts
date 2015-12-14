@@ -120,7 +120,7 @@ export default class Command extends Base {
     }
 
     protected buildFullCommand(): Array<string> {
-        var parent = this;
+        var parent: Command = this;
 
         while (this.utils.isObject(parent.parent)) {
             parent = parent.parent;

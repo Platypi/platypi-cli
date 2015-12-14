@@ -59,7 +59,7 @@
     "tsconfig-glob": "latest",
     "tsconfig-lint": "latest",
     "tsd": "latest",
-    "typescript": "^1.5.3"
+    "typescript": "^1.7.5"
   },
   "scripts": {
     "prepublish": "npm run tsd && npm run build",
