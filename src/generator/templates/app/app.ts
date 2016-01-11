@@ -1,4 +1,4 @@
-import {App, events, register, routing} from 'platypus';
+import {App, events, register, routing, web} from 'platypus';
 import {{capitalizeFirst vcName}}ViewControl from '../viewcontrols/{{lowercase vcName}}/{{lowercase vcName}}.vc';
 
 export default class MyApp extends App {

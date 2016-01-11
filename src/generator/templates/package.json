@@ -37,7 +37,7 @@
     "postbundle": "echo bundle done!",
     "postless": "echo less done!",
     "prepublish": "npm run tsd && tsconfig",
-    "start": "concurrent -r -k \"npm run watch\" \"node server/server\"",
+    "start": "tsc typings/tsd.d.ts server/server.ts -m commonjs -t es5 && concurrent -r -k \"npm run watch\" \"node server/server\"",
     "ts": "tsconfig && tsc -p .",
     "tsconfig": "tsconfig",
     "tsd": "tsd update -so && tsd link",
