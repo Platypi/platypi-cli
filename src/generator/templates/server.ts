@@ -25,14 +25,12 @@ function isFileExt(file: string): boolean {
 }
 
 let app = express(),
-	platui = '/node_modules/platypusui/dist/fonts',
-	fontawesome = '/node_modules/font-awesome/fonts';
+	platui = '/node_modules/platypusui/dist/fonts';
 
 app
 	.use(logger('dev'))
 	.use(serve(join(root, 'app')))
 	.use(platui, serve(join(root, platui)))
-	.use(fontawesome, serve(join(root, fontawesome)))
 	.get('*', (req: express.Request, res: express.Response, next: Function) => {
 		if (isFileExt(req.url)) {
 			next();
