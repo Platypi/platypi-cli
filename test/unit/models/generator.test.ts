@@ -54,7 +54,7 @@ describe('Generators', () => {
     });
 
     it('should make a directory using destRoot when use mkdirDest', () => {
-        var mkdir = stub(command, 'mkdir', () => { });
+        var mkdir = stub((<any>command).file, 'mkdir', () => { });
         command.mkdirDest('foo', 'bar');
         expect(mkdir).to.have.been.calledWith(path.resolve(command.destRoot(), 'foo'), path.resolve(command.destRoot(), 'bar'));
     });
