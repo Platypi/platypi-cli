@@ -6,76 +6,76 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "es6-promise/es6-promise.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "lodash/lodash.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "rimraf/rimraf.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "through/through.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "chalk/chalk.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "node-uuid/node-uuid.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "minimatch/minimatch.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "mocha/mocha.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "chai-as-promised/chai-as-promised.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "chai/chai.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "sinon-chai/sinon-chai.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "sinon/sinon.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "minimist/minimist.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "handlebars/handlebars.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "swag/swag.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "mkdirp/mkdirp.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "glob/glob.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "fs-extra/fs-extra.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "assertion-error/assertion-error.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "promises-a-plus/promises-a-plus.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "node-uuid/node-uuid-cjs.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "node-uuid/node-uuid-base.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     },
     "node-uuid/node-uuid-global.d.ts": {
-      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+      "commit": "627b6c158b73494c803f36fc2fe00ad75faa8fde"
     }
   }
 }
