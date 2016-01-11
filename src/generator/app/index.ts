@@ -162,6 +162,7 @@ export default class AppGenerator extends Generator {
             this.render('index.html', 'index.html', options),
             this.file.copy(this.srcRoot() + '/favicon.ico', this.destRoot() + '/favicon.ico'),
             this.render('main.ts', 'src/main.ts', options),
+            this.render('server.ts', '../server/server.ts', options),
             this.render('tsd.json', '../tsd.json', options),
             this.render('app/app.ts', 'src/app/app.ts', options),
             this.render('styles/main.less', 'styles/main.less', options),

@@ -2,8 +2,10 @@ import {App, events, register, routing} from 'platypus';
 import {{capitalizeFirst vcName}}ViewControl from '../viewcontrols/{{lowercase vcName}}/{{lowercase vcName}}.vc';
 
 export default class MyApp extends App {
-    constructor(router: routing.Router) {
+    constructor(router: routing.Router, config: web.IBrowserConfig) {
         super();
+
+		config.routingType = config.STATE;
 
         router.configure([
             { pattern: '', view: {{capitalizeFirst vcName}}ViewControl }
@@ -16,5 +18,6 @@ export default class MyApp extends App {
 }
 
 register.app('app', MyApp, [
-    routing.Router
+    routing.Router,
+    web.IBrowserConfig
 ]);

@@ -19,9 +19,11 @@
     "typescript": "latest"
   },
   "devDependencies": {
-    "http-server": "latest",
+    "express": "latest",
+    "morgan": "latest",
     "nodemon": "latest",
     "rimraf": "latest",
+    "serve-static": "latest",
     "watchify": "latest"
   },
   "scripts": {
@@ -35,7 +37,7 @@
     "postbundle": "echo bundle done!",
     "postless": "echo less done!",
     "prepublish": "npm run tsd && tsconfig",
-    "start": "concurrent -r -k \"npm run watch\" \"http-server -p 3000 app\"",
+    "start": "concurrent -r -k \"npm run watch\" \"node server/server\"",
     "ts": "tsconfig && tsc -p .",
     "tsconfig": "tsconfig",
     "tsd": "tsd update -so && tsd link",
