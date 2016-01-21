@@ -34,7 +34,7 @@ export default class BaseGenerator extends Generator {
         var type = this.type.toLowerCase();
 
         this.srcRoot(type);
-        this.destRoot(`app/src/${pluralize(type) }`);
+        this.destRoot(`app/src/${pluralize(type)}`);
     }
 
     defineOptions(): void {
@@ -45,7 +45,7 @@ export default class BaseGenerator extends Generator {
 
         this.option('dir', {
             aliases: ['d'],
-            description: `Specify the path relative to \`app/src/${pluralize(this.type.toLowerCase()) }\` in which to store the ${this.type}`,
+            description: `Specify the path relative to \`app/src/${pluralize(this.type.toLowerCase())}\` in which to store the ${this.type}`,
             defaults: ''
         });
 
@@ -76,12 +76,12 @@ export default class BaseGenerator extends Generator {
             name = options.name,
             promise: Thenable<string>;
 
-        if(!this.utils.isString(options.name) && this.commands.length > 1) {
+        if (!this.utils.isString(options.name) && this.commands.length > 1) {
             name = this.commands[1];
             promise = this.ui.prompt([
                 { name: 'name', type: this.ui.PROMPTS.CONFIRM, default: true, message: `Did you mean \`${this.buildFullCommand().slice(0, -1).join(' ')} -n ${name}\`?` }
-            ]).then((answer: { name: boolean; } ) => {
-                if(answer.name) {
+            ]).then((answer: { name: boolean; }) => {
+                if (answer.name) {
                     return name;
                 }
 
@@ -101,7 +101,12 @@ export default class BaseGenerator extends Generator {
             name = options.name,
             config: any = {
                 name: name,
-                type: name,
+                type: name.replace(/[A-Z]/g, (match: string, index: number) => {
+                    if (index > 0) {
+                        return '-' + match;
+                    }
+                    return match;
+                }),
                 register: options.register !== false
             },
             dest: string = this.getDestination();
@@ -350,7 +355,7 @@ export default class BaseGenerator extends Generator {
             sorted.pop();
         }
 
-        if(sorted[sorted.length - 1].trim() !== '') {
+        if (sorted[sorted.length - 1].trim() !== '') {
             sorted.push('');
         }
 
@@ -372,7 +377,7 @@ export default class BaseGenerator extends Generator {
             } else {
                 let last = others[others.length - 1];
 
-                if(isEmpty(trim) && isString(last) && isEmpty(last.trim())) {
+                if (isEmpty(trim) && isString(last) && isEmpty(last.trim())) {
                     return;
                 }
 
