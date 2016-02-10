@@ -58,18 +58,18 @@
     "sinon-chai": "latest",
     "tsconfig-glob": "latest",
     "tsconfig-lint": "latest",
-    "tsd": "latest",
+    "typings": "latest",
     "typescript": "^1.7.5"
   },
   "scripts": {
-    "prepublish": "npm run tsd && npm run build",
+    "prepublish": "npm run typings && npm run build",
     "build": "tsconfig && tsc -p .",
     "clean": "rimraf src/**/*.js src/*.js test/unit/**/*.js test/*.js",
     "cli": "npm run build && node bin/platypi",
     "lint": "tsconfig-lint -u",
     "test": "npm run build && istanbul cover --dir test/coverage -- test/runner.js",
     "tsconfig": "tsconfig",
-    "tsd": "tsd update -so && tsd link"
+    "typings": "typings install"
   },
   "typescript": {
     "definition": "src/cli.d.ts"

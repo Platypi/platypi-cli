@@ -30,8 +30,10 @@ node_modules
 .DS_Store
 
 # TSD Declarations
-/typings/tsd.d.ts
+/typings/*.d.ts
 /typings/*/*.d.ts
+/typings/*/*/*.d.ts
+/typings/*/*/*/*.d.ts
 
 # JS, css, and map files
 *.js
