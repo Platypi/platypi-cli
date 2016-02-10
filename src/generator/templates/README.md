@@ -65,7 +65,7 @@ The following are descriptions for a few of the useful npm scripts. All of these
 
 - **prepublish**
   - Runs during `npm install`
-  - Installs/links TypeScript declarations using [tsd](http://definitelytyped.org/tsd/)
+  - Installs/links TypeScript declarations using [typings](https://github.com/typings/typings)
   - Runs [tsconfig-glob](https://github.com/wjohnsto/tsconfig-glob) to setup your `tsconfig.json`
 
 - **start**
@@ -73,8 +73,8 @@ The following are descriptions for a few of the useful npm scripts. All of these
   - Rebuilds/bundles when your src files change
   - Starts server that serves assets from the `app` directory on http://localhost:3000
 
-- **tsd**
-  - Installs/links TypeScript declarations using [tsd](http://definitelytyped.org/tsd/)
+- **typings**
+  - Installs/links TypeScript declarations using [typings](https://github.com/typings/typings)
 
 ## Project Structure
 
