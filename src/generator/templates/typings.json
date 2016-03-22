@@ -3,10 +3,11 @@
   "dependencies": {},
   "devDependencies": {},
   "ambientDependencies": {
-    "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts",
-    "mime": "github:DefinitelyTyped/DefinitelyTyped/mime/mime.d.ts",
-    "morgan": "github:DefinitelyTyped/DefinitelyTyped/morgan/morgan.d.ts",
-    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts",
-    "serve-static": "github:DefinitelyTyped/DefinitelyTyped/serve-static/serve-static.d.ts"
+    "express": "registry:dt/express",
+    "express-serve-static-core": "registry:dt/express-serve-static-core",
+    "mime": "registry:dt/mime",
+    "morgan": "registry:dt/morgan",
+    "node": "registry:dt/node",
+    "serve-static": "registry:dt/serve-static"
   }
 }
