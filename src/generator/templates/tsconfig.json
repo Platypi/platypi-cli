@@ -14,7 +14,7 @@
     "filesGlob": [
         "app/**/*.ts",
         "test/**/*.ts",
-        "typings/tsd.d.ts"
+        "typings/browser.d.ts"
     ],
     "files": []
 }
