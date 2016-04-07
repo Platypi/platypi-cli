@@ -18,7 +18,7 @@ let ConfigStore = require('configstore'),
     });
 
 function clientId(): string {
-    var config = ConfigStore(pkg.name),
+    let config = ConfigStore(pkg.name),
         id = config.get('client-id');
 
     if (!utils.isString(id)) {
@@ -30,7 +30,7 @@ function clientId(): string {
 }
 
 function getLogLevel(args: Array<string>): string|number {
-    var level: string,
+    let level: string,
         index = args.indexOf('--loglevel');
 
     if (index > -1) {
@@ -43,13 +43,13 @@ function getLogLevel(args: Array<string>): string|number {
 }
 
 export default function(options: { args: Array<string>; input: NodeJS.ReadableStream; output: NodeJS.WritableStream; }): Thenable<any> {
-    var logLevel = getLogLevel(options.args) || Ui.LOG_LEVEL.INFO;
+    let logLevel = getLogLevel(options.args) || Ui.LOG_LEVEL.INFO;
 
     if (utils.isString(logLevel)) {
         logLevel = (<string>logLevel).toUpperCase();
     }
 
-    var ui = new Ui(<ui.IOptions>utils.extend({
+    let ui = new Ui(<ui.IOptions>utils.extend({
         logLevel: logLevel
     }, options)),
         environment: IEnvironment = {

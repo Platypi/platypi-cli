@@ -7,7 +7,7 @@ import NotFoundError from '../errors/notfound';
 import FileUtils from '../models/fileutils';
 import {findCommand, isAbsolute} from '../utils/utils';
 
-var win32 = process.platform === 'win32';
+let win32 = process.platform === 'win32';
 
 export default class Environment extends Base {
     fileUtils: FileUtils;
@@ -20,7 +20,7 @@ export default class Environment extends Base {
 
     command(defaults: IComponent, command: string = '', parent?: Command): Thenable<any> {
         defaults = this.utils.clone(defaults);
-        var component = this.parseComponent(defaults, command),
+        let component = this.parseComponent(defaults, command),
             prefix = defaults.prefix;
 
         return this._commands(component.component, prefix).then((response) => {
@@ -32,7 +32,7 @@ export default class Environment extends Base {
             component.component = defaults.component;
             return this._commands(component.component, prefix);
         }).then((response) => {
-            var commands = response.commands,
+            let commands = response.commands,
                 Com = commands[component.command];
 
             if (!this.utils.isObject(Com)) {
@@ -57,7 +57,7 @@ export default class Environment extends Base {
 
     listCommands(defaults: IComponent, command: string = ''): Thenable<Array<string>> {
         defaults = this.utils.clone(defaults);
-        var component = this.parseComponent(defaults, command),
+        let component = this.parseComponent(defaults, command),
             prefix = defaults.prefix;
 
         return this._commands(component.component, prefix).then((response) => {
@@ -78,7 +78,7 @@ export default class Environment extends Base {
             command = defaults.command;
         }
 
-        var components = command.split(/:(?!\\|\/)/),
+        let components = command.split(/:(?!\\|\/)/),
             component: string;
 
         if (components.length > 0) {
@@ -97,7 +97,7 @@ export default class Environment extends Base {
     }
 
     private getNpmPaths(): Array<string> {
-        var paths: Array<string> = [];
+        let paths: Array<string> = [];
 
         process.cwd().split(path.sep).forEach((part, index, parts) => {
             let lookup = path.join.apply(path, parts.slice(0, index + 1).concat(['node_modules']));
@@ -125,7 +125,7 @@ export default class Environment extends Base {
     private _commands(component: string, prefix: string): Thenable<{ commands: { [key: string]: typeof Command; }; directory: string; }> {
         return this._find(this.getNpmPaths(), component, prefix).then((info) => {
             component = info.component;
-            var values = info.values,
+            let values = info.values,
                 commands: { [key: string]: typeof Command; } = this.fileUtils.requireAll(component, values);
 
             this.utils.forEach(commands, (command, name) => {
@@ -145,7 +145,7 @@ export default class Environment extends Base {
     }
 
     private _find(paths: Array<string>, component: string, prefix: string): Thenable<{ component: string, values: Array<string> }> {
-        var absolute = component,
+        let absolute = component,
             isRelative = !isAbsolute(absolute);
 
         if (isRelative) {

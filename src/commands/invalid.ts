@@ -12,7 +12,7 @@ export default class Invalid extends Command {
         }
 
         this.ui.help(`Platypi CLI \`v${this.version}\` Help`);
-        var commands = this.getCommands(),
+        let commands = this.getCommands(),
             baseCommand = this.buildFullCommand().join(' ');
 
         this.ui.help(`
@@ -39,7 +39,7 @@ export default class Invalid extends Command {
     }
 
     validate(): any {
-        var command = this.commands[0];
+        let command = this.commands[0];
         if (this.utils.isString(command)) {
             throw new NotFoundError(`Cannot execute \`${this.buildFullCommand().join(' ') }\`, \`${command}\` is not a valid command.`);
         }

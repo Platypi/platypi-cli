@@ -59,7 +59,7 @@
     "tsconfig-glob": "latest",
     "tsconfig-lint": "latest",
     "typings": "latest",
-    "typescript": "^1.7.5"
+    "typescript": "latest"
   },
   "scripts": {
     "prepublish": "npm run typings && npm run build",

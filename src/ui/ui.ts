@@ -4,10 +4,10 @@ import * as through from 'through';
 import {Promise} from 'es6-promise';
 import {EOL} from 'os';
 
-var Progress: any = require('pleasant-progress');
-var inquirer: any = require('inquirer');
+let Progress: any = require('pleasant-progress');
+let inquirer: any = require('inquirer');
 
-var LOG_LEVEL = {
+let LOG_LEVEL = {
     ERROR: 5,
     WARN: 4,
     INFO: 3,
@@ -15,7 +15,7 @@ var LOG_LEVEL = {
     TRACE: 1
 };
 
-var PROMPTS = {
+let PROMPTS = {
     INPUT: 'input',
     EXPAND: 'expand',
     CONFIRM: 'confirm',
@@ -43,7 +43,7 @@ export default class Ui {
     protected utils: typeof utils = utils;
 
     constructor(protected options: ui.IOptions) {
-        var progress = this.progress = new Progress();
+        let progress = this.progress = new Progress();
 
         this.output = this.through(function(data: any): void {
             progress.stop(true);
@@ -61,7 +61,7 @@ export default class Ui {
             return;
         }
 
-        var message: string = error.message,
+        let message: string = error.message,
             stack: string = error.stack;
 
         if (this.utils.isString(stack)) {

@@ -6,7 +6,7 @@ import Service from '../service/index';
 import ViewControl from '../viewcontrol/index';
 import Cordova from '../cordova/index';
 
-var validate: any = require('validate-npm-package-name');
+let validate: any = require('validate-npm-package-name');
 
 export default class AppGenerator extends Generator {
     options: IOptions;
@@ -36,7 +36,7 @@ export default class AppGenerator extends Generator {
     }
 
     askQuestions(): any {
-        var options = this.options;
+        let options = this.options;
 
         return this.promptName(options.name).then((name) => {
             options.name = name;
@@ -88,7 +88,7 @@ export default class AppGenerator extends Generator {
             this.title = name;
 
             name = this.utils.kebabCase(name).toLowerCase();
-            var valid = validate(name);
+            let valid = validate(name);
 
             if (this.utils.isArray(valid.errors) || this.utils.isArray(valid.warnings)) {
                 this.ui.warn('');
@@ -131,7 +131,7 @@ export default class AppGenerator extends Generator {
         this.project.root = this.options.dir;
         this.ui.debug('Generating the `default` app');
 
-        var destRoot = path.resolve(this.destRoot(), '..'),
+        let destRoot = path.resolve(this.destRoot(), '..'),
             genOptions = {
                 env: this.env,
                 directory: this.directory,
@@ -155,7 +155,7 @@ export default class AppGenerator extends Generator {
             name: title
         };
 
-        var promises: Array<Thenable<any>> = [
+        let promises: Array<Thenable<any>> = [
             this.render('package.json', '../package.json', options),
             this.render('README.md', '../README.md', options),
             this.render('tsconfig.json', '../tsconfig.json', options),

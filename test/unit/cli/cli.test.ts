@@ -6,7 +6,7 @@ import Ui from '../mock/ui.mock';
 use(require('chai-as-promised'));
 
 describe('cli', () => {
-    var cli: Cli;
+    let cli: Cli;
 
     beforeEach(() => {
         cli = new Cli({
@@ -15,7 +15,7 @@ describe('cli', () => {
     });
 
     it('should run a command when it is matched', (done) => {
-        var ranCreate = false,
+        let ranCreate = false,
             Create = getCreateCommand(() => {
                 ranCreate = true;
             });
@@ -32,7 +32,7 @@ describe('cli', () => {
     });
 
     it('should run a command when its alias is matched', (done) => {
-        var ranCreate = false,
+        let ranCreate = false,
             Create = getCreateCommand(() => {
                 ranCreate = true;
             });

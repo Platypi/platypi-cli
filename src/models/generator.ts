@@ -23,7 +23,7 @@ export default class Generator extends Command {
         this.env = options.env;
         this.directory = options.directory;
         this.srcRoot(path.resolve(options.directory, 'templates'));
-        var project = this.project,
+        let project = this.project,
             root: string;
 
         if (this.utils.isObject(project)) {
@@ -34,10 +34,10 @@ export default class Generator extends Command {
     }
 
     protected render(source: string, destination: string, context?: any): Thenable<void> {
-        var src = this.getPath(this._srcRoot, source),
+        let src = this.getPath(this._srcRoot, source),
             dest = this.getPath(this._destRoot, destination);
 
-        var options: any = this.utils.extend({
+        let options: any = this.utils.extend({
             context: context,
             encoding: 'utf8'
         }, context);
@@ -94,7 +94,7 @@ export default class Generator extends Command {
     }
 
     protected mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string {
-        var eol = this.file.eol(data),
+        let eol = this.file.eol(data),
             lines = data.split(eol);
 
         return this.utils.map(lines, handler).join(eol);

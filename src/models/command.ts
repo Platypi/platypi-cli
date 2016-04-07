@@ -79,7 +79,7 @@ export default class Command extends Base {
         this.defineOptions();
         this.parseOptions();
 
-        var options = this.options,
+        let options = this.options,
             commands = this.commands = (<any>this.options)._;
 
         if (this.needsHelp()) {
@@ -89,10 +89,10 @@ export default class Command extends Base {
         return Promise.resolve(this.askQuestions())
             .then(this.validate.bind(this))
             .then((valid: boolean) => {
-                var command = commands.shift();
+                let command = commands.shift();
                 this.args.splice(this.args.indexOf(command), 1);
                 if (valid === false) {
-                    var message: string;
+                    let message: string;
 
                     if (this.utils.isString(command)) {
                         message = `\`${command}\` doesn't have enough information to complete. For more information see \`platypi ${command} -h\``;
@@ -120,7 +120,7 @@ export default class Command extends Base {
     }
 
     protected buildFullCommand(): Array<string> {
-        var parent: Command = this;
+        let parent: Command = this;
 
         while (this.utils.isObject(parent.parent)) {
             parent = parent.parent;
@@ -139,12 +139,12 @@ export default class Command extends Base {
     protected commandsHelp(command: string): any { }
 
     protected aliasesHelp(command: string): any {
-        var aliases: Array<string> = (<any>this).constructor.aliases;
+        let aliases: Array<string> = (<any>this).constructor.aliases;
 
         if (this.utils.isArray(aliases)) {
             aliases = aliases.slice(0);
 
-            var commandName = (<any>this.constructor).commandName;
+            let commandName = (<any>this.constructor).commandName;
 
             if (this.utils.isString(commandName)) {
                 aliases.unshift(commandName);
@@ -163,12 +163,12 @@ export default class Command extends Base {
     protected optionsHelp(command: string): any {
         this.ui.help(`
   Options:`);
-        var options = this._options,
+        let options = this._options,
             longest = 0,
             lines: Array<{ command: string; description: string; defaults?: any; }> = [];
 
         this.utils.forEach(options, (option) => {
-            var prepend = '--',
+            let prepend = '--',
                 aliasPrepend = '-';
 
             if (option.defaults === true) {
@@ -176,7 +176,7 @@ export default class Command extends Base {
                 aliasPrepend += '-no-';
             }
 
-            var commands: string;
+            let commands: string;
 
             if (this.utils.isArray(option.aliases) && option.aliases.length > 0) {
                 commands = `${option.aliases.map(alias => `${aliasPrepend}${alias}`).join(', ') }, ${prepend}${option.name}`;
@@ -191,14 +191,14 @@ export default class Command extends Base {
             lines.push({ command: commands, description: option.description, defaults: option.defaults });
         });
 
-        var utils = this.utils,
+        let utils = this.utils,
             isNull = (val: any) => { return utils.isNull(val) || utils.isUndefined(val); },
             isString = utils.isString,
             isEmpty = utils.isEmpty,
             isBoolean = utils.isBoolean;
 
         this.utils.forEach(lines, (line) => {
-            var padding: string = EOL + this.file.spaces(longest + 10);
+            let padding: string = EOL + this.file.spaces(longest + 10);
             this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('') }${wrap(line.description, 58, padding) }`);
 
             if (!isNull(line.defaults) && !(isString(line.defaults) && isEmpty(line.defaults)) && !isBoolean(line.defaults)) {
@@ -210,7 +210,7 @@ export default class Command extends Base {
     }
 
     protected parseOptions(): void {
-        var options = this._options;
+        let options = this._options;
 
         this.options = <any>minimist(this.args, {
             '--': true,
@@ -238,7 +238,7 @@ export default class Command extends Base {
             hide: false
         });
 
-        var _options = this._options,
+        let _options = this._options,
             options = this.options;
 
         if (!this.utils.isObject(_options[name])) {

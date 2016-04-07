@@ -1,7 +1,7 @@
 import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
 
-var validate: any = require('validate-npm-package-name');
+let validate: any = require('validate-npm-package-name');
 
 export default class CordovaGenerator extends Generator {
     options: IOptions;
@@ -28,7 +28,7 @@ export default class CordovaGenerator extends Generator {
     }
 
     askQuestions(): any {
-        var options = this.options;
+        let options = this.options;
 
         return this.promptName(options.name).then((name) => {
             options.name = this.utils.startCase(name);
@@ -37,10 +37,10 @@ export default class CordovaGenerator extends Generator {
 
     promptName(name: string = ''): Thenable<string> {
         name = name.trim();
-        var utils = this.utils;
+        let utils = this.utils;
 
         if (utils.isEmpty(name) && utils.isObject(this.project)) {
-            var pkg = this.project.package();
+            let pkg = this.project.package();
 
             if (utils.isObject(pkg) && utils.isString(pkg.name)) {
                 name = pkg.name;
@@ -48,7 +48,7 @@ export default class CordovaGenerator extends Generator {
         }
 
         if (!utils.isEmpty(name)) {
-            var valid = validate(name);
+            let valid = validate(name);
 
             if (utils.isArray(valid.errors) || utils.isArray(valid.warnings)) {
                 this.ui.warn('');
@@ -85,7 +85,7 @@ export default class CordovaGenerator extends Generator {
     }
 
     protected normalizeOptions(options: IOptions): void {
-        var match: RegExpMatchArray = [];
+        let match: RegExpMatchArray = [];
 
         if (this.utils.isEmpty(options.id)) {
             options.id = options.name.replace(/\s/g, '');
@@ -99,7 +99,7 @@ export default class CordovaGenerator extends Generator {
             if (!/^(io|com|org)\./.test(options.id)) {
                 options.id = `com.${options.id}`;
             } else {
-                var index = options.id.indexOf('.');
+                let index = options.id.indexOf('.');
 
                 options.id = options.id.substring(0, index) + '.platypi.' + options.id.substring(index + 1);
             }

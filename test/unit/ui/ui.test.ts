@@ -8,7 +8,7 @@ use(require('chai-as-promised'));
 use(require('sinon-chai'));
 
 describe('Ui', () => {
-    var ui: Ui,
+    let ui: Ui,
         spy: Sinon.SinonSpy;
 
     beforeEach(() => {
@@ -25,7 +25,7 @@ describe('Ui', () => {
     });
 
     it('should log at info by default', () => {
-        var shouldLogSpy = spyOn(ui, 'shouldLog');
+        let shouldLogSpy = spyOn(ui, 'shouldLog');
         ui.log('test');
 
         expect(spy).to.have.been.calledOnce;
@@ -36,7 +36,7 @@ describe('Ui', () => {
     });
 
     it('should prompt asynchronously', (done) => {
-        var promptStub = stub((<any>ui).inquirer, 'prompt', (obj: any, cb) => {
+        let promptStub = stub((<any>ui).inquirer, 'prompt', (obj: any, cb) => {
             cb();
         });
 
@@ -46,7 +46,7 @@ describe('Ui', () => {
 
     describe('progress', () => {
         ['start', 'stop'].forEach((value) => {
-            var progressStub: Sinon.SinonStub;
+            let progressStub: Sinon.SinonStub;
 
             beforeEach(() => {
                 progressStub = stub((<any>ui).progress, value);
@@ -80,7 +80,7 @@ describe('Ui', () => {
 
     function errorMethod(): void {
         it('should do nothing if called with falsy values', () => {
-            var err;
+            let err;
 
             ui.error(err);
             err = null;
@@ -94,7 +94,7 @@ describe('Ui', () => {
         });
 
         it('should accept a string', () => {
-            var err = 'test message';
+            let err = 'test message';
             ui.error(err);
 
             expect(spy).to.have.been.calledOnce;
@@ -102,7 +102,7 @@ describe('Ui', () => {
         });
 
         it('should accept an object', () => {
-            var err = {
+            let err = {
                 message: 'test message'
             };
 
@@ -113,7 +113,7 @@ describe('Ui', () => {
         });
 
         it('should accept an error', () => {
-            var err = new Error('test message');
+            let err = new Error('test message');
 
             ui.error(err);
 
@@ -123,7 +123,7 @@ describe('Ui', () => {
     }
 
     ['error', 'warn', 'info', 'debug', 'trace'].forEach((value) => {
-        var level = Ui.LOG_LEVEL[value.toUpperCase()];
+        let level = Ui.LOG_LEVEL[value.toUpperCase()];
         describe(`${value} method`, () => {
             beforeEach(() => {
                 ui.setLogLevel(value.toUpperCase());
@@ -149,7 +149,7 @@ describe('Ui', () => {
             });
 
             it(`should not log above ${value} level`, () => {
-                var outputSpy = spyOn((<any>ui).output, 'write');
+                let outputSpy = spyOn((<any>ui).output, 'write');
                 ui.setLogLevel(level + 1);
                 ui[value]('message');
 

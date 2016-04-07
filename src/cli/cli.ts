@@ -6,11 +6,11 @@ import Base from '../models/base';
 export default class Cli extends Base {
     run(environment: IEnvironment): Thenable<number> {
         return Promise.resolve().then(() => {
-            var args = minimist(environment.args);
+            let args = minimist(environment.args);
 
-            var RegisteredCommand = findCommand(environment.commands, args._[0]);
+            let RegisteredCommand = findCommand(environment.commands, args._[0]);
 
-            var command = new RegisteredCommand({
+            let command = new RegisteredCommand({
                 ui: this.ui,
                 project: this.project
             });

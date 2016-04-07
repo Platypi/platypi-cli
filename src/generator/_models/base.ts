@@ -20,7 +20,7 @@ export default class BaseGenerator extends Generator {
         this.type = config.type;
         this.ext = config.ext.toLowerCase();
         this.allowExtends = !!config.allowExtends;
-        var allowExtendsWithoutBase = config.allowExtendsWithoutBase;
+        let allowExtendsWithoutBase = config.allowExtendsWithoutBase;
 
         if (allowExtendsWithoutBase === false) {
             this.allowExtendsWithoutBase = false;
@@ -31,7 +31,7 @@ export default class BaseGenerator extends Generator {
         this.fileExtension = !config.noFileExtension;
         this.declaration = !!config.declaration;
 
-        var type = this.type.toLowerCase();
+        let type = this.type.toLowerCase();
 
         this.srcRoot(type);
         this.destRoot(`app/src/${pluralize(type)}`);
@@ -72,7 +72,7 @@ export default class BaseGenerator extends Generator {
     }
 
     askQuestions(): any {
-        var options = this.options,
+        let options = this.options,
             name = options.name,
             promise: Thenable<string>;
 
@@ -97,7 +97,7 @@ export default class BaseGenerator extends Generator {
     }
 
     run(): any {
-        var options = this.options,
+        let options = this.options,
             name = options.name,
             config: any = {
                 name: name,
@@ -111,7 +111,7 @@ export default class BaseGenerator extends Generator {
             },
             dest: string = this.getDestination();
 
-        var ext = options.extends,
+        let ext = options.extends,
             src = this.ext;
 
         if (ext === false && this.allowExtends) {
@@ -121,7 +121,7 @@ export default class BaseGenerator extends Generator {
         }
 
         if (this.allowExtends) {
-            var root = this.destRoot();
+            let root = this.destRoot();
 
             config.type = path.relative(path.resolve(root), path.resolve(root, dest, '..')).replace(/\\|\//g, '-');
         }
@@ -147,12 +147,12 @@ export default class BaseGenerator extends Generator {
     }
 
     protected _render(src: string, dest: string, config: any): Thenable<any> {
-        var promises = [
+        let promises = [
             this.render(`${src}.ts`, `${dest}.ts`, config)
         ];
 
         if (this.declaration && this.options.declaration) {
-            var dDest = dest.substring(0, dest.lastIndexOf('/')) + '/i' + dest.substring(dest.lastIndexOf('/') + 1);
+            let dDest = dest.substring(0, dest.lastIndexOf('/')) + '/i' + dest.substring(dest.lastIndexOf('/') + 1);
             promises.push(this.render(`i${src}.d.ts`, `${dDest}.d.ts`, config));
         }
 
@@ -160,7 +160,7 @@ export default class BaseGenerator extends Generator {
     }
 
     protected processMainTs(): Thenable<any> {
-        var destRoot = path.resolve(this.destRoot(), '..'),
+        let destRoot = path.resolve(this.destRoot(), '..'),
             root = path.relative(this.project.root, destRoot),
             paths = [
                 root + '/app/app.ts',
@@ -174,13 +174,13 @@ export default class BaseGenerator extends Generator {
                 root + '/templatecontrols/**/*.d.ts'
             ];
 
-        var file = path.resolve(destRoot, 'main.ts');
+        let file = path.resolve(destRoot, 'main.ts');
 
         return Promise.all([
             this.file.read(file),
             this.glob(root, paths, ignore)
         ]).then((results: Array<any>) => {
-            var data: string = results[0],
+            let data: string = results[0],
                 files: Array<string> = results[1],
                 req = `import '`,
                 append: Array<string> = [];
@@ -202,7 +202,7 @@ export default class BaseGenerator extends Generator {
     }
 
     protected processMainLess(): Thenable<any> {
-        var destRoot = path.resolve(this.destRoot(), '..'),
+        let destRoot = path.resolve(this.destRoot(), '..'),
             root = path.relative(this.project.root, destRoot),
             paths = [
                 root + '/attributecontrols/**/*.less',
@@ -210,13 +210,13 @@ export default class BaseGenerator extends Generator {
                 root + '/viewcontrols/**/*.less',
             ];
 
-        var file = path.resolve(destRoot, '../styles/main.less');
+        let file = path.resolve(destRoot, '../styles/main.less');
 
         return Promise.all([
             this.file.read(file),
             this.glob(root, paths, undefined, '../src/')
         ]).then((results: Array<any>) => {
-            var data: string = results[0],
+            let data: string = results[0],
                 files: Array<string> = results[1],
                 imprt = `@import '`,
                 append: Array<string> = [];
@@ -243,7 +243,7 @@ export default class BaseGenerator extends Generator {
         }
 
         files = files.slice(0);
-        var firstFile = files.shift();
+        let firstFile = files.shift();
         return new Promise<Array<string>>((resolve, reject) => {
             glob(firstFile, {
                 ignore: ignore.map((file) => {
@@ -254,7 +254,7 @@ export default class BaseGenerator extends Generator {
                     return file;
                 })
             }, (err, matches) => {
-                var out = matches.map((file) => {
+                let out = matches.map((file) => {
                     return replace + path.relative(root, file).replace(/\\/g, '/').replace(/\.ts$/, '');
                 });
 
@@ -272,7 +272,7 @@ export default class BaseGenerator extends Generator {
     }
 
     protected getDestination(): string {
-        var options = this.options,
+        let options = this.options,
             name = options.name,
             dir = options.dir,
             dest: string;
@@ -297,7 +297,7 @@ export default class BaseGenerator extends Generator {
     }
 
     protected findExtends(root: string): string {
-        var ext: string = this.options.extends;
+        let ext: string = this.options.extends;
 
         if (this.utils.isString(ext)) {
             return ext;
@@ -307,20 +307,20 @@ export default class BaseGenerator extends Generator {
             return '';
         }
 
-        var dest = this.destRoot();
+        let dest = this.destRoot();
 
         return path.relative(path.resolve(dest, root, '..'), path.resolve(dest, `base/base.${this.ext}`));
     }
 
     private formatMain(data: string, append: Array<string>): string {
-        var eol = this.file.eol(data),
+        let eol = this.file.eol(data),
             appFound: boolean = false,
             acFound: boolean = false,
             injFound: boolean = false,
             tcFound: boolean = false,
             vcFound: boolean = false;
 
-        var sorted = this.sortMain(data.split(eol)
+        let sorted = this.sortMain(data.split(eol)
             .concat(append))
             .map((value, index, lines) => {
                 if (value.indexOf('/app/') > -1 && !appFound) {
@@ -363,7 +363,7 @@ export default class BaseGenerator extends Generator {
     }
 
     private sortMain(lines: Array<string>): Array<string> {
-        var imports: Array<string> = [],
+        let imports: Array<string> = [],
             others: Array<string> = [],
             trim: string,
             isString = this.utils.isString,
@@ -399,7 +399,7 @@ export default class BaseGenerator extends Generator {
     }
 
     private sort(a: string, b: string): number {
-        var aa = a.indexOf('app') > -1,
+        let aa = a.indexOf('app') > -1,
             ba = b.indexOf('app') > -1,
             aac = a.indexOf('attributecontrols') > -1,
             bac = b.indexOf('attributecontrols') > -1,

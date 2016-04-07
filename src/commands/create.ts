@@ -13,7 +13,7 @@ class Create extends Command {
     };
 
     generalHelp(command: string): any {
-        var baseCommand = this.buildFullCommand().join(' ');
+        let baseCommand = this.buildFullCommand().join(' ');
         this.ui.help(`
   General Usage:
 
@@ -21,7 +21,7 @@ class Create extends Command {
     }
 
     commandsHelp(command: string): any {
-        var baseCommand = this.buildFullCommand().join(' ');
+        let baseCommand = this.buildFullCommand().join(' ');
 
         return this.env.listCommands(this.defaultComponent, this.commands[0]).then((commands) => {
             this.ui.help(`

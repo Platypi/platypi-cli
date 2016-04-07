@@ -5,7 +5,7 @@ import Command from '../models/command';
 import InvalidCommand from '../commands/invalid';
 
 export function findCommand(commands: Array<typeof Command>, name: string): typeof Command {
-    var command = find(commands, (command) => {
+    let command = find(commands, (command) => {
         if(isFunction((<any>command).default)) {
             command = (<any>command).default;
         }
@@ -23,7 +23,7 @@ export function findCommand(commands: Array<typeof Command>, name: string): type
 }
 
 export function pluralize(str: string): string {
-    var last = str.slice(-2);
+    let last = str.slice(-2);
 
     if (last[1] === 'y') {
         return str.slice(0, -1) + 'ies';
@@ -39,7 +39,7 @@ export function wrap(str: string, width: number = 60, brk: string = EOL, cut: bo
         return str;
     }
 
-    var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)'),
+    let regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)'),
         match = str.match(new RegExp(regex, 'g'));
 
     if (match.length > 1) {

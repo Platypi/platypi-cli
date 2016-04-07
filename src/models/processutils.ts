@@ -5,10 +5,10 @@ import Base from './base';
 export default class ProcessUtils extends Base {
     exec(command: string, args: Array<string> = [], options?: models.IExecOptions): Thenable<any> {
         return new Promise<any>((resolve, reject) => {
-            var cmd = [command].concat(args).join(' ');
+            let cmd = [command].concat(args).join(' ');
             this.ui.info(`Running command \`${cmd}\``);
 
-            var child = exec(cmd, options);
+            let child = exec(cmd, options);
 
             child.stdout.on('data', (data: string) => {
                 this.ui.log(data, this.ui.LOG_LEVEL.INFO);

@@ -80,7 +80,7 @@ export default class FileUtils extends Base {
     }
 
     eol(data: string): string {
-        var cr = '\r',
+        let cr = '\r',
             lf = '\n',
             r = /\r/.test(data),
             n = /\n/.test(data);
@@ -97,7 +97,7 @@ export default class FileUtils extends Base {
     }
 
     mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string {
-        var eol = this.eol(data),
+        let eol = this.eol(data),
             lines = data.split(eol);
 
         return this.utils.map(lines, handler).join(eol);
@@ -110,7 +110,7 @@ export default class FileUtils extends Base {
                     return reject(err);
                 }
 
-                var ignoreStrings = <Array<string>>ignores.filter((ignore) => {
+                let ignoreStrings = <Array<string>>ignores.filter((ignore) => {
                     return this.utils.isString(ignore);
                 }),
                     ignoreRegex = <Array<RegExp>>ignores.filter((ignore) => {
@@ -118,7 +118,7 @@ export default class FileUtils extends Base {
                     });
 
                 directories = directories.filter((dir) => {
-                    var isDir = fs.statSync(path.join(src, dir)).isDirectory(),
+                    let isDir = fs.statSync(path.join(src, dir)).isDirectory(),
                         index = ignores.indexOf(dir);
 
                     if (!isDir || index > -1) {
@@ -136,7 +136,7 @@ export default class FileUtils extends Base {
     }
 
     requireAll(src: string, directories: Array<string>): { [key: string]: any; } {
-        var modules: { [key: string]: any; } = {};
+        let modules: { [key: string]: any; } = {};
 
         directories.forEach((dir) => {
             let module = require(path.resolve(src, dir));

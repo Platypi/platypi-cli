@@ -28,10 +28,10 @@ export default class ControlGenerator extends Generator {
     }
 
     protected _render(src: string, dest: string, config: any): Thenable<any> {
-        var options = this.options;
+        let options = this.options;
         config.html = options.html;
 
-        var promises = [
+        let promises = [
             this._renderFile('.ts', src, dest, config)
         ];
 

@@ -5,7 +5,7 @@ import {isObject, isString, merge, cloneDeep} from 'lodash';
 import NotFoundError from '../errors/notfound';
 import FileUtils from './fileutils';
 
-var findup = require('findup'),
+let findup = require('findup'),
     stringify = require('json-stable-stringify');
 
 export default class Project extends Base {
@@ -41,12 +41,12 @@ export default class Project extends Base {
     }
 
     protected static closestPackage(ui: ui.Ui, root: string): Thenable<{ directory: string; pkg: any; }> {
-        var file = 'package.json';
+        let file = 'package.json';
         return Promise.all([
             Project.closestConfig(ui, root, 'package.json'),
             Project.closestConfig(ui, root, 'platypi.json')
         ]).then((values) => {
-            var pkg = values[0],
+            let pkg = values[0],
                 platypi = values[1],
                 pkgError = !isString(pkg.directory),
                 platypiError = !isString(platypi.directory);
@@ -88,7 +88,7 @@ export default class Project extends Base {
             if (!isString(directory)) {
                 return <any>directory;
             }
-            var config = path.join(directory, configName);
+            let config = path.join(directory, configName);
             ui.debug(`Reading ${config}`);
             return {
                 directory: directory,
@@ -111,7 +111,7 @@ export default class Project extends Base {
 
     constructor(options: models.IProjectOptions) {
         super(options);
-        var cliPackage: any = this.cliPkg = require('../../package.json');
+        let cliPackage: any = this.cliPkg = require('../../package.json');
         this.bin = this.utils.keys(cliPackage.bin)[0];
         this.root = options.root;
         this.pkg = this.utils.cloneDeep(options.pkg);
@@ -119,7 +119,7 @@ export default class Project extends Base {
     }
 
     getConfig(property: string): any {
-        var config = this.pkg.platypi || {};
+        let config = this.pkg.platypi || {};
 
         return config[property];
     }

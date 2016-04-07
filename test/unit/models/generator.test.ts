@@ -30,7 +30,7 @@ class MockGenerator extends Generator {
 }
 
 describe('Generators', () => {
-    var command: MockGenerator;
+    let command: MockGenerator;
 
     beforeEach(() => {
         command = new MockGenerator({
@@ -54,7 +54,7 @@ describe('Generators', () => {
     });
 
     it('should make a directory using destRoot when use mkdirDest', () => {
-        var mkdir = stub((<any>command).file, 'mkdir', () => { });
+        let mkdir = stub((<any>command).file, 'mkdir', () => { });
         command.mkdirDest('foo', 'bar');
         expect(mkdir).to.have.been.calledWith(path.resolve(command.destRoot(), 'foo'), path.resolve(command.destRoot(), 'bar'));
     });

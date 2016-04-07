@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import {Promise} from 'es6-promise';
 import CreateBase from '../../../src/commands/create';
 
-var cb = () => { };
+let cb = () => { };
 
 export class Create extends CreateBase {
     static aliases: Array<string> = ['create-alias'];

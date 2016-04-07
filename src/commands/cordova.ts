@@ -53,7 +53,7 @@ class Cordova extends Command {
     }
 
     generalHelp(command: string): any {
-        var baseCommand = this.buildFullCommand().join(' ');
+        let baseCommand = this.buildFullCommand().join(' ');
 
         this.ui.help(`
   This command will run \`cordova\` commands in the context of your cordova project directory.
@@ -72,7 +72,7 @@ class Cordova extends Command {
             args = args.slice(1);
         }
 
-        var arg = args[0],
+        let arg = args[0],
             promise: Thenable<void>;
 
         if (arg === 'build' || arg === 'compile') {
@@ -89,15 +89,16 @@ class Cordova extends Command {
     }
 
     protected modifyIndex(): Thenable<void> {
-        var cordova = '<script type="text/javascript" src="cordova.js"></script>',
+        let cordova = '<script type="text/javascript" src="cordova.js"></script>',
             haveCordova = false,
             scriptStart: number = -1,
             file = path.resolve(this.project.root, 'cordova/www/index.html');
 
         return this.file.read(file).then((data) => {
-            var eol = this.file.eol(data),
+            let eol = this.file.eol(data),
                 lines = data.split(eol);
 
+            this.removeBase(lines);
             this.addIndexHead(lines, data);
 
             haveCordova = lines.some((line, index) => {
@@ -111,13 +112,23 @@ class Cordova extends Command {
             });
 
             if (!haveCordova) {
-                var spaces = (/^(\s*)/.exec(lines[scriptStart]) || ['', ''])[1];
+                let spaces = (/^(\s*)/.exec(lines[scriptStart]) || ['', ''])[1];
 
                 lines.splice(scriptStart, 0, spaces + cordova);
             }
 
             return this.file.write(file, lines.join(eol));
         });
+    }
+
+    protected removeBase(lines: Array<string>): void {
+        let index = this.findBase(lines);
+
+        if (index === -1) {
+            return;
+        }
+
+        lines.splice(0, index + 1);
     }
 
     protected addIndexHead(lines: Array<string>, data: string): void {
@@ -127,15 +138,30 @@ class Cordova extends Command {
 
         this.ui.info('Adding cordova tags to index.html');
 
-        var index = this.findHead(lines);
+        let index = this.findHead(lines);
         lines.splice(0, index + 1, this.indexAdd);
     }
 
     protected findHead(lines: Array<string>): number {
-        var index = -1;
+        let index = -1;
 
         lines.some((line, i) => {
             if (line.indexOf('<head>') > -1) {
+                index = i;
+            }
+
+            return index > -1;
+        });
+
+        return index;
+    }
+
+    protected findBase(lines: Array<string>): number {
+        let base = '<base href="/">',
+            index = -1;
+
+        lines.some((line, i) => {
+            if (line.indexOf(base) > -1) {
                 index = i;
             }
 

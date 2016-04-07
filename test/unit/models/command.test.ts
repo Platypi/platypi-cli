@@ -9,7 +9,7 @@ use(require('chai-as-promised'));
 use(require('sinon-chai'));
 
 describe('Command', () => {
-    var command: Command;
+    let command: Command;
 
     beforeEach(() => {
         command = new Command({

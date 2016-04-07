@@ -8,7 +8,7 @@ use(require('sinon-chai'));
 
 describe('Project', () => {
     it('should find a package', (done) => {
-        var promise = Project.project(new Ui(), process.cwd()).then(() => { }, () => { });
+        let promise = Project.project(new Ui(), process.cwd()).then(() => { }, () => { });
         expect(promise).to.eventually.be.an('undefined').notify(done);
     });
 });
