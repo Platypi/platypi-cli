@@ -29,11 +29,8 @@ node_modules
 # OSX Folder Attributes
 .DS_Store
 
-# TSD Declarations
-/typings/*.d.ts
-/typings/*/*.d.ts
-/typings/*/*/*.d.ts
-/typings/*/*/*/*.d.ts
+# Typings Declarations
+/typings
 
 # JS, css, and map files
 *.js

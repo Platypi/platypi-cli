@@ -2,7 +2,7 @@
   "name": "platypi-cli",
   "dependencies": {},
   "devDependencies": {},
-  "ambientDependencies": {
+  "globalDependencies": {
     "assertion-error": "github:DefinitelyTyped/DefinitelyTyped/assertion-error/assertion-error.d.ts#800a7047cf275cc9f695cbd116748cd408a09d6d",
     "chai": "github:DefinitelyTyped/DefinitelyTyped/chai/chai.d.ts#9c25433c84251bfe72bf0030a95edbbb2c81c9d5",
     "chai-as-promised": "github:DefinitelyTyped/DefinitelyTyped/chai-as-promised/chai-as-promised.d.ts#bf8b0be21ef5fb4c74108329eb6001c060aff7b5",

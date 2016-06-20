@@ -11,7 +11,7 @@
     "filesGlob": [
         "src/**/*.ts",
         "test/**/*.ts",
-        "typings/browser.d.ts",
+        "typings/index.d.ts",
         "!src/cli.d.ts",
         "!src/generator/templates/**/*.ts"
     ],
@@ -20,7 +20,7 @@
         "src/interfaces.d.ts",
         "src/models/imodels.d.ts",
         "src/ui/iui.d.ts",
-        "typings/browser.d.ts",
+        "typings/index.d.ts",
         "src/cli/cli.ts",
         "src/commands/cordova.ts",
         "src/commands/create.ts",
