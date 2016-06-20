@@ -23,7 +23,7 @@
     "framework"
   ],
   "license": "MIT",
-  "bugs": {W
+  "bugs": {
     "url": "https://github.com/Platypi/platypi-cli/issues"
   },
   "dependencies": {
