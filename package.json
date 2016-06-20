@@ -1,6 +1,6 @@
 {
   "name": "platypi-cli",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "description": "A command line interface for working with PlatypusTS projects.",
   "author": "Platypi <support@platypi.io>",
   "homepage": "https://platypi.io",
@@ -23,7 +23,7 @@
     "framework"
   ],
   "license": "MIT",
-  "bugs": {
+  "bugs": {W
     "url": "https://github.com/Platypi/platypi-cli/issues"
   },
   "dependencies": {

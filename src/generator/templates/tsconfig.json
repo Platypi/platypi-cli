@@ -1,20 +1,18 @@
 {
-    "lintOptions": {
-        "rules": {}
-    },
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": false,
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
         "watch": false
     },
     "filesGlob": [
         "app/**/*.ts",
         "test/**/*.ts",
-        "typings/browser.d.ts"
+        "typings/index.d.ts"
     ],
     "files": []
 }
