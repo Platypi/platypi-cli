@@ -1,5 +1,6 @@
 import * as path from 'path';
 import {Promise} from 'es6-promise';
+import ValidationError from '../errors/validation';
 import Command from '../models/command';
 
 class Cordova extends Command {
@@ -128,7 +129,7 @@ class Cordova extends Command {
             return;
         }
 
-        lines.splice(0, index + 1);
+        lines.splice(index, 1);
     }
 
     protected addIndexHead(lines: Array<string>, data: string): void {
@@ -139,7 +140,12 @@ class Cordova extends Command {
         this.ui.info('Adding cordova tags to index.html');
 
         let index = this.findHead(lines);
-        lines.splice(0, index + 1, this.indexAdd);
+
+        if (index === -1) {
+            throw new ValidationError('You need a `<head>` tag.');
+        }
+
+        lines.splice(index, 0, this.indexAdd);
     }
 
     protected findHead(lines: Array<string>): number {
