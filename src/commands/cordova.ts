@@ -145,7 +145,7 @@ class Cordova extends Command {
             throw new ValidationError('You need a `<head>` tag.');
         }
 
-        lines.splice(index, 0, this.indexAdd);
+        lines.splice(0, index + 1, this.indexAdd);
     }
 
     protected findHead(lines: Array<string>): number {
