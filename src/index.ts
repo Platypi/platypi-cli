@@ -5,7 +5,7 @@ import Project from './models/project';
 import Command from './models/command';
 import Generator from './models/generator';
 import * as utils from 'lodash';
-import * as uuid from 'node-uuid';
+import * as uuid from 'uuid';
 
 export {default as Command} from './models/command';
 export {default as Generator} from './models/generator';
