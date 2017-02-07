@@ -23,6 +23,7 @@ resolve('platypi-cli', {
     input: process.stdin,
     output: process.stdout
   }).then(function (result) {
+      console.log('done');
     var exitCode = typeof result === 'object' ? result.exitCode : result;
     exit(exitCode);
   });
