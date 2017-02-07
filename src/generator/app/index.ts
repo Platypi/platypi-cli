@@ -90,6 +90,8 @@ export default class AppGenerator extends Generator {
             name = this.utils.kebabCase(name).toLowerCase();
             let valid = validate(name);
 
+            console.log(valid);
+
             if (this.utils.isArray(valid.errors) || this.utils.isArray(valid.warnings)) {
                 this.ui.warn('');
                 this.utils.forEach(valid.errors, (err: string) => {
