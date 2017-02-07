@@ -57,6 +57,8 @@ export default function(options: { args: Array<string>; input: NodeJS.ReadableSt
             args: options.args
         };
 
+    console.log('test');
+
     return Project.project(ui, process.cwd()).then((project) => {
         return (new Cli({
             ui: ui,
