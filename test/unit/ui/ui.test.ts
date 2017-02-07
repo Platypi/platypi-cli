@@ -1,5 +1,5 @@
 import {use, expect} from 'chai';
-import {spy as spyOn, stub} from 'sinon';
+import {spy as spyOn, stub, SinonSpy, SinonStub} from 'sinon';
 import Ui from '../../../src/ui/ui';
 import * as through from 'through';
 import * as chalk from 'chalk';
@@ -9,7 +9,7 @@ use(require('sinon-chai'));
 
 describe('Ui', () => {
     let ui: Ui,
-        spy: Sinon.SinonSpy;
+        spy: SinonSpy;
 
     beforeEach(() => {
         ui = new Ui({
@@ -46,7 +46,7 @@ describe('Ui', () => {
 
     describe('progress', () => {
         ['start', 'stop'].forEach((value) => {
-            let progressStub: Sinon.SinonStub;
+            let progressStub: SinonStub;
 
             beforeEach(() => {
                 progressStub = stub((<any>ui).progress, value);

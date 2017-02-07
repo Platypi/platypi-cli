@@ -31,7 +31,7 @@ export default class Ui {
     LOG_LEVEL: ui.ILogLevels = Ui.LOG_LEVEL;
     PROMPTS: ui.IPrompts = Ui.PROMPTS;
 
-    protected chalk: Chalk.ChalkModule = chalk;
+    protected chalk: chalk.Chalk = chalk;
     protected Prompt: any = inquirer.ui.Prompt;
     protected input: NodeJS.ReadableStream;
     protected logLevel: number;
@@ -156,7 +156,7 @@ export default class Ui {
         this.logLevel = <number>level;
     }
 
-    protected makePretty(message: string, color: Chalk.ChalkChain): string {
+    protected makePretty(message: string, color: chalk.ChalkChain): string {
         if (!this.utils.isString(message)) {
             return <any>color(message);
         }

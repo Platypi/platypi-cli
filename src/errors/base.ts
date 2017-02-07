@@ -1,17 +1,14 @@
-export class BaseError {
+export class BaseError extends Error {
     name: string = 'BaseError';
     stack: string;
+    message: string;
 
-    constructor(public message?: string) {
-        Error.apply(this, arguments);
+    constructor(message?: string) {
+        super(message);
 
+        this.message = message;
         if (process.env.PLATYPI_VERBOSE_ERRORS) {
             this.stack = (<any>new Error()).stack;
         }
     }
 }
-
-export function extend(ExtendedError: typeof BaseError): void {
-    ExtendedError.prototype = Object.create(Error.prototype);
-    ExtendedError.prototype.constructor = ExtendedError;
-};
