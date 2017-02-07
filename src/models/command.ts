@@ -48,6 +48,8 @@ export default class Command extends Base {
         this.option('loglevel', {
             description: 'Print at and above a particular level                (ERROR > WARN > INFO > DEBUG > TRACE)'
         });
+
+        this.ui.error(new ValidationError('test'));
     }
 
     help(command?: string): Thenable<void> {
