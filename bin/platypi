@@ -18,13 +18,18 @@ resolve('platypi-cli', {
     cli = require(localCli).default;
   }
 
+  console.log('run');
+
   cli({
     args: process.argv.slice(2),
     input: process.stdin,
     output: process.stdout
   }).then(function (result) {
-      console.log('done');
+    console.log('done');
     var exitCode = typeof result === 'object' ? result.exitCode : result;
     exit(exitCode);
   });
+
+
+    console.log('done2');
 });
