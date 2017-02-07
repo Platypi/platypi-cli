@@ -40,7 +40,7 @@ export default class AppGenerator extends Generator {
 
         return this.promptName(options.name).then((name) => {
             options.name = name;
-
+            console.log(name);
             if (this.utils.isEmpty(options.dir)) {
                 name = this.utils.camelCase(name).toLowerCase();
             }
