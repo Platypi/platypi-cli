@@ -1,7 +1,3 @@
-/// <reference path="../typings/main/ambient/node/node.d.ts" />
-/// <reference path="../typings/main/ambient/lodash/lodash.d.ts" />
-/// <reference path="../typings/main/ambient/glob/glob.d.ts" />
-/// <reference path="../typings/main/ambient/es6-promise/es6-promise.d.ts" />
 declare module 'platypi-cli' {
     import * as utils from 'lodash';
     class BaseObject {

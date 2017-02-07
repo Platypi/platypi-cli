@@ -63,18 +63,10 @@ The following are descriptions for a few of the useful npm scripts. All of these
   - You can specify your custom lint rules in your `tsconfig.json`
   - Default rules can be found at the [tsconfig-lint](https://github.com/wjohnsto/tsconfig-lint#user-content-default-rules) project
 
-- **prepublish**
-  - Runs during `npm install`
-  - Installs/links TypeScript declarations using [typings](https://github.com/typings/typings)
-  - Runs [tsconfig-glob](https://github.com/wjohnsto/tsconfig-glob) to setup your `tsconfig.json`
-
 - **start**
   - Builds/bundles your src files and watches them for changes
   - Rebuilds/bundles when your src files change
   - Starts server that serves assets from the `app` directory on http://localhost:3000
-
-- **typings**
-  - Installs/links TypeScript declarations using [typings](https://github.com/typings/typings)
 
 ## Project Structure
 

@@ -9,10 +9,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "watch": false
     },
-    "filesGlob": [
-        "app/**/*.ts",
-        "test/**/*.ts",
-        "typings/index.d.ts"
-    ],
-    "files": []
+    "include": [
+        "app/**/*.ts"
+    ]
 }

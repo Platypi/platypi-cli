@@ -29,10 +29,6 @@ node_modules
 # OSX Folder Attributes
 .DS_Store
 
-# TSD Declarations
-/typings/tsd.d.ts
-/typings/*/*.d.ts
-
 # TS, css, and map files
 *.ts
 *.css
@@ -41,14 +37,6 @@ node_modules
 # Non-essential directories
 /project
 /cordova
-
-
-# No typings in declaration file
-!/typings/node/node.d.ts
-!/typings/lodash/lodash.d.ts
-!/typings/glob/glob.d.ts
-!/typings/minimatch/minimatch.d.ts
-!/typings/es6-promise/es6-promise.d.ts
 
 # Don't ignore template TS or declaration
 !src/cli.d.ts

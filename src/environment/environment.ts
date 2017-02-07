@@ -155,7 +155,6 @@ export default class Environment extends Base {
         return this.fileUtils.dir(absolute, [
             'templates',
             'node_modules',
-            'typings',
             /^_.*$/,
             /^\..*$/
         ]).then((values) => {

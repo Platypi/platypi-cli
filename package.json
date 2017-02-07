@@ -79,8 +79,7 @@
     "sinon": "latest",
     "sinon-chai": "latest",
     "tsconfig-lint": "latest",
-    "typescript": "latest",
-    "typings": "latest"
+    "typescript": "latest"
   },
   "scripts": {
     "prepublish": "npm run build",
