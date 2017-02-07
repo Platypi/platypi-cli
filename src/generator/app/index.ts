@@ -83,14 +83,12 @@ export default class AppGenerator extends Generator {
 
     promptName(name: string = ''): Thenable<string> {
         name = name.trim();
-
+        console.log('name: ' + name);
         if (!this.utils.isEmpty(name)) {
             this.title = name;
 
             name = this.utils.kebabCase(name).toLowerCase();
             let valid = validate(name);
-
-            console.log(valid);
 
             if (this.utils.isArray(valid.errors) || this.utils.isArray(valid.warnings)) {
                 this.ui.warn('');
