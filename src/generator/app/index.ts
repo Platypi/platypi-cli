@@ -38,8 +38,6 @@ export default class AppGenerator extends Generator {
     askQuestions(): any {
         let options = this.options;
 
-        console.log('asking questions');
-
         return this.promptName(options.name).then((name) => {
             options.name = name;
 
@@ -110,6 +108,8 @@ export default class AppGenerator extends Generator {
         return this.ui.prompt([
             { name: 'name', type: 'input', message: `What is the name of your app?` }
         ]).then((answer: { name: string; }) => {
+            console.log('name prompted');
+            console.log(answer.name);
             return this.promptName(answer.name);
         });
     }
