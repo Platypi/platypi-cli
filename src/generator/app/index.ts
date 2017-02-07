@@ -83,7 +83,7 @@ export default class AppGenerator extends Generator {
 
     promptName(name: string = ''): Thenable<string> {
         name = name.trim();
-        console.log('name: ' + name);
+
         if (!this.utils.isEmpty(name)) {
             this.title = name;
 

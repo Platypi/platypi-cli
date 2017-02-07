@@ -1,11 +1,11 @@
 import * as utils from 'lodash';
 import * as chalk from 'chalk';
 import * as through from 'through';
+import * as inquirer from 'inquirer';
 import {Promise} from 'es6-promise';
 import {EOL} from 'os';
 
 let Progress: any = require('pleasant-progress');
-let inquirer: any = require('inquirer');
 
 let LOG_LEVEL = {
     ERROR: 5,
@@ -39,7 +39,7 @@ export default class Ui {
     protected progress: { start: (message?: string, stepString?: string) => void; stop: (printWithFullStepString?: boolean) => void; };
     protected Promise: typeof Promise = Promise;
     protected through: typeof through = through;
-    protected inquirer: any = inquirer;
+    protected inquirer: inquirer.Inquirer = inquirer;
     protected utils: typeof utils = utils;
 
     constructor(protected options: ui.IOptions) {
@@ -122,9 +122,7 @@ export default class Ui {
            return question;
         });
 
-        return new this.Promise((resolve) => {
-            this.inquirer.prompt(questions, resolve);
-        });
+        return this.Promise.resolve(this.inquirer.prompt(<inquirer.Questions>questions));
     }
 
     startProgress(message?: string, stepString?: string): void {
