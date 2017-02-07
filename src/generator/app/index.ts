@@ -38,6 +38,8 @@ export default class AppGenerator extends Generator {
     askQuestions(): any {
         let options = this.options;
 
+        console.log('asking questions');
+
         return this.promptName(options.name).then((name) => {
             options.name = name;
 
