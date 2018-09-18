@@ -1,12 +1,15 @@
-import {expect} from 'chai';
-import {Promise} from 'es6-promise';
 import UiBase from '../../../src/ui/ui';
 
 export class Ui extends UiBase {
-    constructor(private onLog: (message?: string, level?: number) => void = (message?: string, level?: number) => { }) {
+    constructor(
+        private onLog: (message?: string, level?: number) => void = (
+            message?: string,
+            level?: number
+        ) => {}
+    ) {
         super({
             input: process.stdin,
-            output: process.stdout
+            output: process.stdout,
         });
     }
 
@@ -14,13 +17,13 @@ export class Ui extends UiBase {
         this.onLog(message, level);
     }
 
-    prompt(): Thenable<any> {
+    prompt(): Promise<any> {
         return Promise.resolve({});
     }
 
-    startProgress(): void { }
+    startProgress(): void {}
 
-    stopProgress(): void { }
+    stopProgress(): void {}
 }
 
 export default Ui;

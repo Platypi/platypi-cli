@@ -1,4 +1,3 @@
-import {Promise} from 'es6-promise';
 import Generator from '../../models/generator';
 
 let validate: any = require('validate-npm-package-name');
@@ -8,22 +7,24 @@ export default class CordovaGenerator extends Generator {
     protected needsProject: boolean = true;
 
     protected deps: any = {
-        ncp: 'latest'
+        ncp: 'latest',
     };
 
     protected scripts: any = {
-        'build': 'npm run clean:dist && concurrent -r "npm run less" "npm run build:ts" && npm run cordova',
-        copy: 'mkdirp cordova/www && concurrent -r "npm run copy:dist" "npm run copy:fonts" "npm run copy:images" "npm run copy:index"',
+        build:
+            'npm run clean:dist && concurrent -r "npm run less" "npm run build:ts" && npm run cordova',
+        copy:
+            'mkdirp cordova/www && concurrent -r "npm run copy:dist" "npm run copy:fonts" "npm run copy:images" "npm run copy:index"',
         'copy:dist': 'ncp app/dist cordova/www/dist',
         'copy:fonts': 'ncp app/fonts cordova/www/fonts',
         'copy:images': 'ncp app/images cordova/www/images',
         'copy:index': 'ncp app/index.html cordova/www/index.html',
-        'cordova': 'npm run copy && plat cordova prepare && plat cordova build'
+        cordova: 'npm run copy && plat cordova prepare && plat cordova build',
     };
 
     defineOptions(): any {
         this.option('id', {
-            description: 'The id of your cordova app'
+            description: 'The id of your cordova app',
         });
     }
 
@@ -35,7 +36,7 @@ export default class CordovaGenerator extends Generator {
         });
     }
 
-    promptName(name: string = ''): Thenable<string> {
+    promptName(name: string = ''): Promise<string> {
         name = name.trim();
         let utils = this.utils;
 
@@ -65,22 +66,32 @@ export default class CordovaGenerator extends Generator {
             }
         }
 
-        return this.ui.prompt([
-            { name: 'name', type: 'input', message: `What is the name of your app?` }
-        ]).then((answer: { name: string; }) => {
-            return this.promptName(answer.name);
-        });
+        return this.ui
+            .prompt([
+                {
+                    name: 'name',
+                    type: 'input',
+                    message: `What is the name of your app?`,
+                },
+            ])
+            .then((answer: { name: string }) => {
+                return this.promptName(answer.name);
+            });
     }
 
     run(): any {
         this.normalizeOptions(this.options);
 
         return Promise.all([
-            this.render('cordova/config.xml', 'cordova/config.xml', this.options),
+            this.render(
+                'cordova/config.xml',
+                'cordova/config.xml',
+                this.options
+            ),
             this.copy('cordova/res', 'cordova/res'),
             this.project.addDependencies(this.deps),
             this.project.addScripts(this.scripts),
-            this.mkdirDest('cordova/www')
+            this.mkdirDest('cordova/www'),
         ]);
     }
 
@@ -101,7 +112,10 @@ export default class CordovaGenerator extends Generator {
             } else {
                 let index = options.id.indexOf('.');
 
-                options.id = options.id.substring(0, index) + '.platypi.' + options.id.substring(index + 1);
+                options.id =
+                    options.id.substring(0, index) +
+                    '.platypi.' +
+                    options.id.substring(index + 1);
             }
         }
 

@@ -1,4 +1,4 @@
-declare module ui {
+declare namespace ui {
     class Ui {
         static LOG_LEVEL: ILogLevels;
 
@@ -15,7 +15,7 @@ declare module ui {
         help(message: string): void;
         log(message: any, logLevel?: number): void;
         logLine(message: any, logLevel?: number): void;
-        prompt(questions: Array<IQuestion>): Thenable<any>;
+        prompt(questions: Array<IQuestion>): Promise<any>;
         startProgress(message?: string, stepString?: string): void;
         stopProgress(printWithFullStepString?: boolean): void;
         setLogLevel(level: string | number): void;

@@ -1,20 +1,18 @@
-import {use, expect} from 'chai';
-import {spy as spyOn, stub, SinonSpy, SinonStub} from 'sinon';
+import { use, expect } from 'chai';
+import { spy as spyOn, stub, SinonSpy, SinonStub } from 'sinon';
 import Ui from '../../../src/ui/ui';
-import * as through from 'through';
-import * as chalk from 'chalk';
+import through from 'through';
 
 use(require('chai-as-promised'));
 use(require('sinon-chai'));
 
 describe('Ui', () => {
-    let ui: Ui,
-        spy: SinonSpy;
+    let ui: Ui, spy: SinonSpy;
 
     beforeEach(() => {
         ui = new Ui({
-            input: through((data) => { }),
-            output: through((data) => { })
+            input: through((data) => {}),
+            output: through((data) => {}),
         });
 
         spy = spyOn(ui, 'log');
@@ -25,7 +23,7 @@ describe('Ui', () => {
     });
 
     it('should log at info by default', () => {
-        let shouldLogSpy = spyOn(ui, 'shouldLog');
+        let shouldLogSpy = spyOn(<any>ui, 'shouldLog');
         ui.log('test');
 
         expect(spy).to.have.been.calledOnce;
@@ -36,11 +34,11 @@ describe('Ui', () => {
     });
 
     it('should prompt asynchronously', (done) => {
-        let promptStub = stub((<any>ui).inquirer, 'prompt', (obj: any, cb) => {
-            cb();
-        });
+        let promptStub = stub((<any>ui).inquirer, 'prompt').callsFake(() => {});
 
-        expect(ui.prompt([])).to.eventually.be.an('undefined').notify(done);
+        expect(ui.prompt([]))
+            .to.eventually.be.an('undefined')
+            .notify(done);
         promptStub.restore();
     });
 
@@ -103,7 +101,7 @@ describe('Ui', () => {
 
         it('should accept an object', () => {
             let err = {
-                message: 'test message'
+                message: 'test message',
             };
 
             ui.error(err);

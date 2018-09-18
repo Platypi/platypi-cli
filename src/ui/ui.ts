@@ -1,9 +1,8 @@
-import * as utils from 'lodash';
-import * as chalk from 'chalk';
-import * as through from 'through';
-import * as inquirer from 'inquirer';
-import {Promise} from 'es6-promise';
-import {EOL} from 'os';
+import utils from 'lodash';
+import chalk from 'chalk';
+import through from 'through';
+import inquirer from 'inquirer';
+import { EOL } from 'os';
 
 let Progress: any = require('pleasant-progress');
 
@@ -12,7 +11,7 @@ let LOG_LEVEL = {
     WARN: 4,
     INFO: 3,
     DEBUG: 2,
-    TRACE: 1
+    TRACE: 1,
 };
 
 let PROMPTS = {
@@ -21,7 +20,7 @@ let PROMPTS = {
     CONFIRM: 'confirm',
     LIST: 'list',
     RAWLIST: 'rawlist',
-    PASSWORD: 'password'
+    PASSWORD: 'password',
 };
 
 export default class Ui {
@@ -31,19 +30,21 @@ export default class Ui {
     LOG_LEVEL: ui.ILogLevels = Ui.LOG_LEVEL;
     PROMPTS: ui.IPrompts = Ui.PROMPTS;
 
-    protected chalk: chalk.Chalk = chalk;
     protected Prompt: any = inquirer.ui.Prompt;
     protected input: NodeJS.ReadableStream;
     protected logLevel: number;
     protected output: NodeJS.ReadWriteStream;
-    protected progress: { start: (message?: string, stepString?: string) => void; stop: (printWithFullStepString?: boolean) => void; };
+    protected progress: {
+        start: (message?: string, stepString?: string) => void;
+        stop: (printWithFullStepString?: boolean) => void;
+    };
     protected Promise: typeof Promise = Promise;
     protected through: typeof through = through;
     protected inquirer: inquirer.Inquirer = inquirer;
     protected utils: typeof utils = utils;
 
     constructor(protected options: ui.IOptions) {
-        let progress = this.progress = new Progress();
+        let progress = (this.progress = new Progress());
 
         this.output = this.through(function(data: any): void {
             progress.stop(true);
@@ -65,8 +66,17 @@ export default class Ui {
             stack: string = error.stack;
 
         if (this.utils.isString(stack)) {
-            this.logLine(this.makePretty(stack.slice(0, stack.indexOf(message) + message.length), chalk.red), LOG_LEVEL.ERROR);
-            this.logLine(stack.slice(stack.indexOf(message) + message.length + 1), LOG_LEVEL.ERROR);
+            this.logLine(
+                this.makePretty(
+                    stack.slice(0, stack.indexOf(message) + message.length),
+                    chalk.red
+                ),
+                LOG_LEVEL.ERROR
+            );
+            this.logLine(
+                stack.slice(stack.indexOf(message) + message.length + 1),
+                LOG_LEVEL.ERROR
+            );
             return;
         }
 
@@ -100,7 +110,7 @@ export default class Ui {
     log(message: any, logLevel: number = LOG_LEVEL.INFO): void {
         if (this.utils.isString(message) && message.indexOf('\u001b') === -1) {
             message = (<string>message).replace(/`[^`]*`/g, (substr) => {
-                return <string><any>this.chalk.cyan(substr);
+                return <string>(<any>chalk.cyan(substr));
             });
         }
 
@@ -113,16 +123,21 @@ export default class Ui {
         this.log(message + EOL, logLevel);
     }
 
-    prompt(questions: Array<IQuestion>): Thenable<any> {
+    prompt(questions: Array<IQuestion>): Promise<any> {
         questions = questions.map((question) => {
-           if(this.utils.isString(question.message)) {
-               question.message = this.makePretty(<string>question.message, chalk.reset);
-           }
+            if (this.utils.isString(question.message)) {
+                question.message = this.makePretty(
+                    <string>question.message,
+                    chalk.reset
+                );
+            }
 
-           return question;
+            return question;
         });
 
-        return this.Promise.resolve(this.inquirer.prompt(<inquirer.Questions>questions));
+        return this.Promise.resolve(
+            this.inquirer.prompt(<inquirer.Questions>questions)
+        );
     }
 
     startProgress(message?: string, stepString?: string): void {
@@ -154,18 +169,20 @@ export default class Ui {
         this.logLevel = <number>level;
     }
 
-    protected makePretty(message: string, color: chalk.ChalkChain): string {
+    protected makePretty(message: string, color: typeof chalk): string {
         if (!this.utils.isString(message)) {
             return <any>color(message);
         }
 
-        return this.utils.map(message.split(/(`[^`]*`)/g), (val) => {
-            if (val[0] === '`') {
-                return chalk.cyan(val);
-            }
+        return this.utils
+            .map(message.split(/(`[^`]*`)/g), (val) => {
+                if (val[0] === '`') {
+                    return chalk.cyan(val);
+                }
 
-            return color(val);
-        }).join('');
+                return color(val);
+            })
+            .join('');
     }
 
     protected shouldLog(logLevel: number): boolean {

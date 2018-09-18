@@ -1,5 +1,4 @@
-import * as path from 'path';
-import {Promise} from 'es6-promise';
+import path from 'path';
 import ValidationError from '../errors/validation';
 import Command from '../models/command';
 
@@ -42,13 +41,15 @@ class Cordova extends Command {
     private defaultComponent: IComponent = {
         component: path.resolve(__dirname, '..', 'cordova'),
         command: 'create',
-        prefix: 'plat-cordova-'
+        prefix: 'plat-cordova-',
     };
 
     help(command: string): any {
         return super.help(command).then(() => {
             this.ui.help(`Here is the \`cordova\` help:`);
-            this.ui.help(`..........................................................`);
+            this.ui.help(
+                `..........................................................`
+            );
             return this.exec(this.args);
         });
     }
@@ -68,29 +69,30 @@ class Cordova extends Command {
         return this.exec(this.args);
     }
 
-    protected exec(args: Array<string>): Thenable<any> {
+    protected exec(args: Array<string>): Promise<any> {
         if (args[0] === 'cordova') {
             args = args.slice(1);
         }
 
         let arg = args[0],
-            promise: Thenable<void>;
+            promise: Promise<void>;
 
         if (arg === 'build' || arg === 'compile') {
             promise = this.modifyIndex();
         } else {
-            promise = Promise.resolve<void>();
+            promise = Promise.resolve<void>(null);
         }
 
         return promise.then(() => {
             return this.process.exec('cordova', args, {
-                cwd: path.resolve(this.project.root, 'cordova')
+                cwd: path.resolve(this.project.root, 'cordova'),
             });
         });
     }
 
-    protected modifyIndex(): Thenable<void> {
-        let cordova = '<script type="text/javascript" src="cordova.js"></script>',
+    protected modifyIndex(): Promise<void> {
+        let cordova =
+                '<script type="text/javascript" src="cordova.js"></script>',
             haveCordova = false,
             scriptStart: number = -1,
             file = path.resolve(this.project.root, 'cordova/www/index.html');

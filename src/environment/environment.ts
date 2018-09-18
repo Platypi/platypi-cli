@@ -18,7 +18,7 @@ export default class Environment extends Base {
         this.fileUtils = this.instantiate(FileUtils, options);
     }
 
-    command(defaults: IComponent, command: string = '', parent?: Command): Thenable<any> {
+    command(defaults: IComponent, command: string = '', parent?: Command): Promise<any> {
         defaults = this.utils.clone(defaults);
         let component = this.parseComponent(defaults, command),
             prefix = defaults.prefix;
@@ -55,7 +55,7 @@ export default class Environment extends Base {
         });
     }
 
-    listCommands(defaults: IComponent, command: string = ''): Thenable<Array<string>> {
+    listCommands(defaults: IComponent, command: string = ''): Promise<Array<string>> {
         defaults = this.utils.clone(defaults);
         let component = this.parseComponent(defaults, command),
             prefix = defaults.prefix;
@@ -122,7 +122,7 @@ export default class Environment extends Base {
         return paths.reverse();
     }
 
-    private _commands(component: string, prefix: string): Thenable<{ commands: { [key: string]: typeof Command; }; directory: string; }> {
+    private _commands(component: string, prefix: string): Promise<{ commands: { [key: string]: typeof Command; }; directory: string; }> {
         return this._find(this.getNpmPaths(), component, prefix).then((info) => {
             component = info.component;
             let values = info.values,
@@ -144,7 +144,7 @@ export default class Environment extends Base {
         });
     }
 
-    private _find(paths: Array<string>, component: string, prefix: string): Thenable<{ component: string, values: Array<string> }> {
+    private _find(paths: Array<string>, component: string, prefix: string): Promise<{ component: string, values: Array<string> }> {
         let absolute = component,
             isRelative = !isAbsolute(absolute);
 

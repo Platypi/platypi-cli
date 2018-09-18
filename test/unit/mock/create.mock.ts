@@ -1,8 +1,6 @@
-import {expect} from 'chai';
-import {Promise} from 'es6-promise';
 import CreateBase from '../../../src/commands/create';
 
-let cb = () => { };
+let cb = () => {};
 
 export class Create extends CreateBase {
     static aliases: Array<string> = ['create-alias'];
@@ -16,4 +14,4 @@ export class Create extends CreateBase {
 export default function(onRun: () => void): typeof Create {
     cb = onRun;
     return Create;
-};
+}

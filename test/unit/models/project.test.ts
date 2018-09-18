@@ -1,5 +1,4 @@
-import {use, expect} from 'chai';
-import {spy as spyOn} from 'sinon';
+import { use, expect } from 'chai';
 import Project from '../../../src/models/project';
 import Ui from '../mock/ui.mock';
 
@@ -8,7 +7,12 @@ use(require('sinon-chai'));
 
 describe('Project', () => {
     it('should find a package', (done) => {
-        let promise = Project.project(new Ui(), process.cwd()).then(() => { }, () => { });
-        expect(promise).to.eventually.be.an('undefined').notify(done);
+        let promise = Project.project(new Ui(), process.cwd()).then(
+            () => {},
+            () => {}
+        );
+        expect(promise)
+            .to.eventually.be.an('undefined')
+            .notify(done);
     });
 });

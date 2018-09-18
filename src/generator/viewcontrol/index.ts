@@ -23,7 +23,7 @@ export default class ViewControlGenerator extends Generator {
         });
     }
 
-    protected _renderFile(ext: string, src: string, dest: string, config: any): Thenable<any> {
+    protected _renderFile(ext: string, src: string, dest: string, config: any): Promise<any> {
         if(this.options.router && (ext === '.ts' || ext === '.html')) {
             src = 'routing.' + src;
         }

@@ -1,12 +1,8 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
-import {use, expect} from 'chai';
-import {spy as spyOn, stub} from 'sinon';
+import { use, expect } from 'chai';
+import { stub } from 'sinon';
 import Generator from '../../../src/models/generator';
 import Ui from '../mock/ui.mock';
-import NotImplementedError from '../../../src/errors/notimplemented';
-import ValidationError from '../../../src/errors/validation';
-import {Promise} from 'es6-promise';
 
 use(require('chai-as-promised'));
 use(require('sinon-chai'));
@@ -40,8 +36,8 @@ describe('Generators', () => {
             project: <any>{
                 root: '.',
                 version: '1.0.0',
-                bin: 'plat'
-            }
+                bin: 'plat',
+            },
         });
     });
 
@@ -54,8 +50,11 @@ describe('Generators', () => {
     });
 
     it('should make a directory using destRoot when use mkdirDest', () => {
-        let mkdir = stub((<any>command).file, 'mkdir', () => { });
+        let mkdir = stub((<any>command).file, 'mkdir').callsFake(() => {});
         command.mkdirDest('foo', 'bar');
-        expect(mkdir).to.have.been.calledWith(path.resolve(command.destRoot(), 'foo'), path.resolve(command.destRoot(), 'bar'));
+        expect(mkdir).to.have.been.calledWith(
+            path.resolve(command.destRoot(), 'foo'),
+            path.resolve(command.destRoot(), 'bar')
+        );
     });
 });

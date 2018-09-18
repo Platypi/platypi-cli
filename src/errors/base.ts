@@ -6,8 +6,5 @@ export class BaseError extends Error {
         super(message);
 
         this.message = message;
-        if (process.env.PLATYPI_VERBOSE_ERRORS) {
-            this.stack = (<any>new Error()).stack;
-        }
     }
 }

@@ -1,13 +1,12 @@
-import {EOL} from 'os';
-import {Promise} from 'es6-promise';
+import { EOL } from 'os';
 import Base from './base';
 import Environment from '../environment/environment';
 import ValidationError from '../errors/validation';
 import NotImplementedError from '../errors/notimplemented';
-import * as minimist from 'minimist';
+import minimist from 'minimist';
 import FileUtils from './fileutils';
 import ProcessUtils from './processutils';
-import {wrap} from '../utils/utils';
+import { wrap } from '../utils/utils';
 
 export default class Command extends Base {
     static commandName: string = 'command';
@@ -23,7 +22,7 @@ export default class Command extends Base {
     protected process: ProcessUtils;
 
     private _originalArgs: Array<string>;
-    private _options: { [key: string]: models.ICommandOption; } = {};
+    private _options: { [key: string]: models.ICommandOption } = {};
 
     constructor(options: models.ICommandOptions) {
         super(options);
@@ -34,25 +33,29 @@ export default class Command extends Base {
         this.parent = options.parent;
         this.option('help', {
             aliases: ['h'],
-            description: 'Get help information for this command'
+            description: 'Get help information for this command',
         });
 
         this.option('verbose', {
-            description: 'Print all log statements'
+            description: 'Print all log statements',
         });
 
         this.option('silent', {
-            description: 'Print only warnings and errors'
+            description: 'Print only warnings and errors',
         });
 
         this.option('loglevel', {
-            description: 'Print at and above a particular level                (ERROR > WARN > INFO > DEBUG > TRACE)'
+            description:
+                'Print at and above a particular level                (ERROR > WARN > INFO > DEBUG > TRACE)',
         });
     }
 
-    help(command?: string): Thenable<void> {
+    help(command?: string): Promise<void> {
         if (!this.utils.isEmpty(command)) {
-            this.ui.help(`Help for command \`${this.buildFullCommand().join(' ') }\`:` + EOL);
+            this.ui.help(
+                `Help for command \`${this.buildFullCommand().join(' ')}\`:` +
+                    EOL
+            );
         }
 
         return Promise.resolve(this.generalHelp(command))
@@ -64,14 +67,19 @@ export default class Command extends Base {
             })
             .then(() => {
                 return this.optionsHelp(command);
-            }).then(() => {
+            })
+            .then(() => {
                 this.ui.help('');
             });
     }
 
-    validateAndRun(commandArgs: Array<string>): Thenable<any> {
+    validateAndRun(commandArgs: Array<string>): Promise<any> {
         if (this.needsProject && !this.utils.isString(this.project.root)) {
-            return Promise.reject(new ValidationError(`This command can only be run inside a project.`));
+            return Promise.reject(
+                new ValidationError(
+                    `This command can only be run inside a project.`
+                )
+            );
         }
 
         this.args = commandArgs.slice(0);
@@ -79,8 +87,7 @@ export default class Command extends Base {
         this.defineOptions();
         this.parseOptions();
 
-        let options = this.options,
-            commands = this.commands = (<any>this.options)._;
+        let commands = (this.commands = (<any>this.options)._);
 
         if (this.needsHelp()) {
             return Promise.resolve(this.help(commands[0]));
@@ -97,7 +104,8 @@ export default class Command extends Base {
                     if (this.utils.isString(command)) {
                         message = `\`${command}\` doesn't have enough information to complete. For more information see \`platypi ${command} -h\``;
                     } else {
-                        message = 'Please specify a command. Use `platypi -h` for more information.';
+                        message =
+                            'Please specify a command. Use `platypi -h` for more information.';
                     }
 
                     throw new ValidationError(message);
@@ -107,16 +115,20 @@ export default class Command extends Base {
             });
     }
 
-    protected defineOptions(): void { }
+    protected defineOptions(): void {}
 
-    protected askQuestions(): any { }
+    protected askQuestions(): any {}
 
     protected validate(): any {
         return true;
     }
 
     protected run(): any {
-        throw new NotImplementedError(`The command \`${(<any>this.constructor).commandName}\` exists, but has not been implemented.`);
+        throw new NotImplementedError(
+            `The command \`${
+                (<any>this.constructor).commandName
+            }\` exists, but has not been implemented.`
+        );
     }
 
     protected buildFullCommand(): Array<string> {
@@ -133,10 +145,10 @@ export default class Command extends Base {
         this.ui.help(`
   General Usage:
 
-    ${this.buildFullCommand().join(' ') } [...options]`);
+    ${this.buildFullCommand().join(' ')} [...options]`);
     }
 
-    protected commandsHelp(command: string): any { }
+    protected commandsHelp(command: string): any {}
 
     protected aliasesHelp(command: string): any {
         let aliases: Array<string> = (<any>this).constructor.aliases;
@@ -150,12 +162,12 @@ export default class Command extends Base {
                 aliases.unshift(commandName);
             }
 
-            this.utils.remove(aliases, alias => alias === command);
+            this.utils.remove(aliases, (alias) => alias === command);
 
             if (aliases.length > 0) {
                 this.ui.help(`
   Aliases:
-    ${aliases.join(', ') }`);
+    ${aliases.join(', ')}`);
             }
         }
     }
@@ -165,7 +177,11 @@ export default class Command extends Base {
   Options:`);
         let options = this._options,
             longest = 0,
-            lines: Array<{ command: string; description: string; defaults?: any; }> = [];
+            lines: Array<{
+                command: string;
+                description: string;
+                defaults?: any;
+            }> = [];
 
         this.utils.forEach(options, (option) => {
             let prepend = '--',
@@ -178,8 +194,13 @@ export default class Command extends Base {
 
             let commands: string;
 
-            if (this.utils.isArray(option.aliases) && option.aliases.length > 0) {
-                commands = `${option.aliases.map(alias => `${aliasPrepend}${alias}`).join(', ') }, ${prepend}${option.name}`;
+            if (
+                this.utils.isArray(option.aliases) &&
+                option.aliases.length > 0
+            ) {
+                commands = `${option.aliases
+                    .map((alias) => `${aliasPrepend}${alias}`)
+                    .join(', ')}, ${prepend}${option.name}`;
             } else {
                 commands = `${prepend}${option.name}`;
             }
@@ -188,23 +209,38 @@ export default class Command extends Base {
                 longest = commands.length;
             }
 
-            lines.push({ command: commands, description: option.description, defaults: option.defaults });
+            lines.push({
+                command: commands,
+                description: option.description,
+                defaults: option.defaults,
+            });
         });
 
         let utils = this.utils,
-            isNull = (val: any) => { return utils.isNull(val) || utils.isUndefined(val); },
+            isNull = (val: any) => {
+                return utils.isNull(val) || utils.isUndefined(val);
+            },
             isString = utils.isString,
             isEmpty = utils.isEmpty,
             isBoolean = utils.isBoolean;
 
         this.utils.forEach(lines, (line) => {
             let padding: string = EOL + this.file.spaces(longest + 10);
-            this.ui.help(`    ${line.command}${(<any>this.utils).fill(Array(longest - line.command.length + 4), ' ').join('') }${wrap(line.description, 58, padding) }`);
+            this.ui.help(
+                `    ${line.command}${(<any>this.utils)
+                    .fill(Array(longest - line.command.length + 4), ' ')
+                    .join('')}${wrap(line.description, 58, padding)}`
+            );
 
-            if (!isNull(line.defaults) && !(isString(line.defaults) && isEmpty(line.defaults)) && !isBoolean(line.defaults)) {
+            if (
+                !isNull(line.defaults) &&
+                !(isString(line.defaults) && isEmpty(line.defaults)) &&
+                !isBoolean(line.defaults)
+            ) {
                 this.ui.help(
                     `      default: ${line.defaults}
-`);
+`
+                );
             }
         });
     }
@@ -214,14 +250,22 @@ export default class Command extends Base {
 
         this.options = <any>minimist(this.args, {
             '--': true,
-            default: <any>this.utils.reduce(options, (prev, current) => {
-                prev[current.name] = current.defaults;
-                return prev;
-            }, {}),
-            alias: <any>this.utils.reduce(options, (prev, current) => {
-                prev[current.name] = current.aliases;
-                return prev;
-            }, {})
+            default: <any>this.utils.reduce(
+                options,
+                (prev, current) => {
+                    prev[current.name] = current.defaults;
+                    return prev;
+                },
+                {}
+            ),
+            alias: <any>this.utils.reduce(
+                options,
+                (prev, current) => {
+                    prev[current.name] = current.aliases;
+                    return prev;
+                },
+                {}
+            ),
         });
     }
 
@@ -235,7 +279,7 @@ export default class Command extends Base {
             aliases: [],
             description: 'Description for ' + name,
             defaults: undefined,
-            hide: false
+            hide: false,
         });
 
         let _options = this._options,

@@ -6,19 +6,36 @@ declare module 'platypi-cli' {
         protected utils: typeof utils;
 
         constructor(options: models.IModelOptions);
-        protected instantiate<T>(Constructor: new (opts: models.IModelOptions) => T, options?: any): T;
+        protected instantiate<T>(
+            Constructor: new (opts: models.IModelOptions) => T,
+            options?: any
+        ): T;
     }
 
     class Environment extends BaseObject {
         fileUtils: models.FileUtils;
         constructor(options: models.IModelOptions);
-        command(defaults: models.IComponent, command?: string, parent?: Command): Thenable<any>;
-        listCommands(defaults: models.IComponent, command?: string): Thenable<Array<string>>;
-        protected parseComponent(defaults: models.IComponent, command: string): models.IComponent;
+        command(
+            defaults: models.IComponent,
+            command?: string,
+            parent?: Command
+        ): Promise<any>;
+        listCommands(
+            defaults: models.IComponent,
+            command?: string
+        ): Promise<Array<string>>;
+        protected parseComponent(
+            defaults: models.IComponent,
+            command: string
+        ): models.IComponent;
     }
 
     class ProcessUtils extends BaseObject {
-        exec(command: string, args?: Array<string>, options?: models.IExecOptions): Thenable<any>;
+        exec(
+            command: string,
+            args?: Array<string>,
+            options?: models.IExecOptions
+        ): Promise<any>;
     }
 
     export class Command extends BaseObject {
@@ -32,8 +49,8 @@ declare module 'platypi-cli' {
         protected process: ProcessUtils;
 
         constructor(options: models.ICommandOptions);
-        help(command?: string): Thenable<void>;
-        validateAndRun(commandArgs: Array<string>): Thenable<any>;
+        help(command?: string): Promise<void>;
+        validateAndRun(commandArgs: Array<string>): Promise<any>;
 
         protected defineOptions(): void;
         protected askQuestions(): any;
@@ -50,67 +67,89 @@ declare module 'platypi-cli' {
 
     export class Generator extends Command {
         protected directory: string;
-        protected render(source: string, destination: string, context?: any): Thenable<void>;
-        protected mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string;
+        protected render(
+            source: string,
+            destination: string,
+            context?: any
+        ): Promise<void>;
+        protected mapLines(
+            handler: (
+                line: string,
+                index: number,
+                lines: Array<string>
+            ) => string,
+            data: string
+        ): string;
         protected srcRoot(source?: string): string;
         protected destRoot(dest?: string): string;
-        protected mkdirDest(...dirs: Array<string>): Thenable<any>;
-        protected copy(src: string, dest: string): Thenable<void>;
+        protected mkdirDest(...dirs: Array<string>): Promise<any>;
+        protected copy(src: string, dest: string): Promise<void>;
     }
 
-    export default function(options: { args: Array<string>; input: NodeJS.ReadableStream; output: NodeJS.WritableStream; }): Thenable<any>;
+    export default function(options: {
+        args: Array<string>;
+        input: NodeJS.ReadableStream;
+        output: NodeJS.WritableStream;
+    }): Promise<any>;
 }
 
-declare module models {
+declare namespace models {
     /**
-    * A question object is a hash containing question related values
-    */
+     * A question object is a hash containing question related values
+     */
     interface IQuestion {
         /**
-        * The name to use when storing the answer in the answers hash.
-        */
+         * The name to use when storing the answer in the answers hash.
+         */
         name: string;
 
         /**
-        * The question to print. If defined as a function, the first parameter will be the current inquirer session answers.
-        */
-        message: string|((answers: any) => string);
+         * The question to print. If defined as a function, the first parameter will be the current inquirer session answers.
+         */
+        message: string | ((answers: any) => string);
 
         /**
-        * Type of the prompt. Defaults: input - Possible values: input, expand, confirm, list, rawlist, password
-        */
+         * Type of the prompt. Defaults: input - Possible values: input, expand, confirm, list, rawlist, password
+         */
         type?: string;
 
         /**
-        * Default value(s) to use if nothing is entered, or a function that returns the default value(s).
-        * If defined as a function, the first parameter will be the current inquirer session answers.
-        */
-        default?: string|boolean|number|Array<string>|((answers: any) => any);
+         * Default value(s) to use if nothing is entered, or a function that returns the default value(s).
+         * If defined as a function, the first parameter will be the current inquirer session answers.
+         */
+        default?:
+            | string
+            | boolean
+            | number
+            | Array<string>
+            | ((answers: any) => any);
 
         /**
-        * Choices array or a function returning a choices array. If defined as a function, the first parameter will be the
-        * current inquirer session answers. Array values can be simple strings, or objects containing a name (to display)
-        * and a value properties (to save in the answers hash).
-        */
-        choices?: Array<string|{ key?: string; name: string; value: string; }>|((answers: any) => string);
+         * Choices array or a function returning a choices array. If defined as a function, the first parameter will be the
+         * current inquirer session answers. Array values can be simple strings, or objects containing a name (to display)
+         * and a value properties (to save in the answers hash).
+         */
+        choices?:
+            | Array<string | { key?: string; name: string; value: string }>
+            | ((answers: any) => string);
 
         /**
-        * Receive the user input and should return true if the value is valid, and an error message (String) otherwise. If
-        * false is returned, a default error message is provided.
-        */
+         * Receive the user input and should return true if the value is valid, and an error message (String) otherwise. If
+         * false is returned, a default error message is provided.
+         */
         validate?: (input: any) => boolean;
 
         /**
-        * Receive the user input and return the filtered value to be used inside the program. The value returned will be added to
-        * the Answers hash.
-        */
+         * Receive the user input and return the filtered value to be used inside the program. The value returned will be added to
+         * the Answers hash.
+         */
         filter?: (input: any) => any;
 
         /**
-        * Receive the current user answers hash and should return true or false depending on whether or not this question
-        * should be asked. The value can also be a simple boolean.
-        */
-        when?: boolean|((answers: any) => boolean);
+         * Receive the current user answers hash and should return true or false depending on whether or not this question
+         * should be asked. The value can also be a simple boolean.
+         */
+        when?: boolean | ((answers: any) => boolean);
     }
 
     interface IEnvironment {
@@ -177,45 +216,58 @@ declare module models {
     }
 
     interface IProjectOptions extends IModelOptions {
-		/**
-		 * The root directory for the project
-		 */
+        /**
+         * The root directory for the project
+         */
         root: string;
 
-		/**
-		 * The serialized package.json file
-		 */
+        /**
+         * The serialized package.json file
+         */
         pkg: any;
     }
 
     class Project {
-		/**
-		 * The root directory for the project
-		 */
+        /**
+         * The root directory for the project
+         */
         root: string;
         bin: string;
-        static project(root: string, ui: ui.Ui): Thenable<Project>;
+        static project(root: string, ui: ui.Ui): Promise<Project>;
         getConfig(property: string): any;
         cliPackage(): IPackage;
         package(): ILocalPackage;
-        addDependencies(deps: any, dev?: boolean): Thenable<void>;
-        addScripts(scripts: any): Thenable<void>;
+        addDependencies(deps: any, dev?: boolean): Promise<void>;
+        addScripts(scripts: any): Promise<void>;
     }
 
     class FileUtils {
-        read(source: string, options?: any): Thenable<string>;
-        write(dest: string, data: string, options?: any): Thenable<void>;
-        copy(src: string, dest: string): Thenable<void>;
-        mkdir(...dirs: Array<string>): Thenable<void>;
+        read(source: string, options?: any): Promise<string>;
+        write(dest: string, data: string, options?: any): Promise<void>;
+        copy(src: string, dest: string): Promise<void>;
+        mkdir(...dirs: Array<string>): Promise<void>;
         eol(data: string): string;
         spaces(length: number): string;
-        mapLines(handler: (line: string, index: number, lines: Array<string>) => string, data: string): string;
-        dir(src: string, ignores?: Array<string|RegExp>): Thenable<Array<string>>;
-        requireAll(src: string, directories: Array<string>): { [key: string]: any; };
-        protected ensureWritable(file: string): Thenable<void>;
+        mapLines(
+            handler: (
+                line: string,
+                index: number,
+                lines: Array<string>
+            ) => string,
+            data: string
+        ): string;
+        dir(
+            src: string,
+            ignores?: Array<string | RegExp>
+        ): Promise<Array<string>>;
+        requireAll(
+            src: string,
+            directories: Array<string>
+        ): { [key: string]: any };
+        protected ensureWritable(file: string): Promise<void>;
     }
 
-    module ui {
+    namespace ui {
         class Ui {
             static LOG_LEVEL: ILogLevels;
 
@@ -232,7 +284,7 @@ declare module models {
             help(message: string): void;
             log(message: any, logLevel?: number): void;
             logLine(message: any, logLevel?: number): void;
-            prompt(questions: Array<IQuestion>): Thenable<any>;
+            prompt(questions: Array<IQuestion>): Promise<any>;
             startProgress(message?: string, stepString?: string): void;
             stopProgress(printWithFullStepString?: boolean): void;
             setLogLevel(level: string | number): void;

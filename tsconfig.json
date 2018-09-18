@@ -1,19 +1,18 @@
 {
     "compilerOptions": {
+        "esModuleInterop": true,
         "module": "commonjs",
-        "target": "es5",
-        "noImplicitAny": false,
         "removeComments": true,
-        "preserveConstEnums": true,
-        "sourceMap": false,
-        "watch": false
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "strict": false,
+        "strictPropertyInitialization": false,
+        "target": "es2017"
     },
     "exclude": [
+        "node_modules",
         "src/cli.d.ts",
         "src/generator/templates/**/*.ts"
     ],
-    "include": [
-        "src/**/*.ts",
-        "test/**/*.ts"
-    ]
+    "include": ["src/**/*.ts", "test/**/*.ts"]
 }
