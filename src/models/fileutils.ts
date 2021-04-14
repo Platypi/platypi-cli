@@ -61,16 +61,7 @@ export default class FileUtils extends Base {
     mkdir(...dirs: Array<string>): Promise<void> {
         return Promise.all(
             dirs.map((dir) => {
-                return new Promise<void>((resolve, reject) => {
-                    mkdir(dir, (err) => {
-                        if (this.utils.isObject(err)) {
-                            reject(err);
-                            return;
-                        }
-
-                        resolve();
-                    });
-                });
+                return mkdir(dir);
             })
         ).then(this.utils.noop);
     }
@@ -145,9 +136,9 @@ export default class FileUtils extends Base {
 
             if (
                 this.utils.isObject(module) &&
-                this.utils.isObject(module.default)
+                this.utils.isObject((<any>module).default)
             ) {
-                modules[dir] = module.default;
+                modules[dir] = (<any>module).default;
             } else {
                 modules[dir] = module;
             }

@@ -45,10 +45,10 @@ declare namespace models {
         stdio?: any;
         customFds?: any;
         env?: any;
-        encoding?: string;
+        encoding?: BufferEncoding;
         timeout?: number;
         maxBuffer?: number;
-        killSignal?: string;
+        killSignal?: number;
     }
 
     interface IProjectOptions extends IModelOptions {

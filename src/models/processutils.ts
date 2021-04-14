@@ -23,7 +23,7 @@ export default class ProcessUtils extends Base {
 
             child.on('close', (code: string) => {
                 this.ui.debug(`${command} exited with code ${code}`);
-                resolve();
+                resolve(undefined);
             });
         });
     }

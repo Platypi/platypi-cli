@@ -136,7 +136,7 @@ export default class Ui {
         });
 
         return this.Promise.resolve(
-            this.inquirer.prompt(<inquirer.Questions>questions)
+            this.inquirer.prompt(<inquirer.Question[]>questions)
         );
     }
 
