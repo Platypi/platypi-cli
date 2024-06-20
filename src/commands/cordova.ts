@@ -34,7 +34,7 @@ class Cordova extends Command {
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: cdvfile: 'unsafe-eval'; style-src * 'unsafe-inline'; media-src *">
+        <meta http-equiv="Content-Security-Policy" content="default-src * data: blob: gap: cdvfile: 'unsafe-eval'; style-src * 'unsafe-inline'; media-src *">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">`;
 
