@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import mkdir from 'mkdirp';
+import { mkdirp } from 'mkdirp';
 import path from 'path';
 import Base from './base';
 
@@ -19,7 +19,7 @@ export default class FileUtils extends Base {
                     return;
                 }
 
-                resolve(data);
+                resolve(<any>data);
             });
         });
     }
@@ -61,7 +61,7 @@ export default class FileUtils extends Base {
     mkdir(...dirs: Array<string>): Promise<void> {
         return Promise.all(
             dirs.map((dir) => {
-                return mkdir(dir);
+                return mkdirp(dir);
             })
         ).then(this.utils.noop);
     }

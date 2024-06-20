@@ -96,12 +96,12 @@ export default class CordovaGenerator extends Generator {
     }
 
     protected normalizeOptions(options: IOptions): void {
-        let match: RegExpMatchArray = [];
+        let match: RegExpMatchArray = <any>[];
 
         if (this.utils.isEmpty(options.id)) {
             options.id = options.name.replace(/\s/g, '');
         } else {
-            match = options.id.match(/\./g) || [];
+            match = options.id.match(/\./g) || <any>[];
         }
 
         if (match.length === 0) {

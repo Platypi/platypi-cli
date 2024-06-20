@@ -40,7 +40,7 @@ export default class Ui {
     };
     protected Promise: typeof Promise = Promise;
     protected through: typeof through = through;
-    protected inquirer: inquirer.Inquirer = inquirer;
+    protected inquirer = inquirer;
     protected utils: typeof utils = utils;
 
     constructor(protected options: ui.IOptions) {
@@ -136,7 +136,7 @@ export default class Ui {
         });
 
         return this.Promise.resolve(
-            this.inquirer.prompt(<inquirer.Question[]>questions)
+            this.inquirer.prompt(questions)
         );
     }
 
@@ -158,10 +158,10 @@ export default class Ui {
         if (this.utils.isNumber((<any>LOG_LEVEL)[level])) {
             this.logLevel = (<any>LOG_LEVEL)[level];
             return;
-        } else if (level < LOG_LEVEL.TRACE) {
+        } else if (<number>level < LOG_LEVEL.TRACE) {
             this.logLevel = LOG_LEVEL.TRACE;
             return;
-        } else if (level > LOG_LEVEL.ERROR) {
+        } else if (<number>level > LOG_LEVEL.ERROR) {
             this.logLevel = LOG_LEVEL.ERROR;
             return;
         }
